@@ -7,16 +7,12 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
+<ui:composition template="../gabaritos/dashboard.xhtml">
+	<ui:define name="messages">
+	 	teste
+	</ui:define>
 
+</ui:composition>
 
-<h:body>
-	<ui:composition template="/WEB-INF/facelets/gabaritos/dashboard.xhtml">
-		<ui:define name="navigation">
-			<ui:include src="#{SPABean.navigation}"></ui:include>
-		</ui:define>
-	
-	</ui:composition>
-
-</h:body>
 
 </html>
