@@ -14,11 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+//import javax.validation.constraints.Future;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.NotNull;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "tb_evento")
@@ -27,12 +27,12 @@ public class Evento {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty(message = "Campo obrigatorio")
+//	@NotEmpty(message = "Campo obrigatorio")
 	private String descricao;
 
-	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	@NotNull(message = "Campo obrigatorio")
-	@Future(message = "A data deve estar no futuro")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+//	@NotNull(message = "Campo obrigatorio")
+//	@Future(message = "A data deve estar no futuro")
 	private LocalDateTime data;
 
 	private StatusEvento status;

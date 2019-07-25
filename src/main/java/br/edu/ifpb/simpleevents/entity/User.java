@@ -14,26 +14,27 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
+//import javax.validation.constraints.NotEmpty;
+//import javax.validation.constraints.Past;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.context.WebApplicationContext;
+//import org.springframework.context.annotation.Scope;
+//import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.security.core.GrantedAuthority;
+//import org.springframework.security.core.authority.SimpleGrantedAuthority;
+//import org.springframework.security.core.userdetails.UserDetails;
+//import org.springframework.web.context.WebApplicationContext;
 
 @Entity
 @Table(name = "tb_usuario")
-@Scope(value=WebApplicationContext.SCOPE_SESSION)
-public class User implements UserDetails {
+//@Scope(value=WebApplicationContext.SCOPE_SESSION)
+public class User {
+//implements UserDetails {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotEmpty(message = "Nome e obrigatorio")
+//	@NotEmpty(message = "Nome e obrigatorio")
 	private String nome;
 
 	//@Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Informe um telefone [(83) 98892-1223]")
@@ -45,8 +46,8 @@ public class User implements UserDetails {
 //	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
 	private String senha;
 	
-	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Past(message = "A data deve estar no passado")
+//	@DateTimeFormat(pattern = "yyyy-MM-dd")
+//	@Past(message = "A data deve estar no passado")
 	private Date datanascimento;
 	
 	/* rela��o com eventos */
@@ -160,51 +161,51 @@ public class User implements UserDetails {
 				+ ", datanascimento=" + datanascimento + "]";
 	}
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-		grantList.add(new SimpleGrantedAuthority("ROLE_USER"));
-		
-		if (this.isAdmin()) {
-			GrantedAuthority autorizacaoAdmin = new SimpleGrantedAuthority("ROLE_ADMIN");
-			grantList.add(autorizacaoAdmin);
-		}
-		return grantList;
-	}
+//	@Override
+//	public Collection<? extends GrantedAuthority> getAuthorities() {
+//		
+//		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
+//		grantList.add(new SimpleGrantedAuthority("ROLE_USER"));
+//		
+//		if (this.isAdmin()) {
+//			GrantedAuthority autorizacaoAdmin = new SimpleGrantedAuthority("ROLE_ADMIN");
+//			grantList.add(autorizacaoAdmin);
+//		}
+//		return grantList;
+//	}
 
-	@Override
-	public String getPassword() {
-		return this.getSenha();
-	}
-
-	@Override
-	public String getUsername() {
-		return this.getEmail();
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
+//	@Override
+//	public String getPassword() {
+//		return this.getSenha();
+//	}
+//
+//	@Override
+//	public String getUsername() {
+//		return this.getEmail();
+//	}
+//
+//	@Override
+//	public boolean isAccountNonExpired() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isAccountNonLocked() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isCredentialsNonExpired() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
+//
+//	@Override
+//	public boolean isEnabled() {
+//		// TODO Auto-generated method stub
+//		return true;
+//	}
 
 }
