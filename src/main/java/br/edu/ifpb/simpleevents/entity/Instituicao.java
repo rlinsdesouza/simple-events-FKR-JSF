@@ -4,8 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "tb_instituicao")
 public class Instituicao implements Participante {
 	
 	@Column(unique=true)
@@ -20,6 +24,14 @@ public class Instituicao implements Participante {
 		this.email = email;
 		this.senha = senha;
 		this.participantes = new ArrayList<>();
+	}
+	
+	public Instituicao() {
+		
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	@Override
@@ -44,9 +56,15 @@ public class Instituicao implements Participante {
 		this.participantes.remove(p);
 	}
 
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	@Override
 	public String getSenha() {
 		return this.senha;
 	}
 
+	
+	
 }
