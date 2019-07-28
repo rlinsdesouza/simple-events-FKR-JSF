@@ -1,7 +1,6 @@
 package br.edu.ifpb.simpleevents.entity;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -14,22 +13,14 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-//import javax.validation.constraints.NotEmpty;
-//import javax.validation.constraints.Past;
 
-//import org.springframework.context.annotation.Scope;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import org.springframework.security.core.GrantedAuthority;
-//import org.springframework.security.core.authority.SimpleGrantedAuthority;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.web.context.WebApplicationContext;
 
 @Entity
 @Table(name = "tb_usuario")
 //@Scope(value=WebApplicationContext.SCOPE_SESSION)
-public class User {
+public class User implements Participante {
 //implements UserDetails {
-	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -65,7 +56,7 @@ public class User {
 	private boolean isAdmin = false;
 
 	public User() {
-	};
+	}
 
 	public AvaliacaoEvento getAvaliacaoEvento() {
 		return avaliacaoEvento;
@@ -159,6 +150,11 @@ public class User {
 	public String toString() {
 		return "User [id=" + id + ", nome=" + nome + ", telefone=" + telefone + ", email=" + email + ", senha=" + senha
 				+ ", datanascimento=" + datanascimento + "]";
+	}
+
+	@Override
+	public int getCount() {
+		return 1;
 	}
 
 //	@Override
