@@ -6,17 +6,17 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
+<h:outputStylesheet name="webjars/font-awesome/5.9.0/css/font-awesome.css"/>
 
 
 <h:body>
-	<ui:composition template="/WEB-INF/facelets/gabaritos/dashboard.xhtml">
+	<ui:composition template="/app/facelets/gabaritos/dashboard.xhtml">
 		<ui:define name="navigation">
 			<ui:include src="#{SPABean.navigation}"></ui:include>
 		</ui:define>
 		
 		<ui:define name="messages">
-			<ui:include src="/WEB-INF/facelets/gabaritos/messages.xhtml"></ui:include>
+			<ui:include src="/app/facelets/gabaritos/messages.xhtml"></ui:include>
 		</ui:define>
 	
 	</ui:composition>
