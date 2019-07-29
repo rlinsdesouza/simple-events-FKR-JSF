@@ -8,7 +8,7 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class SPABean {
 	
-	private String navigation = "/facelets/gabaritos/navigation.xhtml";
+	private String navigation = "/WEB-INF/facelets/gabaritos/navigation.xhtml";
 	
 	public String getNavigation() {
 		return navigation;	

@@ -10,7 +10,7 @@ public class NavigationView {
 //	private String navigation = "WEB-INF/facelets/gabaritos/navigation.xhtml";
 	
 	public String login() {
-		return "/facelets/components/login.xhtml";
+		return "/login.xhtml";
 	}
 	
 //	public String getNavigation() {

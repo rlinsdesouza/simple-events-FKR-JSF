@@ -1,4 +1,4 @@
-package br.edu.ifpb.simpleevents.security;
+	package br.edu.ifpb.simpleevents.security;
 
 import java.io.IOException;
 
@@ -108,8 +108,5 @@ public class LoginBacking {
 	public void setFacesContext(FacesContext facesContext) {
 		this.facesContext = facesContext;
 	}
-
-   // getters & setters
-    
     
 }
