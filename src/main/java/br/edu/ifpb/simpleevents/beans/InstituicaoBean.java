@@ -32,9 +32,12 @@ public class InstituicaoBean implements Serializable {
 		this.instituicao = new Instituicao();
 	}
 	
-	public void cadastrar () {
+	public String cadastrar () {
 		System.out.println(this.instituicaoDAO);
 		this.instituicaoDAO.create(this.instituicao);
+		return "index";
 	}
+	
+
 
 }

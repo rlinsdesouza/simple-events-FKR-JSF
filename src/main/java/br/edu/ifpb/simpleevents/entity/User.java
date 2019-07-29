@@ -5,37 +5,23 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "tb_usuario")
+//@Table(name = "tb_usuario")
 //@Scope(value=WebApplicationContext.SCOPE_SESSION)
-public class User implements Participante {
+public class User extends Participante {
 //implements UserDetails {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 
 //	@NotEmpty(message = "Nome e obrigatorio")
 	private String nome;
 
 	//@Pattern(regexp = "^\\([1-9]{2}\\) (?:[2-8]|9[1-9])[0-9]{3}\\-[0-9]{4}$", message = "Informe um telefone [(83) 98892-1223]")
 	private String telefone;
-	
-	@Column(unique=true)
-	private String email;
-	
-//	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
-	private String senha;
 	
 //	@DateTimeFormat(pattern = "yyyy-MM-dd")
 //	@Past(message = "A data deve estar no passado")
@@ -82,14 +68,6 @@ public class User implements Participante {
 		this.eventos = eventos;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public void add(Evento ev) {
 		this.eventos.add(ev);
 	}
@@ -112,22 +90,6 @@ public class User implements Participante {
 
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
 	}
 
 	public Date getDatanascimento() {
