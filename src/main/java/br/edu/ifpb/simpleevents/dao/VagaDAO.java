@@ -1,9 +1,9 @@
 package br.edu.ifpb.simpleevents.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import br.edu.ifpb.simpleevents.entity.Vaga;
 
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Vaga;
+public class VagaDAO extends GenericDAO<Vaga, Long> {
 
-public interface VagaDAO extends JpaRepository<Vaga, Long>{
+	private static final long serialVersionUID = 1L;
 
 }

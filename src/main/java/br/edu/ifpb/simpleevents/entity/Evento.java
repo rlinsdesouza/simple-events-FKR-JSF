@@ -14,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 //import javax.validation.constraints.Future;
 //import javax.validation.constraints.NotEmpty;
 //import javax.validation.constraints.NotNull;
@@ -39,7 +41,7 @@ public class Evento {
 	private String local;
 	
 	@ManyToOne
-	private User dono;
+	private ParticipanteComposite dono;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy = "evento", cascade = CascadeType.REMOVE, orphanRemoval=true)
 	@ElementCollection
@@ -83,11 +85,11 @@ public class Evento {
 		this.vagas.add(vaga);
 	}
 
-	public User getDono() {
+	public ParticipanteComposite getDono() {
 		return dono;
 	}
 
-	public void setDono(User owner) {
+	public void setDono(ParticipanteComposite owner) {
 		this.dono = owner;
 	}
 

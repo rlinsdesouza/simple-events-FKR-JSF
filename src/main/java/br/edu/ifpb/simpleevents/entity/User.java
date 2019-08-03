@@ -5,15 +5,19 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+
 
 @Entity
+@DiscriminatorValue("user")
 //@Table(name = "tb_usuario")
 //@Scope(value=WebApplicationContext.SCOPE_SESSION)
-public class User extends Participante {
+public class User extends ParticipanteComposite {
 //implements UserDetails {
 
 

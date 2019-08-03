@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import br.edu.ifpb.simpleevents.desingPattern.Observer.Subject;
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Subject;
 
 @Entity
 @Table(name = "tb_candidato_vaga")

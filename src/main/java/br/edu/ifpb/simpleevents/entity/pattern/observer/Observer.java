@@ -1,4 +1,4 @@
-package br.edu.ifpb.simpleevents.desingPattern.Observer;
+package br.edu.ifpb.simpleevents.entity.pattern.observer;
 
 
 

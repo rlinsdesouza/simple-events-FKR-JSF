@@ -3,16 +3,19 @@ package br.edu.ifpb.simpleevents.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+
 @Entity
-//@Table(name = "tb_instituicao")
-public class Instituicao extends Participante {
+@DiscriminatorValue("instituicao")
+public class Instituicao extends ParticipanteComposite {
 	
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Participante> participantes ;
+	private List<ParticipanteComposite> participantes ;
 
 	public Instituicao(String email, String senha) {
 		super(email, senha);
@@ -26,17 +29,17 @@ public class Instituicao extends Participante {
 	@Override
 	public int getCount() {
 		int resultado = 0;			
-		for (Participante p: this.participantes)
+		for (ParticipanteComposite p: this.participantes)
 			resultado += p.getCount();
 		return resultado;
 		
 	}
 
-	public void add (Participante p) {
+	public void add (ParticipanteComposite p) {
 		this.participantes.add(p);
 	}
 	
-	public void remove (Participante p) {
+	public void remove (ParticipanteComposite p) {
 		this.participantes.remove(p);
 	}	
 	
