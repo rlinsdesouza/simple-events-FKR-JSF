@@ -1,11 +1,10 @@
 package br.edu.ifpb.simpleevents.dao;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import br.edu.ifpb.simpleevents.entity.User;
 
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.User;
+public class UserDAO extends GenericDAO<User, Long> {
 
-public interface UserDAO extends JpaRepository<User, Long> {
+	private static final long serialVersionUID = 1L;
+
 	
-	User findByEmail (String email);
-
 }

@@ -1,4 +1,4 @@
-package br.edu.ifpb.simpleevents.util;
+package br.edu.ifpb.simpleevents.entity.pattern.singleton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
