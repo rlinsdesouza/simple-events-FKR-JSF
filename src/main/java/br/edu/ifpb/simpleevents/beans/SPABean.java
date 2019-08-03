@@ -1,13 +1,16 @@
 package br.edu.ifpb.simpleevents.beans;
 
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
 
-@ManagedBean (name="SPABean")
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+@Named (value="SPABean")
 @SessionScoped
-public class SPABean {
+public class SPABean implements Serializable {
 	
+	private static final long serialVersionUID = 1L;
 	private String navigation = "/WEB-INF/facelets/gabaritos/navigation.xhtml";
 	
 	public String getNavigation() {
