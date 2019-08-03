@@ -2,8 +2,6 @@ package br.edu.ifpb.simpleevents.util;
 
 import java.time.LocalDateTime;
 
-import br.edu.ifpb.simpleevents.desingPattern.Observer.Observer;
-import br.edu.ifpb.simpleevents.desingPattern.Observer.Subject;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
 import br.edu.ifpb.simpleevents.entity.Evento;
@@ -11,6 +9,8 @@ import br.edu.ifpb.simpleevents.entity.NotificacaoObserver;
 import br.edu.ifpb.simpleevents.entity.Status;
 import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Observer;
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Subject;
 
 public class ObserverPatternTest {
 	public static void main(String[] args) {
