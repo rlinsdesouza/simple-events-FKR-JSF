@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import br.edu.ifpb.simpleevents.desingPattern.Observer.Observer;
-import br.edu.ifpb.simpleevents.desingPattern.Observer.Subject;
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Observer;
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Subject;
 
 
 public class NotificacaoObserver extends Observer {

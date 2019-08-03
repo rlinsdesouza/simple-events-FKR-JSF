@@ -1,18 +1,18 @@
-package br.edu.ifpb.simpleevents.util;
+package br.edu.ifpb.simpleevents.entity.pattern.singleton;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SingletonLog {
-	private static SingletonLog instancia = null;
-    private SingletonLog(){ }
+public class LogSingleton {
+	private static LogSingleton instancia = null;
+    private LogSingleton(){ }
 
-    public synchronized static SingletonLog getInstance(){
-        if (SingletonLog.instancia == null){
-        	SingletonLog.instancia = new SingletonLog();
+    public synchronized static LogSingleton getInstance(){
+        if (LogSingleton.instancia == null){
+        	LogSingleton.instancia = new LogSingleton();
         }
-        return SingletonLog.instancia;
+        return LogSingleton.instancia;
     }
 
     public void escrever(String texto){
