@@ -15,22 +15,22 @@
 		<welcome-file>login.jsp</welcome-file>
 	</welcome-file-list>
 
-<!-- 	<security-constraint> -->
-<!-- 		<web-resource-collection> -->
-<!-- 			<web-resource-name>Application pages</web-resource-name> -->
-<!-- 			<url-pattern>/app/*</url-pattern> -->
-<!-- 		</web-resource-collection> -->
-<!-- 		<auth-constraint> -->
-<!-- 			<role-name>ADMIN</role-name> -->
-<!-- 			<role-name>USER</role-name> -->
-<!-- 		</auth-constraint> -->
-<!-- 	</security-constraint> -->
-<!-- 	<security-role> -->
-<!-- 		<role-name>USER</role-name> -->
-<!-- 	</security-role> -->
-<!-- 	<security-role> -->
-<!-- 		<role-name>ADMIN</role-name> -->
-<!-- 	</security-role> -->
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>Application pages</web-resource-name>
+			<url-pattern>/app/*</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>ADMIN</role-name>
+			<role-name>USER</role-name>
+		</auth-constraint>
+	</security-constraint>
+	<security-role>
+		<role-name>USER</role-name>
+	</security-role>
+	<security-role>
+		<role-name>ADMIN</role-name>
+	</security-role>
 
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>

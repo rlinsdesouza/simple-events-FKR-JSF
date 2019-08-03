@@ -1,4 +1,4 @@
-	package br.edu.ifpb.simpleevents.security;
+package br.edu.ifpb.simpleevents.security;
 
 import java.io.IOException;
 
@@ -34,12 +34,10 @@ public class LoginBacking {
 
     @Inject
     private SecurityContext securityContext;
-
-    @Inject
-    private ExternalContext externalContext;
-
-    @Inject
-    private FacesContext facesContext;
+    
+    private FacesContext facesContext = FacesContext.getCurrentInstance();
+    
+    private ExternalContext externalContext = facesContext.getExternalContext();
 
     public void submit() throws IOException {
 
@@ -61,6 +59,11 @@ public class LoginBacking {
     }
 
     private AuthenticationStatus continueAuthentication() {
+    	if(securityContext == null) {
+    		System.out.println("nulo");
+    	}else {
+    		System.out.println(securityContext);
+    	}
         return securityContext.authenticate(
                 (HttpServletRequest) externalContext.getRequest(),
                 (HttpServletResponse) externalContext.getResponse(),
