@@ -9,27 +9,20 @@ import javax.inject.Named;
 @SessionScoped
 public class NavigationView implements Serializable {
 	
-//	private String navigation = "WEB-INF/facelets/gabaritos/navigation.xhtml";
+	private String navigation = "WEB-INF/facelets/gabaritos/navigation.xhtml";
+	
 	private static final long serialVersionUID = 1L;
-
+	
 	public String login() {
 		return "/login.xhtml";
 	}
 	
-//	public String getNavigation() {
-//		return navigation;	
-//	}
-//	
-//	public String login() {
-//		return "/login.xhtml";
-//	}
-//	
-////	public String getNavigation() {
-////		return navigation;	
-////	}
-////	
-////	public void setNavigation (String navigation) {
-////		this.navigation = navigation;
-////	}
-//
-//}
+	public String getNavigation() {
+		return navigation;	
+	}
+	
+	public void setNavigation (String navigation) {
+		this.navigation = navigation;
+	}
+
+}

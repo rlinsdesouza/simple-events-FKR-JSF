@@ -1,79 +1,73 @@
-//package br.edu.ifpb.simpleevents.beans;
-//
-//import java.util.List;
-//import java.util.Random;
-//import java.time.LocalDateTime;
-//
-//
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
-//import com.github.javafaker.Faker;
-//
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.CandidatoVagaDAO;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.EspecialidadeDAO;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.EventoDAO;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.UserDAO;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.VagaDAO;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.CandidatoVaga;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Especialidade;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Evento;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Status;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.StatusEvento;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.User;
-//import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Vaga;
-//
-//@Controller
-//@RequestMapping("/datafaker")
-//public class FakerController {
-////	https://github.com/DiUS/java-faker
-//	Faker faker = new Faker();
-//	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//	
-//	@Autowired
-//	private EspecialidadeDAO especialidadedao;
-//	@Autowired
-//	private UserDAO userdao;
-//	@Autowired 
-//	public EventoDAO eventoDAO;
-//	@Autowired
-//	public VagaDAO vagaDAO;
-//	@Autowired
-//	public CandidatoVagaDAO candidaturaDAO;
-//
-//
-//	
-//	@RequestMapping
-//	public String createDataFaker() {
-//		createDataEspecialidade();
+package br.edu.ifpb.simpleevents.facade;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Random;
+
+import javax.inject.Inject;
+
+import com.github.javafaker.Faker;
+
+import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
+import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
+import br.edu.ifpb.simpleevents.dao.EventoDAO;
+import br.edu.ifpb.simpleevents.dao.UserDAO;
+import br.edu.ifpb.simpleevents.dao.VagaDAO;
+import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
+import br.edu.ifpb.simpleevents.entity.Especialidade;
+import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.Status;
+import br.edu.ifpb.simpleevents.entity.StatusEvento;
+import br.edu.ifpb.simpleevents.entity.User;
+import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.security.PasswordEncrypt;
+
+
+public class FakerFacade {
+//	https://github.com/DiUS/java-faker
+	Faker faker = new Faker();
+	private PasswordEncrypt password = new PasswordEncrypt();
+	
+	@Inject
+	private EspecialidadeDAO especialidadedao;
+	@Inject
+	private UserDAO userdao;
+	@Inject
+	public EventoDAO eventoDAO;
+	@Inject
+	public VagaDAO vagaDAO;
+	@Inject
+	public CandidatoVagaDAO candidaturaDAO;
+
+
+	
+	public String createDataFaker() {
+		createDataEspecialidade();
 //		createDataUser();
 //		createDataEvents();
 //		createDataVagas();
 //		createDataCandidatoVaga();
-//		return "datafaker";
-//	}
-//	
-//	public void createDataEspecialidade () {
-//		Especialidade especialidade;
-//		for (int i = 0; i < 30; i++) {
-//			especialidade = new Especialidade();
-//			especialidade.setNome(faker.company().profession());
-//			especialidade.setDescricao(faker.lorem().characters(100));
-//			especialidadedao.save(especialidade);
-//		}
-//		
-//	}
-//	
+		return "/app/datafaker?faces-redirect=true";
+	}
+	
+	public void createDataEspecialidade () {
+		Especialidade especialidade;
+		for (int i = 0; i < 30; i++) {
+			especialidade = new Especialidade();
+			especialidade.setNome(faker.company().profession());
+			especialidade.setDescricao(faker.lorem().characters(100));
+			especialidadedao.create(especialidade);
+		}
+		
+	}
+	
 //	public void createDataUser () {
 //		User user;
 //		user = new User();
 //		user.setNome("admin");
 //		user.setEmail("admin@test");
 //		user.setAdmin(true);
-//		user.setSenha(passwordEncoder.encode("admin"));
+//		user.setSenha(password.encrypt("admin"));
 //		userdao.save(user);
 //		for (int i = 0; i < 50; i++) {
 //			user = new User();
@@ -81,12 +75,12 @@
 //			user.setEmail(user.getNome().toLowerCase()+"@test");
 //			user.setTelefone(faker.phoneNumber().cellPhone());
 //			user.setDatanascimento(faker.date().birthday(18, 60));
-//			user.setSenha(passwordEncoder.encode(user.getNome().toLowerCase()));
+//			user.setSenha(password.encrypt(user.getNome().toLowerCase()));
 //			userdao.save(user);
 //		}
 //		
 //	}
-//	
+	
 //	public void createDataEvents () {
 //		List<User> usuarios = userdao.findAll();
 //		Evento evento;
@@ -102,7 +96,7 @@
 //		}
 //		
 //	}
-//
+
 //	public void createDataVagas () {
 //		List<Especialidade> especialidades = especialidadedao.findAll();
 //		List<Evento> eventos = eventoDAO.findAll();
@@ -134,7 +128,7 @@
 //			vagaDAO.save(vaga);
 //		}
 //	}
-//
+
 //	public void createDataCandidatoVaga () {
 //		List<Vaga> vagas = vagaDAO.findAll();
 //		List<User> usuarios = userdao.findAll();
@@ -161,4 +155,5 @@
 //			candidaturaDAO.save(candidatura);
 //		}
 //	}
-//}
+
+}
