@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://bootsfaces.net/ui">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Insert title here</title>
+</head>
+<h:body>
+    <div class="container">
+        <h2>Especialidades cadastradas</h2>
+        <h:link value="Adicionar" outcome="especialidade/form"/>
+
+        <h:form id="form">
+        <h:dataTable id="especialidades" value="#{especialidadeBean.especialidades}" var="especialidade">
+            <h:column>
+                <f:facet name="header">Especialidade</f:facet>
+                <h:outputLabel value="#{especialidade.nome}" />
+            </h:column>
+			<h:column>
+                <f:facet name="header">Descrição</f:facet>
+                <h:outputLabel value="#{especialidade.descricao}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">Ações</f:facet>
+                 <h:link value="Deletar" outcome="especialidadeDetails">
+                    <f:param name="id" value="#{especialidade.id}"/>
+                </h:link>
+                 <h:link value="Editar" outcome="especialidadeDetails">
+                    <f:param name="id" value="#{especialidade.id}"/>
+                </h:link>
+                
+                
+                <p:commandButton 
+				styleClass="btn btn-primary" 
+				id="bt_deleta_editar" 
+				value="Editar" 
+				action="#{especialidade.editar}" >
+					<f:param name="id" value="#{especialidade.id}"/>
+				</p:commandButton>
+            </h:column>
+            
+        </h:dataTable>
+    </h:form>
+    </div>
+
+</h:body>
+
+</html>

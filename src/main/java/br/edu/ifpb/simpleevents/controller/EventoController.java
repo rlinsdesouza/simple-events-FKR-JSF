@@ -16,7 +16,7 @@ public class EventoController implements Serializable {
 	private EventoDAO eventoDAO;
 
 	public ArrayList<Evento> consultar() {
-		ArrayList<Evento> eventos = eventoDAO.read();
+		ArrayList<Evento> eventos = (ArrayList<Evento>) eventoDAO.read();
 		return eventos;
 	}
 

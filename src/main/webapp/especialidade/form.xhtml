@@ -9,7 +9,7 @@
 
 
 <h:head>
-    <ui:include src="/commum/head.xhtml"/>
+    <ui:include src="/commum/head.xhtml"/>    
 </h:head>
 <h:body>
 	<div class="container">
@@ -19,15 +19,11 @@
 	
 			<h:outputLabel value="Descrição" for="descricao" />
 			<p:inputText styleClass="form-control" id="descricao" value="#{especialidadeBean.especialidade.descricao}" />
-	
-	<!--                <div class="ui-inputgroup">-->
-	<!--                    <h:outputLabel for="nome" value="Nome:" style="font-weight:bold" />-->
-	<!--                    <p:inputText id="nome" value="#{EspecBean.nome}" />-->
-	<!--                </div>-->
-	<!--                    <h:outputLabel for="descricao" value="Descrição:" style="font-weight:bold" />-->
-	<!--                    <p:inputText id="descricao" value="#{EspecBean.descricao}" />-->
-	<!--                </div>-->
-			<p:commandButton styleClass="form-control btn btn-primary" id="bt_salva_espec" value="Salvar" action="#{especialidadeBean.salvar}" />
+	   		<p:commandButton 
+				styleClass="form-control btn btn-primary" 
+				id="bt_salva_espec" 
+				value="Salvar" 
+				action="#{especialidadeBean.salvar}" />
 		</h:form>
 	</div>
 </h:body>

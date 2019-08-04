@@ -16,7 +16,7 @@ public class EspecialidadeController implements Serializable {
 	private EspecialidadeDAO especialidadeDAO;
 
 	public ArrayList<Especialidade> consultar() {
-		ArrayList<Especialidade> especialidades = especialidadeDAO.read();
+		ArrayList<Especialidade> especialidades = (ArrayList<Especialidade>) especialidadeDAO.read();
 		return especialidades;
 	}
 

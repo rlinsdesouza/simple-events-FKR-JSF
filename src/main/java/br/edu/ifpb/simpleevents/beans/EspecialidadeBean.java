@@ -30,9 +30,7 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 		if (especialidade != null) {
 			this.especialidade = especialidade;
 		}else {
-			System.out.println(controller);
 			this.especialidades = controller.consultar();
-			System.out.println("aqui");
 			this.especialidade = new Especialidade();
 		}
 	}
@@ -42,7 +40,7 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 		try {
 			controller.cadastrar(especialidade);
 			this.addSuccessMessage("Salvo com sucesso");
-			view = "/especialidade/consulta?faces-redirect=true";
+			view = "/especialidade/list?faces-redirect=true";
 			this.especialidade = new Especialidade();
 		}catch(PersistenceException e){
 			this.addErrorMessage("Erro ao tentar salvar a especialidade");
