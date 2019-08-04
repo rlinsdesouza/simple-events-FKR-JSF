@@ -1,9 +1,5 @@
 package br.edu.ifpb.simpleevents.facade;
 
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Random;
-
 import javax.inject.Inject;
 
 import com.github.javafaker.Faker;
@@ -11,15 +7,10 @@ import com.github.javafaker.Faker;
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
 import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
 import br.edu.ifpb.simpleevents.dao.EventoDAO;
+import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.dao.UserDAO;
 import br.edu.ifpb.simpleevents.dao.VagaDAO;
-import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
-import br.edu.ifpb.simpleevents.entity.Evento;
-import br.edu.ifpb.simpleevents.entity.Status;
-import br.edu.ifpb.simpleevents.entity.StatusEvento;
-import br.edu.ifpb.simpleevents.entity.User;
-import br.edu.ifpb.simpleevents.entity.Vaga;
 import br.edu.ifpb.simpleevents.security.PasswordEncrypt;
 
 
@@ -47,8 +38,9 @@ public class FakerFacade {
 //		createDataEvents();
 //		createDataVagas();
 //		createDataCandidatoVaga();
-		return "/app/datafaker?faces-redirect=true";
+		return null;
 	}
+	
 	
 	public void createDataEspecialidade () {
 		Especialidade especialidade;
@@ -80,7 +72,7 @@ public class FakerFacade {
 //		}
 //		
 //	}
-	
+//	
 //	public void createDataEvents () {
 //		List<User> usuarios = userdao.findAll();
 //		Evento evento;

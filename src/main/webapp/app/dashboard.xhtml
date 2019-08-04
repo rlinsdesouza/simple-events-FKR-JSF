@@ -18,7 +18,8 @@
 		<div class="ui-g-12 ui-md-2">Menu</div>
 		<div class="ui-g-12 ui-md-10 ui-g-nopad">
 			<div class="ui-g-12">
-			 <ui:insert name="navigation"></ui:insert>
+				<ui:include src="#{SPABean.navigation}"></ui:include>
+<!-- 			 <ui:insert name="navigation"></ui:insert> -->
 			</div>
 			<div class="ui-g-12">
 			 <ui:insert name="messages"></ui:insert>

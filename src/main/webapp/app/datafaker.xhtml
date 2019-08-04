@@ -9,9 +9,10 @@
 	
 <ui:composition template="dashboard.xhtml">
 	<ui:define name="messages">
-		<ui:include src="#{FakerBean.create}"></ui:include>
-    	<h1>Dados criados com Sucesso!</h1>
-
+		<ui:include src="#{faker.create()}"></ui:include>
+		<h1>Adicionados com sucesso!</h1>
 	</ui:define>
 
 </ui:composition>
+
+</html>

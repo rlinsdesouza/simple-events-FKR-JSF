@@ -1,17 +1,23 @@
 package br.edu.ifpb.simpleevents.beans;
 
-import javax.faces.view.ViewScoped;
+
+
+import java.io.Serializable;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.facade.FakerFacade;
 
-@Named
-public class FakerBean {
+@Named(value="faker")
+public class FakerBean implements Serializable {
+	private static final long serialVersionUID = 1L;
 	
 	@Inject
 	private FakerFacade faker;
 	
+	@Transactional
 	public String create() {
 		return faker.createDataFaker();
 	}
