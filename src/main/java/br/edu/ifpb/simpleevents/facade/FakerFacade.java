@@ -1,5 +1,8 @@
 package br.edu.ifpb.simpleevents.facade;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import javax.inject.Inject;
 
 import com.github.javafaker.Faker;
@@ -7,17 +10,17 @@ import com.github.javafaker.Faker;
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
 import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
 import br.edu.ifpb.simpleevents.dao.EventoDAO;
-import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.dao.UserDAO;
 import br.edu.ifpb.simpleevents.dao.VagaDAO;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
-import br.edu.ifpb.simpleevents.security.PasswordEncrypt;
+import br.edu.ifpb.simpleevents.entity.User;
+import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
 
 public class FakerFacade {
 //	https://github.com/DiUS/java-faker
 	Faker faker = new Faker();
-	private PasswordEncrypt password = new PasswordEncrypt();
+	private PasswordUtil password = new PasswordUtil();
 	
 	@Inject
 	private EspecialidadeDAO especialidadedao;
@@ -32,9 +35,9 @@ public class FakerFacade {
 
 
 	
-	public String createDataFaker() {
+	public String createDataFaker() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		createDataEspecialidade();
-//		createDataUser();
+		createDataParticipantes();
 //		createDataEvents();
 //		createDataVagas();
 //		createDataCandidatoVaga();
@@ -53,25 +56,25 @@ public class FakerFacade {
 		
 	}
 	
-//	public void createDataUser () {
-//		User user;
-//		user = new User();
-//		user.setNome("admin");
-//		user.setEmail("admin@test");
-//		user.setAdmin(true);
-//		user.setSenha(password.encrypt("admin"));
-//		userdao.save(user);
-//		for (int i = 0; i < 50; i++) {
-//			user = new User();
-//			user.setNome(faker.name().firstName());
-//			user.setEmail(user.getNome().toLowerCase()+"@test");
-//			user.setTelefone(faker.phoneNumber().cellPhone());
-//			user.setDatanascimento(faker.date().birthday(18, 60));
-//			user.setSenha(password.encrypt(user.getNome().toLowerCase()));
-//			userdao.save(user);
-//		}
-//		
-//	}
+	public void createDataParticipantes () throws NoSuchAlgorithmException, InvalidKeySpecException {
+		User user;
+		user = new User();
+		user.setNome("admin");
+		user.setEmail("admin@test");
+		user.setAdmin(true);
+		user.setSenha(password.encryptMD5("admin"));
+		userdao.create(user);
+		for (int i = 0; i < 100; i++) {
+			user = new User();
+			user.setNome(faker.name().fullName());
+			user.setEmail(user.getNome()+"@teste");
+			user.setTelefone(faker.phoneNumber().cellPhone());
+			user.setDatanascimento(faker.date().birthday(18, 60));
+			user.setSenha(password.encryptMD5(user.getNome().toLowerCase()));
+			userdao.create(user);
+		}
+		
+	}
 //	
 //	public void createDataEvents () {
 //		List<User> usuarios = userdao.findAll();

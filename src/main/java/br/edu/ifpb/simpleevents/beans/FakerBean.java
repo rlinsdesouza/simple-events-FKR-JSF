@@ -3,6 +3,8 @@ package br.edu.ifpb.simpleevents.beans;
 
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -18,7 +20,7 @@ public class FakerBean implements Serializable {
 	private FakerFacade faker;
 	
 	@Transactional
-	public String create() {
+	public String create() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		return faker.createDataFaker();
 	}
 
