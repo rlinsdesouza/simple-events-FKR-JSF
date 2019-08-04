@@ -1,6 +1,7 @@
 package br.edu.ifpb.simpleevents.dao;
 
 import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,8 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	
 	private static final long serialVersionUID = 1L;
 
-	protected Class<T> entityClass;
+	protected Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass()
+			.getGenericSuperclass()).getActualTypeArguments()[0];
 
 	@Inject
 	protected EntityManager entityManager;
