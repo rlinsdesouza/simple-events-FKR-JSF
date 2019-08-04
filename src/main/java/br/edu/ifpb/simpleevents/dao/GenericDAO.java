@@ -25,7 +25,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	}	
 
 	@Override
-	public List<T> read() {
+	public ArrayList<T> read() {
 		// TODO Auto-generated method stub
 		Query query = entityManager.createQuery("select x from " + entityClass.getSimpleName() + " x");
 		return new ArrayList<T>(query.getResultList());
@@ -67,5 +67,5 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	public void rollback() {
 		this.entityManager.getTransaction().rollback();		
 	}
-
+	
 }
