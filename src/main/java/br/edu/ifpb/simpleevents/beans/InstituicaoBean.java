@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.ifpb.simpleevents.dao.InstituicaoDAO;
+import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.entity.Instituicao;
 
 @Named(value = "instituicaoBean")
@@ -32,6 +33,7 @@ public class InstituicaoBean implements Serializable {
 		this.instituicao = new Instituicao();
 	}
 	
+	@Transactional
 	public String cadastrar () {
 		System.out.println(this.instituicaoDAO);
 		this.instituicaoDAO.create(this.instituicao);

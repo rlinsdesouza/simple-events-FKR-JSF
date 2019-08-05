@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://bootsfaces.net/ui">
+
+
+<h:head>
+    <ui:include src="/commum/head.xhtml"/>    
+</h:head>
+<h:body>
+	<div class="container">
+		<h:form id="form-espec">
+			<h:outputLabel value="Nome" for="nome" />
+			<p:inputText styleClass="form-control" id="nome" value="#{especialidadeBean.especialidade.nome}" />
+	
+			<h:outputLabel value="Descrição" for="descricao" />
+			<p:inputText styleClass="form-control" id="descricao" value="#{especialidadeBean.especialidade.descricao}" />
+	   		<p:commandButton 
+				styleClass="form-control btn btn-primary" 
+				id="bt_salva_espec" 
+				value="Salvar" 
+				action="#{especialidadeBean.salvar}" />
+		</h:form>
+	</div>
+</h:body>
+</html>

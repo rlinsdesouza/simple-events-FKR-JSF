@@ -9,6 +9,8 @@ import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import br.edu.ifpb.simpleevents.entity.Especialidade;
+
 public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>, Serializable{
 	
 	private static final long serialVersionUID = 1L;
@@ -29,8 +31,8 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	@Override
 	public List<T> read() {
 		// TODO Auto-generated method stub
-		Query query = entityManager.createQuery("select x from " + entityClass.getSimpleName() + " x");
-		return new ArrayList<T>(query.getResultList());
+		Query query = entityManager.createQuery("select e from" + entityClass.getSimpleName() +" e");
+		return query.getResultList();
 	}
 
 	@Override
@@ -69,5 +71,5 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	public void rollback() {
 		this.entityManager.getTransaction().rollback();		
 	}
-
+	
 }
