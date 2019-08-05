@@ -53,4 +53,13 @@ public class Especialidade {
 		this.descricao = descricao;
 	}
 
+
+
+	@Override
+	public String toString() {
+		return "Especialidade [id=" + id + ", nome=" + nome + ", descricao=" + descricao + "]";
+	}
+	
+	
+
 }

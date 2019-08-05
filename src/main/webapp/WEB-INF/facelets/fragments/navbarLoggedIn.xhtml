@@ -25,11 +25,14 @@
                     	<a class="nav-link" th:href="@{/especialidades}">Especialidades</a>
                 	</li>
 	  			</th:block> -->
-                <li class="nav-item">
-                	<p:link outcome="index.xhtml" value="Administrar eventos" class="nav-link"/>
+	  			<li class="nav-item">
+                	<p:link outcome="/datafaker.xhtml" value="Datafaker" class="nav-link"/>
                 </li>
                 <li class="nav-item">
-                	<p:link outcome="index.xhtml" value="Meus trabalhos" class="nav-link"/>
+                	<p:link outcome="/eventos/cadastro.xhtml" value="Administrar eventos" class="nav-link"/>
+                </li>
+                <li class="nav-item">
+                	<p:link outcome="/index.xhtml" value="Meus trabalhos" class="nav-link"/>
                 </li>
                 <li class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
