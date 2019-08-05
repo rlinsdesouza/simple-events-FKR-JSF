@@ -31,7 +31,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	@Override
 	public List<T> read() {
 		// TODO Auto-generated method stub
-		Query query = entityManager.createQuery("select e from" + entityClass.getSimpleName() +" e");
+		Query query = entityManager.createQuery("select e from " + entityClass.getSimpleName() +" e");
 		return query.getResultList();
 	}
 
