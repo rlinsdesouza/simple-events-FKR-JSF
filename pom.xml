@@ -35,7 +35,7 @@
 		</dependency>
 
 
-		<!-- https://mvnrepository.com/artifact/javax.enterprise/cdi-api -->
+<!-- 		https://mvnrepository.com/artifact/javax.enterprise/cdi-api -->
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -114,7 +114,6 @@
 		</dependency>
 
 
-
 		<dependency>
 			<groupId>org.apache.myfaces.core</groupId>
 			<artifactId>myfaces-api</artifactId>
@@ -171,7 +170,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.0</version>
 				<configuration>
-					<release>11</release>
+					<release>1.8</release>
 				</configuration>
 			</plugin>
 			<plugin>

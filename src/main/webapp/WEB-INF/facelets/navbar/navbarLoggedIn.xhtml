@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<body>
+    <nav class="navbar navbar-expand-md navbar-light mb-4">
+        <p:link class="navbar-brand " outcome="#{request.contextPath}">
+            <img src="https://res.cloudinary.com/deqmrmqui/image/upload/v1559256417/fakara2_euoenn.png">
+        </p:link>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
+            <h:form th:action="@{/pesquisar}" class="form-inline mt-2 mt-md-0 col-lg-8" style="justify-content: flex-end;">
+                <input name="nome" class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search">
+                <button class="btn teste my-2 my-sm-0" type="submit">Pesquisar</button>
+                <p:commandButton value="Pesquisar" update="growl" action="#{.buttonAction}" style="margin-right:20px;" styleClass="ui-priority-primary" />
+            </h:form>
+            <ul class="navbar-nav">
+                <th:block sec:authorize="hasRole('ADMIN')">
+	    			<li class="nav-item">
+                    	<a class="nav-link" th:href="@{/especialidades}">Especialidades</a>
+                	</li>
+	  			</th:block>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/eventos/meuseventos}">Administrar eventos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/candidaturas/meustrabalhos}">Meus trabalhos</a>
+                </li>
+                <li class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Olá, <span sec:authentication="name"></span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    	<form method="post" class="dropdown-item"
+						  th:action="@{/logout}">
+						  <button type="submit" class="dropdown-item">
+						    Sair
+						  </button>
+						</form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>

@@ -102,7 +102,6 @@ public class FakerFacade {
 			evento.setStatus(StatusEvento.values()[rand.nextInt(StatusEvento.values().length)]);
 			eventoDAO.create(evento);
 		}
-		
 	}
 
 	public void createDataVagas () {

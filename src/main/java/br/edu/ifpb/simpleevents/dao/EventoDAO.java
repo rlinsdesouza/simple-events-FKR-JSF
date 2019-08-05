@@ -25,7 +25,7 @@ public class EventoDAO extends GenericDAO<Evento, Long> {
 	public List<Evento> findByStatus(StatusEvento status) {
 		try {
 			Query query = this.entityManager.createQuery("SELECT e FROM Evento e WHERE e.status= :status");
-			query.setParameter("dono", status);
+			query.setParameter("status", status);
 			return (List<Evento>) query.getResultList();
 		} catch (Exception e) {
 			return null;
