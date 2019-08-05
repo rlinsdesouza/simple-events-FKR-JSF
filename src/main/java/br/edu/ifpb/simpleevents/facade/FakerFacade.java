@@ -1,60 +1,62 @@
-package br.edu.ifpb.simpleevents.beans;
+package br.edu.ifpb.simpleevents.facade;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.time.LocalDateTime;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.inject.Inject;
 
 import com.github.javafaker.Faker;
 
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.CandidatoVagaDAO;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.EspecialidadeDAO;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.EventoDAO;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.UserDAO;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.dao.VagaDAO;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.CandidatoVaga;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Especialidade;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Evento;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Status;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.StatusEvento;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.User;
-import br.edu.ifpb.pweb2.projeto.simpleeventFKR.model.Vaga;
+import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
+import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
+import br.edu.ifpb.simpleevents.dao.EventoDAO;
+import br.edu.ifpb.simpleevents.dao.ParticipanteDAO;
+import br.edu.ifpb.simpleevents.dao.UserDAO;
+import br.edu.ifpb.simpleevents.dao.VagaDAO;
+import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
+import br.edu.ifpb.simpleevents.entity.Especialidade;
+import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.Status;
+import br.edu.ifpb.simpleevents.entity.StatusEvento;
+import br.edu.ifpb.simpleevents.entity.User;
+import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
-@Controller
-@RequestMapping("/datafaker")
-public class FakerController {
+
+public class FakerFacade {
 //	https://github.com/DiUS/java-faker
 	Faker faker = new Faker();
-	private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	private PasswordUtil password = new PasswordUtil();
 	
-	@Autowired
+	@Inject
 	private EspecialidadeDAO especialidadedao;
-	@Autowired
+	@Inject
 	private UserDAO userdao;
-	@Autowired 
+	@Inject
 	public EventoDAO eventoDAO;
-	@Autowired
+	@Inject
 	public VagaDAO vagaDAO;
-	@Autowired
+	@Inject
 	public CandidatoVagaDAO candidaturaDAO;
+	
+	@Inject
+	public ParticipanteDAO participanteDAO;
 
 
 	
-	@RequestMapping
-	public String createDataFaker() {
+	public String createDataFaker() throws NoSuchAlgorithmException, InvalidKeySpecException {
 		createDataEspecialidade();
-		createDataUser();
+		createDataParticipantes();
 		createDataEvents();
 		createDataVagas();
 		createDataCandidatoVaga();
-		return "datafaker";
+		return null;
 	}
+	
 	
 	public void createDataEspecialidade () {
 		Especialidade especialidade;
@@ -62,33 +64,33 @@ public class FakerController {
 			especialidade = new Especialidade();
 			especialidade.setNome(faker.company().profession());
 			especialidade.setDescricao(faker.lorem().characters(100));
-			especialidadedao.save(especialidade);
+			especialidadedao.create(especialidade);
 		}
 		
 	}
 	
-	public void createDataUser () {
+	public void createDataParticipantes () throws NoSuchAlgorithmException, InvalidKeySpecException {
 		User user;
 		user = new User();
 		user.setNome("admin");
 		user.setEmail("admin@test");
 		user.setAdmin(true);
-		user.setSenha(passwordEncoder.encode("admin"));
-		userdao.save(user);
-		for (int i = 0; i < 50; i++) {
+		user.setSenha(password.encryptMD5("admin"));
+		userdao.create(user);
+		for (int i = 0; i < 100; i++) {
 			user = new User();
-			user.setNome(faker.name().firstName());
-			user.setEmail(user.getNome().toLowerCase()+"@test");
+			user.setNome(faker.name().fullName());
+			user.setEmail(user.getNome()+"@teste");
 			user.setTelefone(faker.phoneNumber().cellPhone());
 			user.setDatanascimento(faker.date().birthday(18, 60));
-			user.setSenha(passwordEncoder.encode(user.getNome().toLowerCase()));
-			userdao.save(user);
+			user.setSenha(password.encryptMD5(user.getNome().toLowerCase()));
+			userdao.create(user);
 		}
 		
 	}
 	
 	public void createDataEvents () {
-		List<User> usuarios = userdao.findAll();
+		List<ParticipanteComposite> participantes = participanteDAO.read();
 		Evento evento;
 		for (int i = 0; i < 100; i++) {
 			Random rand = new Random();
@@ -96,16 +98,15 @@ public class FakerController {
 			evento.setDescricao(faker.lorem().sentence());
 			evento.setData(LocalDateTime.now().plusDays(10));
 			evento.setLocal(faker.address().fullAddress());
-			evento.setDono(usuarios.get(rand.nextInt(usuarios.size())));
+			evento.setDono(participantes.get(rand.nextInt(participantes.size())));
 			evento.setStatus(StatusEvento.values()[rand.nextInt(StatusEvento.values().length)]);
-			eventoDAO.save(evento);
+			eventoDAO.create(evento);
 		}
-		
 	}
 
 	public void createDataVagas () {
-		List<Especialidade> especialidades = especialidadedao.findAll();
-		List<Evento> eventos = eventoDAO.findAll();
+		List<Especialidade> especialidades = especialidadedao.read();
+		List<Evento> eventos = eventoDAO.read();
 		Vaga vaga;
 		for (int i = 0; i < 200; i++) {
 			Random rand = new Random();
@@ -131,20 +132,20 @@ public class FakerController {
 //				System.out.println(testeEspecialidade);
 //			} while (testeEspecialidade);
 			vaga.setEspecialidade(novaEspecialidade);
-			vagaDAO.save(vaga);
+			vagaDAO.create(vaga);
 		}
 	}
 
 	public void createDataCandidatoVaga () {
-		List<Vaga> vagas = vagaDAO.findAll();
-		List<User> usuarios = userdao.findAll();
+		List<Vaga> vagas = vagaDAO.read();
+		List<User> usuarios = userdao.read();
 		CandidatoVaga candidatura;
 		for (int i = 0; i < 300; i++) {
 			Random rand = new Random();
 			candidatura = new CandidatoVaga();
 			candidatura.setVaga(vagas.get(rand.nextInt(vagas.size())));
 			candidatura.setStatus(Status.AGUARDANDO_APROVACAO);
-			List<CandidatoVaga> candidaturasExistentes = vagaDAO.findById(candidatura.getVaga().getId()).get().getCandidatoVaga();
+			List<CandidatoVaga> candidaturasExistentes = vagaDAO.read(candidatura.getVaga().getId()).getCandidatoVaga();
 
 			Boolean testeCandidato = false;
 			User novoCandidato;
@@ -158,7 +159,8 @@ public class FakerController {
 				}
 			} while (testeCandidato);
 			candidatura.setCandidato(novoCandidato);
-			candidaturaDAO.save(candidatura);
+			candidaturaDAO.create(candidatura);
 		}
 	}
+
 }

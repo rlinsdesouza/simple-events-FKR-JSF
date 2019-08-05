@@ -17,6 +17,17 @@ public class Especialidade {
 
 	public Especialidade() {
 	};
+	
+	
+
+	public Especialidade(Long id, String nome, String descricao) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.descricao = descricao;
+	}
+
+
 
 	public Long getId() {
 		return id;

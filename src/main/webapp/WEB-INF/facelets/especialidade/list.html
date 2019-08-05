@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/head.html :: head">
+</head>
+<body>
+
+		<!-- Navbar -->
+    <div th:replace="fragments/navbar"></div>
+    
+	<div class="container">
+		<div th:text="${deletado}" ></div>
+		<br>
+		<h2>Especialidades cadastradas</h2>
+		<a th:href="@{/especialidades/form}" class="btn btn-primary">Nova</a>
+		<div style="height: 20px"></div>
+		<table class="table table-stripped">
+			<tr>
+				<th>Id</th>
+				<th>Nome</th>
+				<th>Descrição</th>
+				<th>Action</th>
+			</tr>
+			<tr th:each="espec: ${especialidades}">
+				<td th:text="${espec.id}"></td>
+				<td th:text="${espec.nome}"></td>
+				<td th:text="${espec.descricao}"></td>
+				<td> 
+					<div class="btn-group pull-right">
+						<a class="btn btn-sm btn-primary" th:href="@{/especialidades/edit/{id}(id=${espec.id})}" >Editar</a>
+						<a class="delete btn btn-sm btn-danger" th:href="@{/especialidades/delete/{id}(id=${espec.id})}">Excluir</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<footer th:insert="fragments/footer :: footer"></footer>
+</body>
+</html>

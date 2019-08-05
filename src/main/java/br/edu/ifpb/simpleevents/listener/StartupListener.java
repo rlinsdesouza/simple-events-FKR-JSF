@@ -1,0 +1,36 @@
+package br.edu.ifpb.simpleevents.listener;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import javax.inject.Inject;
+import javax.persistence.EntityManagerFactory;
+import javax.servlet.ServletContextEvent;
+import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
+import org.apache.log4j.Logger;
+
+import br.edu.ifpb.simpleevents.dao.EntityManagerProducer;
+import br.edu.ifpb.simpleevents.facade.FakerFacade;
+
+@WebListener
+public class StartupListener implements ServletContextListener {
+	private static Logger logger = Logger.getLogger(StartupListener.class);
+	
+	
+	public void contextDestroyed(ServletContextEvent arg0) {
+		EntityManagerFactory emf = EntityManagerProducer.getEntityManagerFactory();
+		if (emf != null) {
+			emf.close();
+			logger.info("Fábrica de EntityManagers fechada.");
+		}
+	}
+
+	public void contextInitialized(ServletContextEvent event) {
+		// Inicia a criação da fábrica de EntityManagers da JPA
+		EntityManagerProducer.getEntityManagerFactory();
+		logger.info("Fábrica de EntityManagers instanciada.");
+	}
+
+}

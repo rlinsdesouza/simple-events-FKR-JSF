@@ -8,9 +8,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.edu.ifpb.simpleevents.entity.pattern.observer.Subject;
+
 @Entity
 @Table(name = "tb_candidato_vaga")
-public class CandidatoVaga {
+public class CandidatoVaga extends Subject{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +27,17 @@ public class CandidatoVaga {
 	public CandidatoVaga() {
 	}
 	
+	public CandidatoVaga(Long i, Vaga vaga, int notaDesempenho, Status status, User candidato) {
+		super();
+		this.id = i;
+		this.vaga = vaga;
+		this.notaDesempenho = notaDesempenho;
+		this.status = status;
+		this.candidato = candidato;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -55,6 +68,7 @@ public class CandidatoVaga {
 
 	public void setStatus(Status state) {
 		this.status = state;
+		notifyAllObservers();
 	}
 
 	public User getCandidato() {
