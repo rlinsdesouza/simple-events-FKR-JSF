@@ -13,14 +13,20 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	
 	private static final long serialVersionUID = 1L;
 
-	protected Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass()
-			.getGenericSuperclass()).getActualTypeArguments()[0];
+	protected Class<T> entityClass;
+
+
+	public GenericDAO() {
+//		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
+//		this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
+	}
 
 	@Inject
 	protected EntityManager entityManager;
 
 
 	@Override
+	@Transactional
 	public T create(T object) {
 		this.entityManager.persist(object);
 		return object;
@@ -28,7 +34,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 
 	@Override
 	public List<T> read() {
-		// TODO Auto-generated method stub
+		System.out.println(entityClass.getSimpleName());
 		Query query = entityManager.createQuery("select x from " + entityClass.getSimpleName() + " x");
 		return new ArrayList<T>(query.getResultList());
 	}
@@ -39,11 +45,13 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	}
 
 	@Override
+	@Transactional
 	public T update(T object) {
 		return this.entityManager.merge(object);
 	}
 
 	@Override
+	@Transactional
 	public void delete(T object) {
 		object = this.entityManager.merge(object);
 		this.entityManager.remove(object);
