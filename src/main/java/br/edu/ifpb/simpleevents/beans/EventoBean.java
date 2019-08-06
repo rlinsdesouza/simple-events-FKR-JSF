@@ -2,55 +2,54 @@ package br.edu.ifpb.simpleevents.beans;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
-import br.edu.ifpb.simpleevents.entity.StatusEvento;
-import br.edu.ifpb.simpleevents.entity.Vaga;
-import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
-import br.edu.ifpb.simpleevents.facade.EspecialidadeController;
+import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.facade.EventoController;
 
 @Named(value="eventos")
 @SessionScoped
-public class EventoBean implements Serializable {
+public class EventoBean extends GenericBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private EspecialidadeController espcontrol;
+	private EventoController evtcontrol;
+	
+	
 	
 	private List<Especialidade> especialidades;
 	
 	
-	private String descricao;
-//	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-	private LocalDateTime data;
-	private StatusEvento status;
-	private String local;
-	private ParticipanteComposite dono;
-	private List<Vaga> vagas = new ArrayList<>();
-	private List<AvaliacaoEvento> avaliacaoEventos = new ArrayList<>();
+	private Evento evento;
+	private String dataevento;
+	
+	
+	@PostConstruct
+	private void init() {
+		Evento evento = (Evento) this.getFlash("evento");
+		if (evento != null) {
+			this.evento = evento;
+		} else {
+			this.evento  = new Evento();
+		}	
+	}
+	
+	
 	
     public String form () {
-        this.especialidades = espcontrol.getEspecialidades();
         return "/WEB-INF/facelets/evento/form.xhtml";
     }
+    
 
-//    @RequestMapping(method = RequestMethod.POST, value = "/save")
-//    public ModelAndView save(@Valid Evento evento,
-//                             Authentication auth,
-//                             BindingResult result,
-//                             @RequestParam(value = "especialidades", required = false) List<Long> especialidades,
-//                             @RequestParam(value = "quantidades", required = false) List<Integer> quantidades
-//    ) {
-//        if (result.hasErrors()) {
-//            return new ModelAndView("/form");
-//        }
+    public String salvar( ) {
+        System.out.println("entrei");
 //        if (especialidades != null) {
 //            eventoDAO.save(evento);
 //            Optional<Especialidade> esp;
@@ -66,13 +65,11 @@ public class EventoBean implements Serializable {
 //                i++;
 //            }
 //        }
-//        User currentUser = userDAO.findByEmail(auth.getName());
-//        evento.setDono(currentUser);
-//        evento.setStatus(StatusEvento.ABERTO);
-//        eventoDAO.save(evento);
-//        return new ModelAndView("redirect:/eventos/meuseventos");
-//    }
-//
+        evento.setData(converter(dataevento));
+        evtcontrol.save(evento);
+        return "/index.xhtml?faces-redirect=true";
+    }
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    public ModelAndView list(Authentication auth) {
 //        ModelAndView modelList = new ModelAndView("evento/list");
@@ -307,73 +304,47 @@ public class EventoBean implements Serializable {
 //    	}
 //        return vagasCandidatos;
 //    }
+    
+    private LocalDateTime converter (String data) {
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+		LocalDateTime dateTime = LocalDateTime.parse(data, formatter);
+		return dateTime;
+    	
+    }
 
 	
   //get and setters
     
-    public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public LocalDateTime getData() {
-		return data;
-	}
-
-	public void setData(LocalDateTime data) {
-		this.data = data;
-	}
-
-	public StatusEvento getStatus() {
-		return status;
-	}
-
-	public void setStatus(StatusEvento status) {
-		this.status = status;
-	}
-
-	public String getLocal() {
-		return local;
-	}
-
-	public void setLocal(String local) {
-		this.local = local;
-	}
-
-	public ParticipanteComposite getDono() {
-		return dono;
-	}
-
-	public void setDono(ParticipanteComposite dono) {
-		this.dono = dono;
-	}
-
-	public List<Vaga> getVagas() {
-		return vagas;
-	}
-
-	public void setVagas(List<Vaga> vagas) {
-		this.vagas = vagas;
-	}
-
-	public List<AvaliacaoEvento> getAvaliacaoEventos() {
-		return avaliacaoEventos;
-	}
-
-	public void setAvaliacaoEventos(List<AvaliacaoEvento> avaliacaoEventos) {
-		this.avaliacaoEventos = avaliacaoEventos;
-	}
-
+    
 	public List<Especialidade> getEspecialidades() {
 		return especialidades;
+	}
+
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
 	}
 
 	public void setEspecialidades(List<Especialidade> especialidades) {
 		this.especialidades = especialidades;
 	}
+
+
+
+	public String getDataevento() {
+		return dataevento;
+	}
+
+
+
+	public void setDataevento(String dataevento) {
+		this.dataevento = dataevento;
+	}
+	
+	
         
     
 }

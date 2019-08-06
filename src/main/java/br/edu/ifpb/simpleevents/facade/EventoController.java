@@ -1,70 +1,45 @@
-//package br.edu.ifpb.simpleevents.facade;
-//
-//import java.security.Principal;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//import java.util.List;
-//import java.util.Map;
-//import java.util.Optional;
-//
-//import javax.inject.Inject;
-//import javax.validation.Valid;
-//
-//import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-//import org.springframework.validation.BindingResult;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//import org.springframework.web.bind.annotation.RequestMethod;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.servlet.ModelAndView;
-//import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-//
-//import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
-//import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
-//import br.edu.ifpb.simpleevents.dao.EventoDAO;
-//import br.edu.ifpb.simpleevents.dao.UserDAO;
-//import br.edu.ifpb.simpleevents.dao.VagaDAO;
-//import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
-//import br.edu.ifpb.simpleevents.entity.Especialidade;
-//import br.edu.ifpb.simpleevents.entity.Evento;
-//import br.edu.ifpb.simpleevents.entity.Status;
-//import br.edu.ifpb.simpleevents.entity.StatusEvento;
-//import br.edu.ifpb.simpleevents.entity.User;
-//import br.edu.ifpb.simpleevents.entity.Vaga;
-//
-//public class EventoController {
-//
-//	@Inject
-//    private EventoDAO eventoDAO;
-//
-//    @Inject
-//    private UserDAO userDAO;
-//
-//    @Inject
-//    private EspecialidadeDAO especDAO;
-//
-//    @Inject
-//    private VagaDAO vagaDAO;
-//
-//    @Inject
-//    private CandidatoVagaDAO candidatoVagaDAO;
-//
-//
-////    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//
-//
-//    
-//    
-//
-//    @RequestMapping(method = RequestMethod.POST, value = "/save")
-//    public ModelAndView save(@Valid Evento evento,
-//                             Authentication auth,
-//                             BindingResult result,
-//                             @RequestParam(value = "especialidades", required = false) List<Long> especialidades,
-//                             @RequestParam(value = "quantidades", required = false) List<Integer> quantidades
-//    ) {
+package br.edu.ifpb.simpleevents.facade;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.faces.context.FacesContext;
+import javax.inject.Inject;
+
+import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
+import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
+import br.edu.ifpb.simpleevents.dao.EventoDAO;
+import br.edu.ifpb.simpleevents.dao.ParticipanteDAO;
+import br.edu.ifpb.simpleevents.dao.Transactional;
+import br.edu.ifpb.simpleevents.dao.VagaDAO;
+import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.StatusEvento;
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+
+public class EventoController implements Serializable {
+	private static final long serialVersionUID = 1L;
+	@Inject
+    private EventoDAO eventoDAO;
+
+    @Inject
+    private ParticipanteDAO participanteDAO;
+
+    @Inject
+    private EspecialidadeDAO especDAO;
+
+    @Inject
+    private VagaDAO vagaDAO;
+
+    @Inject
+    private CandidatoVagaDAO candidatoVagaDAO;
+
+
+//    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+    private String username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+    
+    @Transactional
+    public Evento save(Evento evento) {
 //        if (result.hasErrors()) {
 //            return new ModelAndView("/form");
 //        }
@@ -83,13 +58,17 @@
 //                i++;
 //            }
 //        }
-//        User currentUser = userDAO.findByEmail(auth.getName());
-//        evento.setDono(currentUser);
-//        evento.setStatus(StatusEvento.ABERTO);
-//        eventoDAO.save(evento);
-//        return new ModelAndView("redirect:/eventos/meuseventos");
-//    }
-//
+    	
+    	ParticipanteComposite currentUser = participanteDAO.findByEmail("admin@test");
+        evento.setDono(currentUser);
+        evento.setStatus(StatusEvento.ABERTO);
+        return eventoDAO.create(evento); 
+    }
+    
+    public List<Evento> findAll() {
+    	return eventoDAO.read();
+    }
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    public ModelAndView list(Authentication auth) {
 //        ModelAndView modelList = new ModelAndView("evento/list");
@@ -324,4 +303,4 @@
 //    	}
 //        return vagasCandidatos;
 //    }
-//}
+}

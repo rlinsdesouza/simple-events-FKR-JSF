@@ -11,7 +11,7 @@ public class ParticipanteDAO extends GenericDAO<ParticipanteComposite, Long> {
 
 	public ParticipanteComposite findByEmail (String email) {
 		try {
-			Query q = this.entityManager.createQuery("SELECT p FROM Participante p WHERE p.email = :email");
+			Query q = this.entityManager.createQuery("SELECT p FROM ParticipanteComposite p WHERE p.email = :email");
 			q.setParameter("email", email);
 			return (ParticipanteComposite) q.getSingleResult();
 		} catch (NoResultException e) {

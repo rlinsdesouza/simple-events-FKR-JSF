@@ -1,9 +1,17 @@
-<!-- th:attr="aria-labelledby='avaliarEvento'+${trabalho.id}" -->
+
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<div th:fragment="modalAvaliarDesempenho">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<body>
     <!-- Modal -->
-    <div class="modal fade" th:attr="id='avaliarDesempenho'+${evento.id}" tabindex="-1" role="dialog"
+    <div class="modal fade" pt:id="avaliarDesempenho+#{evento.id}" tabindex="-1" role="dialog"
          aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <form th:action="@{/candidaturas/{id}/avaliar(id=${evento.id})}" th:object="${Evento}" method="POST">
@@ -35,5 +43,5 @@
                 </div>
         </form>
     </div>
-</div>
+</body>
 </html>

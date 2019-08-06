@@ -20,11 +20,6 @@ public class EspecialidadeController implements Serializable {
 	}
 	
 	
-//	@RequestMapping("/form")
-//	public ModelAndView form(Especialidade especialidade) {
-//		return new ModelAndView("especialidade/form");
-//	}
-//	
 //	@RequestMapping(method=RequestMethod.POST, value="/save")
 //	public ModelAndView save(@Valid Especialidade especialidade, 
 //			BindingResult result){
