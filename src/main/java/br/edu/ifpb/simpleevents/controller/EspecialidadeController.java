@@ -31,11 +31,9 @@ public class EspecialidadeController implements Serializable {
 	}
 	
 	@Transactional
-	public boolean deletar(Especialidade especialidade) {
-		boolean deletou = false;
+	public void deletar(Especialidade especialidade) {
 		Especialidade espec = especialidadeDAO.read(especialidade.getId());
 		especialidadeDAO.delete(espec);
-		return deletou;
 	}
 	
 }
