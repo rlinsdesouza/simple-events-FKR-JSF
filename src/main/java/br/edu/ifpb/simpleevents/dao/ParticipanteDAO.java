@@ -18,5 +18,4 @@ public class ParticipanteDAO extends GenericDAO<ParticipanteComposite, Long> {
 			return null;
 		}
 	}
-	
 }

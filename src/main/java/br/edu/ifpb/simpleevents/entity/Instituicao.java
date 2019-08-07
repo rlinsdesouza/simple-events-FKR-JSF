@@ -24,6 +24,7 @@ public class Instituicao extends ParticipanteComposite {
 	
 	public Instituicao() {
 		super();
+		this.participantes = new ArrayList<>();
 	}
 
 	@Override
@@ -41,6 +42,13 @@ public class Instituicao extends ParticipanteComposite {
 	
 	public void remove (ParticipanteComposite p) {
 		this.participantes.remove(p);
-	}	
-	
+	}
+
+	public List<ParticipanteComposite> getParticipantes() {
+		return participantes;
+	}
+
+	public void setParticipantes(List<ParticipanteComposite> participantes) {
+		this.participantes = participantes;
+	}
 }
