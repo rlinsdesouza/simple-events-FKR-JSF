@@ -74,6 +74,11 @@ public class EventoBean extends GenericBean implements Serializable {
 		return "/eventos/listageral.xhtml?faces-redirect=true";
 	}
 
+	public String apresentarVagas (Evento evento) {
+		System.out.println(evento);
+		return "/eventos/candidatarEvento.xhtml?faces-redirect=true";
+	}
+
 //    @RequestMapping(method = RequestMethod.GET)
 //    public ModelAndView list(Authentication auth) {
 //        ModelAndView modelList = new ModelAndView("evento/list");

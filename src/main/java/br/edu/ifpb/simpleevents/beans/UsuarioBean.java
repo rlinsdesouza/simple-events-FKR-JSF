@@ -37,7 +37,7 @@ public class UsuarioBean extends GenericBean implements Serializable {
 
     public String save () {
         this.participanteController.save(this.usuario);
-        return "index.xhtml?faces-redirect=true";
+        return "/index.xhtml?faces-redirect=true";
     }
 }
 
