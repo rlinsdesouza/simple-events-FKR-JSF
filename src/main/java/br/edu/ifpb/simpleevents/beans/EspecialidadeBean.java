@@ -48,11 +48,18 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 		return view;
 	}
 	
-	public String editar() {
+	public String editar(Especialidade espec) {
+		this.setEspecialidade(espec);
 		this.setFlash("especialidade", especialidade);
 		return "/especialidade/form?faces-redirect=true";
 	}
-	
+
+	public String excluir(Especialidade especialidade){
+		this.controller.deletar(especialidade);
+		this.especialidades = this.controller.consultar();
+		return "list.xhtml?faces-redirect=true";
+	}
+
 	public List<Especialidade> getEspecialidades(){
 		return this.especialidades;
 	}
