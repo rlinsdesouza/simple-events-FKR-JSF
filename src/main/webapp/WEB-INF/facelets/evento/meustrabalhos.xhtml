@@ -1,19 +1,20 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/head.html :: head">
-</head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
 <body>
-
-<!-- Navbar -->
-    <div th:replace="fragments/navbar"></div>
-
-	<div th:replace="fragments/mensagens"></div>
     
 	<div class="container">
-		<div th:if="${deletado}" >
+<!-- 		<div th:if="${deletado}" >
 			<div th:replace="fragments/mensagens"></div>
-		</div>
-		<br>
+		</div> -->
+		<br/>
 		<h2>Meus trabalhos</h2>
 		<div style="height: 20px"></div>
 		<table class="table table-stripped">
@@ -25,7 +26,8 @@
 				<th>Status</th>
 				<th>Action<th>
 			</tr>
-			<tr th:each="trabalho: ${trabalhos}">
+			<c:forEach var="trabalho" items="#{trabalhos.trabalhos}">
+			<tr>
 				<td th:text="${trabalho.vaga.evento.descricao}"></td>
 				<td th:text="${trabalho.vaga.evento.local}"></td>
 				<td th:text="${trabalho.vaga.evento.data}"></td>
@@ -51,6 +53,7 @@
 					</div>
 				</td>
 			</tr>
+			</c:forEach>
 		</table>
 	</div>
 
