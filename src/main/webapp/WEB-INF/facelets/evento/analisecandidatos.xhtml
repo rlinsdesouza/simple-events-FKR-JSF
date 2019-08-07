@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+	
+<body>    
+	<div class="container">
+<!-- 		<h2 th:text="${evento.descricao}"></h2> -->
+		<br/>
+		<h4>Candidatos cadastrados</h4>
+		<div style="height: 20px"></div>
+		<h:form>
+		<table class="table table-stripped">
+			<tr>
+				<th>Nome</th>
+				<th>Telefone</th>
+				<th>Vaga</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+				<c:forEach var="candidatura" items="#{analiseCandidatos.candidaturas}">
+			<tr>
+				<td>#{candidatura.candidato.nome}</td>
+				<td>#{candidatura.candidato.telefone}</td>
+				<td>#{candidatura.vaga.especialidade.nome}</td>
+				<td>#{candidatura.status}</td>
+				<td>
+					<c:if test="#{candidatura.status.name() == 'AGUARDANDO_APROVACAO'}">
+					<div class="btn-group pull-right">
+						<h:commandButton class="delete btn btn-sm btn-success" action="#{analiseCandidatos.aprovar(candidatura.id)}" value="Aprovar"/>
+						<h:commandButton class="delete btn btn-sm btn-danger" action="#{analiseCandidatos.reprovar(candidatura.id)}" value="Recusar"/>
+					</div>
+					</c:if>
+				</td>
+			</tr>
+				</c:forEach>
+		</table>
+		</h:form>
+	</div>
+</body>
+</html>
