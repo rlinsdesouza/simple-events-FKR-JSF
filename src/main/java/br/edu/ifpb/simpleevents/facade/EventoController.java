@@ -14,6 +14,7 @@ import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.dao.VagaDAO;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.StatusEvento;
+import br.edu.ifpb.simpleevents.entity.Vaga;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 
 public class EventoController implements Serializable {
@@ -67,6 +68,11 @@ public class EventoController implements Serializable {
     
     public List<Evento> findAll() {
     	return eventoDAO.read();
+    }
+    
+    @Transactional
+    public Vaga criarVaga (Vaga vaga) {
+    	return vagaDAO.create(vaga);
     }
 
 //    @RequestMapping(method = RequestMethod.GET)

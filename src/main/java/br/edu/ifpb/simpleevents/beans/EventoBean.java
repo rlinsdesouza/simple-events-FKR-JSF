@@ -3,72 +3,76 @@ package br.edu.ifpb.simpleevents.beans;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.ifpb.simpleevents.entity.Especialidade;
 import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.facade.EspecialidadeController;
 import br.edu.ifpb.simpleevents.facade.EventoController;
 
-@Named(value="eventos")
-@SessionScoped
+@Named(value = "eventos")
+@ViewScoped
 public class EventoBean extends GenericBean implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	@Inject
 	private EventoController evtcontrol;
-	
-	
-	
+
+	@Inject
+	private EspecialidadeController espccontrol;
+
 	private List<Especialidade> especialidades;
-	
-	
+	private List<EscolhaVagasEvento> escolhaVagas;
+
 	private Evento evento;
 	private String dataevento;
-	
-	
+
 	@PostConstruct
 	private void init() {
 		Evento evento = (Evento) this.getFlash("evento");
 		if (evento != null) {
 			this.evento = evento;
+			this.especialidades = this.espccontrol.getEspecialidades();
+			this.escolhaVagas = new ArrayList<EventoBean.EscolhaVagasEvento>();
+			for (Especialidade especialidade : this.especialidades) {
+				this.escolhaVagas.add(new EscolhaVagasEvento(especialidade, false, 0));
+			}
 		} else {
-			this.evento  = new Evento();
-		}	
+			this.evento = new Evento();
+		}
 	}
-	
-	
-	
-    public String form () {
-        return "/WEB-INF/facelets/evento/form.xhtml";
-    }
-    
 
-    public String salvar( ) {
-        System.out.println("entrei");
-//        if (especialidades != null) {
-//            eventoDAO.save(evento);
-//            Optional<Especialidade> esp;
-//            int i = 0;
-//            for (Long id : especialidades) {
-//                esp = especDAO.findById(id);
-//                Vaga vaga = new Vaga();
-//                vaga.setEspecialidade(esp.get());
-//                vaga.setQtdVagas(quantidades.get(i));
-//                vaga.setEvento(evento);
-//                vagaDAO.save(vaga);
-//                evento.add(vaga);
-//                i++;
-//            }
-//        }
-        evento.setData(converter(dataevento));
-        evtcontrol.save(evento);
-        return "/index.xhtml?faces-redirect=true";
-    }
+	public String form() {
+
+		return "/WEB-INF/facelets/evento/form.xhtml";
+	}
+
+	public String salvar() {
+		evento.setData(converter(dataevento));
+		this.evento = evtcontrol.save(evento);
+		this.setFlash("evento", evento);
+		return "/eventos/addvagas.xhtml";
+	}
+
+	public String salvarVagas() {
+		for (EscolhaVagasEvento escolhaVagasEvento : escolhaVagas) {
+			if (escolhaVagasEvento.temVaga) {
+				evtcontrol.criarVaga(new Vaga(escolhaVagasEvento.especialidade, escolhaVagasEvento.quantidade, evento));
+			}
+		}
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Evento e vagas adicionados com sucesso!"));
+		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		return "/eventos/listageral.xhtml?faces-redirect=true";
+	}
 
 //    @RequestMapping(method = RequestMethod.GET)
 //    public ModelAndView list(Authentication auth) {
@@ -304,20 +308,26 @@ public class EventoBean extends GenericBean implements Serializable {
 //    	}
 //        return vagasCandidatos;
 //    }
-    
-    private LocalDateTime converter (String data) {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+
+	private LocalDateTime converter(String data) {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 		LocalDateTime dateTime = LocalDateTime.parse(data, formatter);
 		return dateTime;
-    	
-    }
 
-	
-  //get and setters
-    
-    
+	}
+
+	// get and setters
+
 	public List<Especialidade> getEspecialidades() {
 		return especialidades;
+	}
+
+	public List<EscolhaVagasEvento> getEscolhaVagas() {
+		return escolhaVagas;
+	}
+
+	public void setEscolhaVagas(List<EscolhaVagasEvento> escolhaVagas) {
+		this.escolhaVagas = escolhaVagas;
 	}
 
 	public Evento getEvento() {
@@ -332,19 +342,52 @@ public class EventoBean extends GenericBean implements Serializable {
 		this.especialidades = especialidades;
 	}
 
-
-
 	public String getDataevento() {
 		return dataevento;
 	}
 
-
-
 	public void setDataevento(String dataevento) {
 		this.dataevento = dataevento;
 	}
-	
-	
-        
-    
+
+//	inner class para escolha de quantidade de vagas por especialidade no switch
+
+	public class EscolhaVagasEvento {
+		private Especialidade especialidade;
+		private boolean temVaga;
+		private int quantidade;
+
+		public EscolhaVagasEvento(Especialidade especialidade, boolean temVaga, int quantidade) {
+			super();
+			this.especialidade = especialidade;
+			this.temVaga = temVaga;
+			this.quantidade = quantidade;
+		}
+
+		public Especialidade getEspecialidade() {
+			return especialidade;
+		}
+
+		public void setEspecialidade(Especialidade especialidade) {
+			this.especialidade = especialidade;
+		}
+
+		public boolean isTemVaga() {
+			return temVaga;
+		}
+
+		public void setTemVaga(boolean temVaga) {
+			this.temVaga = temVaga;
+		}
+
+		public int getQuantidade() {
+			return quantidade;
+		}
+
+		public void setQuantidade(int quantidade) {
+			this.quantidade = quantidade;
+		}
+
+	}
+
 }

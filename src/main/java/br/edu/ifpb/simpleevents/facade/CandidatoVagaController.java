@@ -1,4 +1,4 @@
-//package br.edu.ifpb.simpleevents.beans;
+package br.edu.ifpb.simpleevents.facade;
 //
 //import java.security.Principal;
 //import java.util.HashMap;

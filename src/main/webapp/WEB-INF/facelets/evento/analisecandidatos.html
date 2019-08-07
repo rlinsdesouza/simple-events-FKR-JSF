@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org"
-  xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<head th:insert="fragments/head.html :: head">
-</head>
-<body>
-
-<!-- Navbar -->
-    <div th:replace="fragments/navbar"></div>
-    
-    <div th:replace="fragments/mensagens"></div>
-    
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:p="http://primefaces.org/ui">
+	
+<body>    
 	<div class="container">
 		<h2 th:text="${evento.descricao}"></h2>
 		<br>
@@ -36,10 +35,7 @@
 					</div>
 				</td>
 			</tr>
-			
 		</table>
 	</div>
-
-<footer th:insert="fragments/footer :: footer"></footer>
 </body>
 </html>
