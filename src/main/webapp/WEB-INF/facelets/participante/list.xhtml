@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<body>
+<h:outputStylesheet>
+    .form-area {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</h:outputStylesheet>
+
+
+<div class="form-area text-center">
+    <h4>Identificação dos Participantes</h4>
+
+    <h:form id="teste">
+        <table class="table table-striped col-sm-6 m-auto">
+            <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Editar</th>
+                <th scope="col">Deletar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <c:forEach var="participante" items="#{participanteBean.participantes}">
+                <tr>
+                    <th scope="row">#{participante.id}</th>
+                    <td>#{participante.email}</td>
+                    <td>
+                        <h:commandLink action="#{participanteBean.editar(participante)}">Editar</h:commandLink>
+                    </td>
+                    <td>
+                        <h:commandLink action="#{usuarioBean.save}">Deletar</h:commandLink>
+                    </td>
+                </tr>
+            </c:forEach>
+
+            </tbody>
+        </table>
+
+    </h:form>
+</div>
+
+</body>
+
+</html>
+
+        <!--<h:form id="form">-->
+        <!--    <h:dataTable id="especialidades" value="#{participanteBean.participantes}" var="participante">-->
+
+        <!--        <h:column>-->
+        <!--            <f:facet name="header">ID</f:facet>-->
+        <!--            <h:outputLabel value="#{participante.id}"/>-->
+        <!--        </h:column>-->
+        <!--        <h:column>-->
+        <!--            <f:facet name="header">E-mail</f:facet>-->
+        <!--            <h:outputLabel value="#{participante.email}"/>-->
+        <!--        </h:column>-->
+        <!--        <h:column>-->
+        <!--            &lt;!&ndash;            <f:facet name="header">Ações</f:facet>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            <h:link value="Deletar" outcome="especialidadeDetails">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <f:param name="id" value="#{especialidade.id}"/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </h:link>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            <h:link value="Editar" outcome="especialidadeDetails">&ndash;&gt;-->
+        <!--            &lt;!&ndash;                <f:param name="id" value="#{especialidade.id}"/>&ndash;&gt;-->
+        <!--            &lt;!&ndash;            </h:link>&ndash;&gt;-->
+
+
+        <!--            <p:commandButton-->
+        <!--                    styleClass="btn btn-primary"-->
+        <!--                    id="bt_deleta_editar"-->
+        <!--                    value="Editar"-->
+        <!--                    action="#{participanteBean.editar}">-->
+        <!--                <f:param name="id" value="#{participante.id}"/>-->
+        <!--            </p:commandButton>-->
+        <!--        </h:column>-->
+
+        <!--    </h:dataTable>-->
+        <!--</h:form>-->
