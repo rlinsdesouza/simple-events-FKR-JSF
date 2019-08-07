@@ -47,7 +47,7 @@
 <!-- 						<a class="delete btn btn-sm btn-warning" th:href="@{/eventos/edit/{id}(id=${evento.id})}">Editar</a> -->
 <!-- 					</div> -->
 <!-- 					<div class="btn-group pull-right" th:if="${evento.status.name() == 'ABERTO' && evento.dono.email.equals(userLog.email)}"> -->
-						<p:link outcome="/index.xhtml" value="Analisar Candidatos"
+						<p:link outcome="/eventos/escolhecandidatos.xhtml" value="Analisar Candidatos"
 								class="delete btn btn-sm btn-light">
 								<f:param name="id" value="#{evento.id}" />
 						</p:link>

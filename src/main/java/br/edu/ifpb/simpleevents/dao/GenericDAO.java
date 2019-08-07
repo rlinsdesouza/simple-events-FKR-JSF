@@ -36,7 +36,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	}
 
 	@Override
-	public T read(PK id) {
+	public T read(Long id) {
 		return this.entityManager.find(entityClass, id);
 	}
 
