@@ -10,6 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.edu.ifpb.simpleevents.entity.Especialidade;
+import br.edu.ifpb.simpleevents.entity.pattern.singleton.LogSingleton;
 
 public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>, Serializable{
 	
@@ -25,6 +26,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	@Override
 	public T create(T object) {
 		this.entityManager.persist(object);
+		LogSingleton.getInstance().escrever("Create - " + entityClass.getSimpleName());
 		return object;
 	}	
 
@@ -42,12 +44,14 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 
 	@Override
 	public T update(T object) {
+		LogSingleton.getInstance().escrever("Update - " + entityClass.getSimpleName());
 		return this.entityManager.merge(object);
 	}
 
 	@Override
 	public void delete(T object) {
 		object = this.entityManager.merge(object);
+		LogSingleton.getInstance().escrever("Delete - " + entityClass.getSimpleName());
 		this.entityManager.remove(object);
 	}
 	

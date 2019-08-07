@@ -21,8 +21,4 @@ public class LogSingleton {
         String data = dateFormat.format(date);
         System.out.println(data + " log: "+ texto);
     }
-
-    public void ler(){
-
-    }
 }
