@@ -1,52 +1,47 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://bootsfaces.net/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://bootsfaces.net/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>Insert title here</title>
 </head>
 <h:body>
     <div class="container">
-        <h2>Especialidades cadastradas</h2>
-        <h:link value="Adicionar" outcome="especialidade/form"/>
+        <div class="form-area text-center">
+            <h4>Especialidades cadastradas</h4>
+            <h:form id="form_espec" >
+                <table class="table table-striped col-sm-6 m-auto">
+                    <thead>
+                    <tr>
+                        <th scope="col">Especialidade</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Editar</th>
+                        <th scope="col">Deletar</th>
+                    </tr>
+                    </thead>
 
-        <h:form id="form">
-        <h:dataTable id="especialidades" value="#{especialidadeBean.especialidades}" var="especialidade">
-            <h:column>
-                <f:facet name="header">Especialidade</f:facet>
-                <h:outputLabel value="#{especialidade.nome}" />
-            </h:column>
-			<h:column>
-                <f:facet name="header">Descrição</f:facet>
-                <h:outputLabel value="#{especialidade.descricao}"/>
-            </h:column>
-            <h:column>
-                <f:facet name="header">Ações</f:facet>
-                 <h:link value="Deletar" outcome="especialidadeDetails">
-                    <f:param name="id" value="#{especialidade.id}"/>
-                </h:link>
-                 <h:link value="Editar" outcome="especialidadeDetails">
-                    <f:param name="id" value="#{especialidade.id}"/>
-                </h:link>
-                
-                
-                <p:commandButton 
-				styleClass="btn btn-primary" 
-				id="bt_deleta_editar" 
-				value="Editar" 
-				action="#{especialidade.editar}" >
-					<f:param name="id" value="#{especialidade.id}"/>
-				</p:commandButton>
-            </h:column>
-            
-        </h:dataTable>
-    </h:form>
+                    <tbody>
+                    <c:forEach var="especialidade" items="#{especialidadeBean.especialidades}">
+                        <tr>
+                            <th scope="row">#{especialidade.id}</th>
+                            <td>#{especialidade.descricao}</td>
+                            <td>
+                                <h:commandLink action="#{especialidadeBean.editar(especialidade)}">Editar</h:commandLink>
+                            </td>
+                            <td>
+                                <h:commandLink action="#{especialidadeBean.excluir(especialidade)}">Deletar</h:commandLink>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </h:form>
+        </div>
     </div>
-
 </h:body>
 
 </html>
