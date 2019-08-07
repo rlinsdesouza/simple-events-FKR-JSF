@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<body>
+    
+	<div class="container">
+		<br/>
+		<h2>Eventos cadastrados</h2>
+<!-- 		<a sec:authorize="isAuthenticated()" -->
+<!--            th:href="@{/eventos/form}" class="btn btn-primary">Novo</a> -->
+		<div style="height: 20px"></div>
+		<table class="table table-stripped">
+			<tr>
+				<th>Descrição</th>
+				<th>Local</th>
+				<th>Data</th>
+				<th>Vagas</th>
+				<th>Organizador</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+			<c:forEach var="evento" items="#{eventosList.eventos}">
+			<tr>
+				<td>#{evento.descricao}</td>
+				<td>#{evento.local}</td>
+				<td>#{evento.data}</td>
+				<td>#{evento.vagas}</td>
+				<td>#{evento.dono.nome}</td>
+				<td>#{evento.status}</td>
+				<td>
+					<p:link outcome="/index.xhtml" value="Detalhes"
+										class="delete btn btn-sm btn-info">
+										<f:param name="id" value="#{evento.id}" />
+					</p:link>
+<!-- 					<div class="btn-group pull-right" th:if="${evento.dono.id == userLog.id}"> -->
+						<p:link outcome="/index.xhtml" value="Editar"
+										class="delete btn btn-sm btn-warning">
+										<f:param name="id" value="#{evento.id}" />
+						</p:link>
+<!-- 						<a class="delete btn btn-sm btn-warning" th:href="@{/eventos/edit/{id}(id=${evento.id})}">Editar</a> -->
+<!-- 					</div> -->
+<!-- 					<div class="btn-group pull-right" th:if="${evento.status.name() == 'ABERTO' && evento.dono.email.equals(userLog.email)}"> -->
+						<p:link outcome="/index.xhtml" value="Analisar Candidatos"
+								class="delete btn btn-sm btn-light">
+								<f:param name="id" value="#{evento.id}" />
+						</p:link>
+<!-- 						<a class="delete btn btn-sm btn-light" th:href="@{/eventos/{id}/candidatos(id=${evento.id})}">Analisar Candidatos</a> -->
+<!-- 					</div> -->
+					<button
+							type="button" class="btn btn-sm btn-primary" data-toggle="modal"
+							pt:data-target="'#avaliarDesempenho'+#{evento.id}">
+<!-- 							th:if="${evento.status.name() == 'EXECUTADO' && evento.dono.email.equals(userLog.email)}" -->
+					
+						Avaliar
+					</button>
+					<ui:include src="/WEB-INF/facelets/fragments/avaliarDesempenho.xhtml"></ui:include>
+<!-- 					<div th:replace="fragments/avaliarDesempenho"></div> -->
+				</td>
+			</tr>
+			</c:forEach>
+		</table>
+	</div>
+</body>
+</html>
