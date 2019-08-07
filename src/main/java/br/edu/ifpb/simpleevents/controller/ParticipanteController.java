@@ -3,6 +3,7 @@ package br.edu.ifpb.simpleevents.controller;
 import br.edu.ifpb.simpleevents.dao.ParticipanteDAO;
 import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.entity.pattern.singleton.LogSingleton;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -20,11 +21,13 @@ public class ParticipanteController implements Serializable {
 
     @Transactional
     public ParticipanteComposite save (ParticipanteComposite p) {
-        if (p.getId() == null)
+        if (p.getId() == null) {
             this.participanteDAO.create(p);
-        else
+            LogSingleton.getInstance().escrever("Create - participante " + p.getId() + " com email: " + p.getEmail());
+        }else {
             this.participanteDAO.update(p);
-        return p;
+            LogSingleton.getInstance().escrever("Update - participante " + p.getId() + " com email: " + p.getEmail());
+        }return p;
     }
 
     public ParticipanteComposite findByEmail (String email) {
@@ -39,5 +42,6 @@ public class ParticipanteController implements Serializable {
     public void delete(ParticipanteComposite p){
         ParticipanteComposite participante = this.findByEmail(p.getEmail());
         this.participanteDAO.delete(participante);
+        LogSingleton.getInstance().escrever("Delete - participante " + p.getId() + " com email: " + p.getEmail());
     }
 }
