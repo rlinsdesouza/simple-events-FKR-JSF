@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:outputStylesheet name="webjars/font-awesome/5.9.0/css/font-awesome.css"/>
+
+<p:tabMenu activeIndex="#{param.i}">
+    <p:menuitem value="Overview" outcome="index" icon="pi pi-star">
+        <f:param name="i" value="0" />
+    </p:menuitem>
+    <p:menuitem value="Demos" outcome="index" icon="pi pi-search">
+        <f:param name="i" value="1" />
+    </p:menuitem>
+    <p:menuitem value="Documentation" outcome="index" icon="fa fa-apple">
+        <f:param name="i" value="2" />
+    </p:menuitem>
+    <p:menuitem value="Support" outcome="index" icon="fa fa-bed">
+    </p:menuitem>
+    <p:menuitem value="Login" outcome="#{navigation.login()}" icon="fa fa-user"/>
+</p:tabMenu>
+
+</html>

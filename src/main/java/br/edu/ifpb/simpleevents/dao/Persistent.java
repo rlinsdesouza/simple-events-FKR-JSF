@@ -7,7 +7,7 @@ import java.util.List;
 public interface Persistent<T, PK extends Serializable> {
 	public T create(T object);
 	public List<T> read();
-	public T read(PK id);
+	public T read(Long id);
 	public T update(T object);
 	public void delete(T object);
 	public void begin();

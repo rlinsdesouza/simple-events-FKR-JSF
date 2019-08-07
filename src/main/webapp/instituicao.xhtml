@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+<ui:composition template="WEB-INF/facelets/components/dashboard.xhtml">
+
+    <ui:define name="css">
+<!--        <link rel="stylesheet" href="resources/css/instituicao.css"/>-->
+    </ui:define>
+
+    <ui:define name="main">
+
+        <h:outputStylesheet>
+            .form-user {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            h3 {
+                text-align: center;
+            }
+        </h:outputStylesheet>
+
+
+        <div class="area">
+            <h3>Formulário de Cadastro</h3>
+            <h:form styleClass="form form-user">
+                <div class="form-group col-md-3">
+                    <p:outputLabel for="email">E-mail: </p:outputLabel>
+                    <p:inputText id="email" styleClass="form-control" value="#{instituicaoBean.instituicao.email}"
+                                 placeholder="Digite o seu e-mail"/>
+                </div>
+                <div class="form-group col-md-3">
+                    <p:outputLabel for="password">Senha: </p:outputLabel>
+                    <p:password id="password" styleClass="form-control" value="#{instituicaoBean.instituicao.senha}"/>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <p:outputLabel for="vinculados">Participantes vinculados: Digite apenas os e-mails com - no meio</p:outputLabel>
+                    <p:inputTextarea id="vinculados" value="#{instituicaoBean.vinculados}" rows="6" cols="24" />
+                </div>
+
+
+
+                <p:commandButton
+                        styleClass="col-md-2 col-lg-1"
+                        id="bt_save_instituicao"
+                        value="Salvar"
+                        action="#{instituicaoBean.save()}" />
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>
+
+</html>
