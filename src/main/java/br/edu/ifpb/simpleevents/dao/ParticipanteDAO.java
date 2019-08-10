@@ -5,6 +5,8 @@ import javax.persistence.Query;
 
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 
+import java.util.List;
+
 public class ParticipanteDAO extends GenericDAO<ParticipanteComposite, Long> {
 
 	private static final long serialVersionUID = 1L;
@@ -18,4 +20,12 @@ public class ParticipanteDAO extends GenericDAO<ParticipanteComposite, Long> {
 			return null;
 		}
 	}
+
+
+	public List<ParticipanteComposite> getParticipantes() {
+		Query q = this.entityManager.createQuery("select x from Participante x");
+		return q.getResultList();
+	}
+
+
 }
