@@ -10,30 +10,21 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import br.edu.ifpb.simpleevents.entity.Especialidade;
-import br.edu.ifpb.simpleevents.entity.pattern.singleton.LogSingleton;
 
 public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>, Serializable{
 	
 	private static final long serialVersionUID = 1L;
 
-	protected Class<T> entityClass;
-
-
-	@SuppressWarnings("unchecked")
-	public GenericDAO() {
-		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
-		this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];
-	}
+	protected Class<T> entityClass = (Class<T>) ((ParameterizedType) this.getClass()
+			.getGenericSuperclass()).getActualTypeArguments()[0];
 
 	@Inject
 	protected EntityManager entityManager;
 
 
 	@Override
-	@Transactional
 	public T create(T object) {
 		this.entityManager.persist(object);
-		LogSingleton.getInstance().escrever("Create - " + entityClass.getSimpleName());
 		return object;
 	}	
 
@@ -41,7 +32,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	public List<T> read() {
 		// TODO Auto-generated method stub
 		Query query = entityManager.createQuery("select e from " + entityClass.getSimpleName() +" e");
-		return (List<T>) query.getResultList();
+		return query.getResultList();
 	}
 
 	@Override
@@ -50,17 +41,13 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	}
 
 	@Override
-	@Transactional
 	public T update(T object) {
-		LogSingleton.getInstance().escrever("Update - " + entityClass.getSimpleName());
 		return this.entityManager.merge(object);
 	}
 
 	@Override
-	@Transactional
 	public void delete(T object) {
 		object = this.entityManager.merge(object);
-		LogSingleton.getInstance().escrever("Delete - " + entityClass.getSimpleName());
 		this.entityManager.remove(object);
 	}
 	
