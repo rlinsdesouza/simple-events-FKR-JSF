@@ -55,7 +55,6 @@ public class AnaliseCandidatosBean extends GenericBean implements Serializable {
 		Long i = Long.parseUnsignedLong(id);
 		try {
 			CandidatoVaga candidatura = evtcontrol.aprovarCandidato(i);
-			System.out.println(candidatura);
 			if (candidatura != null) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Aprovado com sucesso!"));
 				return "/eventos/escolhecandidatos.xhtml?faces-redirect=true&id=" +candidatura.getVaga().getEvento().getId();
@@ -71,18 +70,22 @@ public class AnaliseCandidatosBean extends GenericBean implements Serializable {
 		}
 	}
 	
-	public String reprovar(Long id) {
+	public String reprovar(String id) {
+		Long i = Long.parseUnsignedLong(id);
 		try {
-			if (evtcontrol.aprovarCandidato(id) != null) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Reprovado com sucesso!"));	
+			CandidatoVaga candidatura = evtcontrol.reprovarCandidato(i);
+			if (candidatura != null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Reprovado com sucesso!"));
+				return "/eventos/escolhecandidatos.xhtml?faces-redirect=true&id=" +candidatura.getVaga().getEvento().getId();
 			}else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"ops!","nao era pra exibir"));
-			};
+				return "/eventos/escolhecandidatos.xhtml?faces-redirect=true&id=" +candidatura.getVaga().getEvento().getId();
+			}
 			
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.getMessage()));
+			return "/index.xhtml?faces-redirect=true";
 		}
-		return null;
 	}
 
 	// get and setters
