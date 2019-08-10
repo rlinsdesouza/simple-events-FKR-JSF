@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:c="http://java.sun.com/jstl/core"
+	  xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+
+<ui:composition template="/WEB-INF/facelets/components/dashboard.xhtml">
+
+
+	<ui:define name="titulo">
+		Simple Events JSF
+	</ui:define>
+
+	<ui:define name="messages">
+		<ui:include src="/WEB-INF/facelets/gabaritos/messages.xhtml"></ui:include>
+	</ui:define>
+
+	<ui:define name="main">
+		<div class="container">
+			<h2>Se candidatar a evento</h2>
+			<div class="container">
+				<h3>Dados do evento:</h3>
+				<h5>#{evento.descricao}</h5>
+				<p>#{evento.local}</p>
+<!--				<input type="datetime-local" class="form-control col-lg-3 col-md-4 col-sm-6" jsf:value="#{evento.data}" disabled />-->
+			</div>
+
+<!--			th:action="@{/eventos/candidatar/{id}(id=${evento.id})}" th:object="${evento}"-->
+			<h:form>
+				<div class="form-group row">
+					<div class="col-sm-2">Vagas disponíveis</div>
+					<div class="col-sm-10">
+<!--						<p:selectManyCheckbox id="grid" value="#{checkboxView.selectedCities}" layout="grid" columns="3">-->
+<!--							<f:selectItems value="#{checkboxView.cities}" var="city" itemLabel="#{city}" itemValue="#{city}" />-->
+<!--						</p:selectManyCheckbox>-->
+<!--						<div th:each="especialidade : ${especialidades}" class="form-check">-->
+<!--							<input class="form-check-input" name="especialidades" type="checkbox" th:value="${especialidade.id}">-->
+<!--							<label class="form-check-label" for="${especialidade.id}" th:text="${especialidade.nome}">-->
+
+<!--							</label>-->
+<!--						</div>-->
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Se candidatar</button>
+					</div>
+				</div>
+				<h:commandButton action=""/>
+			</h:form>
+		</div>
+	</ui:define>
+
+</ui:composition>
+
+</html>

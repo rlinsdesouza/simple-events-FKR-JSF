@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:c="http://java.sun.com/jstl/core" 
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jstl/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:H="http://java.sun.com/jsf/html">
 
 <body>
 
 
-	<div class="album py-5">
-		<div class="container">
-			<div class="row">
-						
-				<c:forEach var="evento" items="#{index.eventos}">
+<div class="album py-5">
+    <div class="container">
+        <div class="row">
+
+			<h:form id="form-candidatar">
+				<c:forEach var="evento" items="#{index.eventos}"
+						   class="col-md-4 col-sm-6">
 					<div class="card mb-4 shadow-sm">
-						<h:outputText value="#{evento.descricao}" />
+						<h:outputText value="#{evento.descricao}"/>
 						<div>
-							<small><h:outputText value="#{evento.local}" /></small>
+							<small><h:outputText value="#{evento.local}"/></small>
 						</div>
 						<div class="card-body">
 							<h:outputText value="#{evento.dono.nome}"
-								class="card-text" />
+										  class="card-text"/>
 							<h:outputText value="#{evento.status}"
-								class="card-text" />
-							<h:outputText value="#{evento.vagas}" class="card-text" />
+										  class="card-text"/>
+							<h:outputText value="#{evento.vagas}" class="card-text"/>
 
 							<div class="d-flex justify-content-between align-items-center">
 								<div class="btn-group">
-									<p:link outcome="/eventos/details.xhtml" value="+detalhes"
-										class="btn btn-sm btn-outline-secondary">
-										<f:param name="id" value="#{evento.id}" />
+									<p:link outcome="/index.xhtml" value="+detalhes"
+											class="btn btn-sm btn-outline-secondary">
+										<f:param name="id" value="#{evento.id}"/>
 									</p:link>
+									<p:link outcome="/index.xhtml" value="Candidatar"
+											class="btn btn-sm btn-outline-secondary">
+										<f:param name="id" value="#{evento.id}"/>
+									</p:link>
+									<h:commandLink action="#{eventos.apresentarVagas(evento)}">Candidatar</h:commandLink>
 
-									<!-- <p:link outcome="/eventos/details.xhtml" value="Candidatar"
-										class="btn btn-sm btn-outline-secondary">
-										<f:param name="id" value="#{evento.id}" />
-									</p:link>-->
 								</div>
-								<small class="text-muted"><h:outputText value="#{evento.data}" /></small>
+								<small class="text-muted"><h:outputText value="#{evento.data}"/></small>
 							</div>
 						</div>
 					</div>
 				</c:forEach>
-			</div>
-		</div>
-	</div>
+			</h:form>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

@@ -47,17 +47,17 @@ public class ParticipanteBean extends GenericBean implements Serializable {
     public String editar(ParticipanteComposite participante) {
         if(participante instanceof User) {
             this.setFlash("usuario", (User) participante);
-            return "user.xhtml?faces-redirect=true";
+            return "/participante/user.xhtml?faces-redirect=true";
         } else {
             this.setFlash("instituicao", (Instituicao) participante);
-            return "instituicao.xhtml?faces-redirect=true";
+            return "/participante/instituicao.xhtml?faces-redirect=true";
         }
     }
 
     public String deletar(ParticipanteComposite participante) {
         this.participanteController.delete(participante);
         this.participantes = this.participanteController.findAll();
-        return "list-participante.xhtml?faces-redirect=true";
+        return "/participante/list.xhtml?faces-redirect=true";
     }
 
 	@PostConstruct

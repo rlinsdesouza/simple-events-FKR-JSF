@@ -77,6 +77,6 @@ public class InstituicaoBean extends GenericBean implements Serializable {
 		System.out.println(this.instituicao);
 		System.out.println(this.participanteController);
 		this.participanteController.save(this.instituicao);
-		return "index.xhtml?faces-redirect=true";
+		return "/index.xhtml?faces-redirect=true";
 	}
 }
