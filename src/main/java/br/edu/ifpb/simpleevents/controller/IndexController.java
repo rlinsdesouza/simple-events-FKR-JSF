@@ -1,4 +1,4 @@
-package br.edu.ifpb.simpleevents.facade;
+package br.edu.ifpb.simpleevents.controller;
 
 import java.io.Serializable;
 import java.util.List;

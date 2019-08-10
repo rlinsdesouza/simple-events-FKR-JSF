@@ -19,6 +19,7 @@ public class GenericDAO<T, PK extends Serializable> implements Persistent<T, PK>
 	protected Class<T> entityClass;
 
 
+	@SuppressWarnings("unchecked")
 	public GenericDAO() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.entityClass = (Class<T>) genericSuperclass.getActualTypeArguments()[0];

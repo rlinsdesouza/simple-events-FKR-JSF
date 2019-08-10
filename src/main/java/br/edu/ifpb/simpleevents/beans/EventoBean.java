@@ -13,11 +13,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.controller.EspecialidadeController;
+import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.Vaga;
-import br.edu.ifpb.simpleevents.facade.EspecialidadeController;
-import br.edu.ifpb.simpleevents.facade.EventoController;
 
 @Named(value = "eventos")
 @ViewScoped
@@ -43,7 +43,7 @@ public class EventoBean extends GenericBean implements Serializable {
 		Evento evento = (Evento) this.getFlash("evento");
 		if (evento != null) {
 			this.evento = evento;
-			this.especialidades = this.espccontrol.getEspecialidades();
+			this.especialidades = this.espccontrol.consultar();
 			this.escolhaVagas = new ArrayList<EventoBean.EscolhaVagasEvento>();
 			for (Especialidade especialidade : this.especialidades) {
 				this.escolhaVagas.add(new EscolhaVagasEvento(especialidade, false, 0));

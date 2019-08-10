@@ -12,10 +12,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.Vaga;
-import br.edu.ifpb.simpleevents.facade.EventoController;
 
 @Named(value = "trabalhos")
 @ViewScoped

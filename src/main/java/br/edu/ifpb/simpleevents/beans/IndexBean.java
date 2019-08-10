@@ -10,8 +10,8 @@ import javax.inject.Named;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import br.edu.ifpb.simpleevents.controller.IndexController;
 import br.edu.ifpb.simpleevents.entity.Evento;
-import br.edu.ifpb.simpleevents.facade.IndexController;
 
 @Named(value = "index")
 @SessionScoped
@@ -36,7 +36,6 @@ public class IndexBean implements Serializable {
         }
     	this.eventos = controller.getEventos();
     	return "/WEB-INF/facelets/evento/listInCards.xhtml";
-
     }
 	
 	public String showNavBar() {
