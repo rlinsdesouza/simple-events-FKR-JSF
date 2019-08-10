@@ -1,33 +1,45 @@
 <!DOCTYPE html>
-<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
-<head th:insert="fragments/head.html :: head">
-</head>
-<body>
-	<!-- Navbar -->
-    <div th:replace="fragments/navbar"></div>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:c="http://java.sun.com/jstl/core">
+
+<f:metadata>
+	<f:viewParam name="id" />
+	<f:viewAction action="#{eventos.}"/>
+</f:metadata>
+
+<h:body>
 	<div class="container">
-		<br>
 		<h3>Detalhes do Evento</h3>
-		<h4 th:text="${evento.descricao}"></h4>
-		<hr>
-		<h5 class="card-title" th:text="${evento.local}"></h5>
+		<h4>#{evento.descricao}</h4>
+		<h5 class="card-title">#{eventos.evento.local}></h5>-->
 		<div class="row">
-			<p class="card-text col-md-3" th:text="${evento.dono.nome}"></p>
-			<p class="card-text col-md-3" th:text="${#temporals.format(evento.data, 'dd-MM-yyyy HH:mm')}"></p>
-			<p class="card-text col-md-3" th:text="${evento.status}"></p>
+			<p class="card-text col-md-3" >#{eventos.evento.dono.email}</p>
+			<p class="card-text col-md-3" >#{eventos.evento.data}></p>
+			<p class="card-text col-md-3" >#{eventos.evento.status}></p>
 		</div>
 		<div class="row">
 			<div class="col-md-6 row">
 				<h5 class="col-md-12">Avaliação dos Participantes</h5>
 				<ul class="list-group">
-					<li class="list-group-item" th:each="candidatoVaga: ${eventoVagas}" th:text="${candidatoVaga.value}"></li>
+					<c:forEach var="vaga" items="#{eventos.evento.vagas}">
+
+						<c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+							<li class="list-group-item" >#{candidato.notaDesempenho}</li>
+						</c:forEach>
+
+					</c:forEach>
+					<!--<li class="list-group-item" th:each="candidatoVaga: ${eventoVagas}" th:text="${candidatoVaga.value}"></li>-->
 				</ul>
 			</div>
 			<div class="col-md-6 row">
 				<h5 class="col-md-12">Avaliação do Evento</h5>
 				<ul class="list-group">
-					<li class="list-group-item" th:each="avaliacao: ${evento.getAvaliacaoEventos()}"
-						th:text="${avaliacao}"></li>
+					<c:forEach var="avaliacao" items="#{eventos.evento.avaliacaoEventos}">
+						<li class="list-group-item" >#{avaliacao.notaAvaliacaoEvento}</li>
+					</c:forEach>
 				</ul>
 			</div>
 		</div>
@@ -49,7 +61,5 @@
 <!--			</div>-->
    	</div>
 
-	<footer th:insert="fragments/footer :: footer"></footer>
-
-</body>
+</h:body>
 </html>
