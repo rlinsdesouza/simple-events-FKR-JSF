@@ -36,6 +36,8 @@ public class EventoBean extends GenericBean implements Serializable {
 	private Evento evento;
 	private String dataevento;
 
+	private Long idSelecionado;
+
 	@PostConstruct
 	private void init() {
 		Evento evento = (Evento) this.getFlash("evento");
@@ -52,8 +54,12 @@ public class EventoBean extends GenericBean implements Serializable {
 	}
 
 	public String form() {
-
 		return "/WEB-INF/facelets/evento/form.xhtml";
+	}
+
+	public String detail(){
+		this.setFlash("evento", evento);
+		return "/WEB-INF/facelets/evento/detail.xhtml";
 	}
 
 	public String salvar() {
@@ -350,7 +356,15 @@ public class EventoBean extends GenericBean implements Serializable {
 		this.dataevento = dataevento;
 	}
 
-//	inner class para escolha de quantidade de vagas por especialidade no switch
+	public Long getIdSelecionado() {
+		return idSelecionado;
+	}
+
+	public void setIdSelecionado(Long idSelecionado) {
+		this.idSelecionado = idSelecionado;
+	}
+
+	//	inner class para escolha de quantidade de vagas por especialidade no switch
 
 	public class EscolhaVagasEvento {
 		private Especialidade especialidade;
