@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -58,6 +59,11 @@ public class EventoBean extends GenericBean implements Serializable {
 	}
 
 	public String detail(){
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		System.out.println(params);
+		Long id = Long.parseLong(params.get("id"));
+		Evento evento = evtcontrol.findById(id);
+		this.evento = evento;
 		this.setFlash("evento", evento);
 		return "/WEB-INF/facelets/evento/detail.xhtml";
 	}

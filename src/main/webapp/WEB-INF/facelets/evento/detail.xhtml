@@ -1,65 +1,58 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
 	  xmlns:c="http://java.sun.com/jstl/core">
-
-<f:metadata>
-	<f:viewParam name="id" />
-	<f:viewAction action="#{eventos.}"/>
-</f:metadata>
 
 <h:body>
 	<div class="container">
 		<h3>Detalhes do Evento</h3>
-		<h4>#{evento.descricao}</h4>
-		<h5 class="card-title">#{eventos.evento.local}></h5>-->
+		<h4>#{eventos.evento.descricao}</h4>
+		<h5 class="card-title">Local: #{eventos.evento.local}</h5>
 		<div class="row">
-			<p class="card-text col-md-3" >#{eventos.evento.dono.email}</p>
-			<p class="card-text col-md-3" >#{eventos.evento.data}></p>
-			<p class="card-text col-md-3" >#{eventos.evento.status}></p>
+			<p class="card-text col-md-3">Organizardor: #{eventos.evento.dono.email}</p>
+			<p class="card-text col-md-3">Data: #{eventos.evento.data}</p>
+			<p class="card-text col-md-3">Status: #{eventos.evento.status}</p>
 		</div>
-		<div class="row">
-			<div class="col-md-6 row">
-				<h5 class="col-md-12">Avaliação dos Participantes</h5>
-				<ul class="list-group">
-					<c:forEach var="vaga" items="#{eventos.evento.vagas}">
 
-						<c:forEach var="candidato" items="#{vaga.candidatoVaga}">
-							<li class="list-group-item" >#{candidato.notaDesempenho}</li>
+		<p:tabView>
+			<p:tab title="Vagas">
+				<h:panelGrid columns="2" cellpadding="10">
+					<div class="container">
+						<div class="row">
+						<c:forEach var="vaga" items="#{eventos.evento.vagas}">
+							<div class="col">
+								#{vaga.especialidade.nome} - ${vaga.qtdVagas}
+							<!--<div class="d-flex justify-content-between align-items-center">
+								<div class="btn-group pull-right" th:if="${evento.dono.id != userLog.id}">
+									<a th:href="@{/eventos/candidatar/{id}(id=${evento.id})}" class="btn btn-sm btn-outline-secondary">Candidatar</a>
+								</div>
+							</div>-->
+							</div>
 						</c:forEach>
-
-					</c:forEach>
-					<!--<li class="list-group-item" th:each="candidatoVaga: ${eventoVagas}" th:text="${candidatoVaga.value}"></li>-->
-				</ul>
-			</div>
-			<div class="col-md-6 row">
-				<h5 class="col-md-12">Avaliação do Evento</h5>
-				<ul class="list-group">
+						</div>
+					</div>
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Avaliação dos Participantes">
+				<h:panelGrid columns="2" cellpadding="10">
+					<ul class="row">
+						<c:forEach var="vaga" items="#{eventos.evento.vagas}">
+							<c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+								<div class="col" >#{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
+							</c:forEach>
+						</c:forEach>
+					</ul>
+				</h:panelGrid>
+			</p:tab>
+			<p:tab title="Avaliação do Evento">
+				<ul class="row">
 					<c:forEach var="avaliacao" items="#{eventos.evento.avaliacaoEventos}">
-						<li class="list-group-item" >#{avaliacao.notaAvaliacaoEvento}</li>
+						<div class="col" >#{avaliacao.notaAvaliacaoEvento}</div>
 					</c:forEach>
 				</ul>
-			</div>
-		</div>
-<!--		  	<div class="card-body row">-->
-<!--		    	<div th:each="vaga : ${evento.vagas}" class="col-md-4">-->
-<!--		        	<div class="card mb-4 shadow-sm">-->
-<!--		            	<p th:text="${vaga.especialidade.nome}"/>-->
-<!--		            	<div>-->
-<!--		             		<small th:text="${vaga.especialidade.descricao}"></small>-->
-<!--		            	</div>-->
-<!--		            	<p th:text="${vaga.qtdVagas}" class="card-text"/>-->
-<!--		            	<div class="d-flex justify-content-between align-items-center">-->
-<!--							<div class="btn-group pull-right" th:if="${evento.dono.id != userLog.id}">-->
-<!--			               		<a th:href="@{/eventos/candidatar/{id}(id=${evento.id})}" class="btn btn-sm btn-outline-secondary">Candidatar</a>-->
-<!--			        		</div>-->
-<!--		        		</div>-->
-<!--	       			</div>-->
-<!--				</div>-->
-<!--			</div>-->
-   	</div>
-
+			</p:tab>
+		</p:tabView>
+	</div>
 </h:body>
 </html>
