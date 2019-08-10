@@ -1,4 +1,4 @@
-package br.edu.ifpb.simpleevents.facade;
+package br.edu.ifpb.simpleevents.controller;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -27,7 +27,7 @@ import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
 
-public class FakerFacade {
+public class FakerController {
 //	https://github.com/DiUS/java-faker
 	Faker faker = new Faker();
 	private PasswordUtil password = new PasswordUtil();
@@ -37,14 +37,14 @@ public class FakerFacade {
 	@Inject
 	private UserDAO userdao;
 	@Inject
-	public EventoDAO eventoDAO;
+	private EventoDAO eventoDAO;
 	@Inject
-	public VagaDAO vagaDAO;
+	private VagaDAO vagaDAO;
 	@Inject
-	public CandidatoVagaDAO candidaturaDAO;
+	private CandidatoVagaDAO candidaturaDAO;
 	
 	@Inject
-	public ParticipanteDAO participanteDAO;
+	private ParticipanteDAO participanteDAO;
 
 
 	

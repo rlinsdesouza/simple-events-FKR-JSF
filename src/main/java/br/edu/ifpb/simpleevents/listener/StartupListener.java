@@ -11,8 +11,8 @@ import javax.servlet.annotation.WebListener;
 
 import org.apache.log4j.Logger;
 
+import br.edu.ifpb.simpleevents.controller.FakerController;
 import br.edu.ifpb.simpleevents.dao.EntityManagerProducer;
-import br.edu.ifpb.simpleevents.facade.FakerFacade;
 
 @WebListener
 public class StartupListener implements ServletContextListener {

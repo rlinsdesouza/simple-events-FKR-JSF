@@ -12,10 +12,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.Vaga;
-import br.edu.ifpb.simpleevents.facade.EventoController;
 
 @Named(value = "analiseCandidatos")
 @ViewScoped
@@ -57,12 +57,12 @@ public class AnaliseCandidatosBean extends GenericBean implements Serializable {
 			CandidatoVaga candidatura = evtcontrol.aprovarCandidato(i);
 			System.out.println(candidatura);
 			if (candidatura != null) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Aprovado com sucesso!"));	
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Aprovado com sucesso!"));
+				return "/eventos/escolhecandidatos.xhtml?faces-redirect=true&id=" +candidatura.getVaga().getEvento().getId();
 			}else {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Ops!","Candidato já aprovado no evento ou Vaga lotada!"));
-			};
-			String url = "/eventos/escolhecandidatos.xhtml?id="+candidatura.getId();
-			return url;
+				return "/eventos/escolhecandidatos.xhtml?faces-redirect=true";
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.toString()));

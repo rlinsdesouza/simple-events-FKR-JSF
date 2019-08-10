@@ -8,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.entity.pattern.observer.Subject;
 
 @Entity
@@ -75,8 +76,8 @@ public class CandidatoVaga extends Subject{
 		return candidato;
 	}
 
-	public void setCandidato(User candidato) {
-		this.candidato = candidato;
+	public void setCandidato(User novoCandidato) {
+		this.candidato = novoCandidato;
 	}
 
 	@Override

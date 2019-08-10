@@ -14,11 +14,11 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.controller.EspecialidadeController;
+import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.Vaga;
-import br.edu.ifpb.simpleevents.facade.EspecialidadeController;
-import br.edu.ifpb.simpleevents.facade.EventoController;
 
 @Named(value = "eventos")
 @ViewScoped
@@ -44,7 +44,7 @@ public class EventoBean extends GenericBean implements Serializable {
 		Evento evento = (Evento) this.getFlash("evento");
 		if (evento != null) {
 			this.evento = evento;
-			this.especialidades = this.espccontrol.getEspecialidades();
+			this.especialidades = this.espccontrol.consultar();
 			this.escolhaVagas = new ArrayList<EventoBean.EscolhaVagasEvento>();
 			for (Especialidade especialidade : this.especialidades) {
 				this.escolhaVagas.add(new EscolhaVagasEvento(especialidade, false, 0));
@@ -84,6 +84,11 @@ public class EventoBean extends GenericBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Evento e vagas adicionados com sucesso!"));
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 		return "/eventos/listageral.xhtml?faces-redirect=true";
+	}
+
+	public String apresentarVagas (Evento evento) {
+		System.out.println(evento);
+		return "/eventos/candidatarEvento.xhtml?faces-redirect=true";
 	}
 
 //    @RequestMapping(method = RequestMethod.GET)

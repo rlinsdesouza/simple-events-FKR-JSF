@@ -17,7 +17,7 @@
         <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
             <h:form class="form-inline mt-2 mt-md-0 col-lg-8" style="justify-content: flex-end;">
                 <p:inputText id="nome" value="#{index.teste}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
-                <h:commandButton value="Pesquisar" id="pesquisar" action="#{index.teste()}" class="btn teste my-2 my-sm-0"/>
+                <h:commandButton value="Pesquisar" id="pesquisar" action="#" class="btn teste my-2 my-sm-0"/>
             </h:form>
             <ul class="navbar-nav">
 <!--                 <th:block sec:authorize="hasRole('ADMIN')">
@@ -40,7 +40,7 @@
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     	<h:form class="dropdown-item">
-                   		  <h:commandButton value="Logout" id="logout" action="#{index.teste()}" class="dropdown-item"/>
+                   		  <h:commandButton value="Logout" id="logout" action="#" class="dropdown-item"/>
 						</h:form>
                     </div>
                 </li>
