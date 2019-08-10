@@ -1,0 +1,33 @@
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+}
+.buttons > a {
+    min-width: 250px;
+    min-height: 180px;
+    margin: 50px;
+    border-radius: 5%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    text-transform: none;
+    font-size: 22px;
+    color: black;
+}
+.buttons > a:link, .buttons > a:hover {
+    text-decoration: none;
+}
+
+.button-green {
+    background: #C1FCC1;
+    box-shadow: 10px 5px 5px #C1DAFC;
+}
+
+.button-blue {
+    background: #C1DAFC;
+    box-shadow: 10px 5px 5px #C1FCC1;
+
+}
