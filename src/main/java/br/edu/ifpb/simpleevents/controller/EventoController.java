@@ -67,7 +67,7 @@ public class EventoController implements Serializable {
 //            }
 //        }
     	
-    	ParticipanteComposite currentUser = participanteDAO.findByEmail("admin@test");
+    	ParticipanteComposite currentUser = LoginFacade.getParticipanteLogado();
         evento.setDono(currentUser);
         evento.setStatus(StatusEvento.ABERTO);
         return eventoDAO.create(evento); 
@@ -416,10 +416,10 @@ public class EventoController implements Serializable {
 		CandidatoVaga candidatura = candidatoVagaDAO.read(id);
 		Boolean validacao = validarCandidatura(candidatura.getVaga(), candidatura.getCandidato());
 		Evento evento = candidatura.getVaga().getEvento();
-//		User usuarioLogado = (User) participanteDAO.findByEmail(username);
-//		if (usuarioLogado.getId() != evento.getDono().getId()) {
-//			throw new Exception("você não pode alterar este evento");	
-//        }
+		User usuarioLogado = (User) LoginFacade.getParticipanteLogado();
+		if (usuarioLogado.getId() != evento.getDono().getId()) {
+			throw new Exception("você não pode alterar este evento");	
+        }
         
 		if(validacao) {
 			candidatura.setStatus(Status.APROVADO);
@@ -441,10 +441,10 @@ public class EventoController implements Serializable {
 	public CandidatoVaga reprovarCandidato (Long id) throws Exception {
 		CandidatoVaga candidatura = candidatoVagaDAO.read(id);
 		Evento evento = candidatura.getVaga().getEvento();
-//		User usuarioLogado = (User) participanteDAO.findByEmail(username);
-//		if (usuarioLogado.getId() != evento.getDono().getId()) {
-//            throw new Exception("você não pode alterar este evento");
-//        }
+		User usuarioLogado = (User) LoginFacade.getParticipanteLogado();
+		if (usuarioLogado.getId() != evento.getDono().getId()) {
+            throw new Exception("você não pode alterar este evento");
+        }
 		candidatura.setStatus(Status.NAO_APROVADO);
 		candidatoVagaDAO.update(candidatura);
 //		att.addFlashAttribute("mensagemsecundaria", "Candidato reprovado com sucesso!");	

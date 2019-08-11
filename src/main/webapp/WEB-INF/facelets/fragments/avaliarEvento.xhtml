@@ -1,0 +1,42 @@
+<!-- th:attr="aria-labelledby='avaliarEvento'+${trabalho.id}" -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	
+	<body>
+	    <!-- Modal -->
+	  <div class="modal fade" pt:id="#{avaliarEvento+trabalho.id}" tabindex="-1" role="dialog" 
+					aria-labelledby="exampleModalLabel" 			 	 
+	 			 	aria-hidden="true">
+		  <h:form th:action="@{/avaliar/{id}(id=${trabalho.id})}">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel">#{trabalho.vaga.evento.descricao}</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">X</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group">
+	  				  	<label for="formControlRange">Avaliacao</label>
+	    				<input type="range" class="form-control-range" name="notaAvaliacaoEvento" min="0" max="10">
+	  				</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+			        <h:commandButton action="#{avaliaEvento.avaliar}" type="submit" class="btn btn-primary">Avaliar</button>
+			      </div>
+			    </div>
+			  </div>
+		  </h:form>  
+	  </div>
+  	</body>
+</html>
