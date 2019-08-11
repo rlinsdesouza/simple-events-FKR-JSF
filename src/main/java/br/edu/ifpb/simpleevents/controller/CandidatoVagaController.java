@@ -1,5 +1,6 @@
 package br.edu.ifpb.simpleevents.controller;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -10,7 +11,8 @@ import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 
-public class CandidatoVagaController {
+public class CandidatoVagaController implements Serializable {
+	private static final long serialVersionUID = 1L;
 
     @Inject
     private CandidatoVagaDAO candidatoVagaDAO;

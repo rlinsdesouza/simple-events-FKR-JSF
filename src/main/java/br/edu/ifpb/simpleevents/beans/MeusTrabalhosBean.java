@@ -33,15 +33,15 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	private List<CandidatoVaga> candidaturas;
 	private Map<Long,String> mapAvaliacoes;
 	
-	@PostConstruct
-	private void init() {
-//		List<CandidatoVaga> candidaturas = (List<CandidatoVaga>) this.getFlash("candidaturas");
-//		if (candidaturas != null) {
-//			this.candidaturas = candidaturas;
-//		} else {
-			this.candidaturas = new ArrayList<CandidatoVaga>();
-//		}
-	}
+//	@PostConstruct
+//	private void init() {
+////		List<CandidatoVaga> candidaturas = (List<CandidatoVaga>) this.getFlash("candidaturas");
+////		if (candidaturas != null) {
+////			this.candidaturas = candidaturas;
+////		} else {
+//			this.candidaturas = new ArrayList<CandidatoVaga>();
+////		}
+//	}
 	
   public String listMeusTrabalhos() {
       this.userLog = LoginFacade.getParticipanteLogado();
