@@ -112,9 +112,28 @@ public class EventoController implements Serializable {
     public Vaga criarVaga (Vaga vaga) {
     	return vagaDAO.create(vaga);
     }
-    
-    
-    
+
+    @Transactional
+    public void adicionarCandidato (Evento evento, Vaga vaga) {
+
+		CandidatoVaga candidatoVaga;
+		candidatoVaga = new CandidatoVaga();
+		candidatoVaga.setVaga(vaga);
+		candidatoVaga.setStatus(Status.AGUARDANDO_APROVACAO);
+		candidatoVaga.setCandidato(this.improvisarCandidato());
+		System.out.println(candidatoVaga);
+		candidatoVagaDAO.create(candidatoVaga);
+	}
+
+	private User improvisarCandidato () {
+    	List<ParticipanteComposite> participantes = this.participanteDAO.read();
+    	for (ParticipanteComposite p: participantes)
+    		if (p instanceof User)
+    			return (User) p;
+		return null;
+	}
+
+
 //    @Transactional
 //	public void avaliarEvento(@PathVariable("id") Long id,
 //			Principal userlogado,
