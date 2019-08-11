@@ -4,41 +4,45 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
-
 <body>
+
     <nav class="navbar navbar-expand-md navbar-light mb-4">
-        <p:link class="navbar-brand " outcome="#{request.contextPath}">
-            <img src="https://res.cloudinary.com/deqmrmqui/image/upload/v1559256417/fakara2_euoenn.png">
-        </p:link>
+        <a class="navbar-brand ">
+            <img src="https://res.cloudinary.com/deqmrmqui/image/upload/v1559256417/fakara2_euoenn.png"/>
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
-            <h:form th:action="@{/pesquisar}" class="form-inline mt-2 mt-md-0 col-lg-8" style="justify-content: flex-end;">
-                <input name="nome" class="form-control mr-sm-2 col-lg-8" type="text" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search">
-                <button class="btn teste my-2 my-sm-0" type="submit">Pesquisar</button>
-                <p:commandButton value="Pesquisar" update="growl" action="#{.buttonAction}" style="margin-right:20px;" styleClass="ui-priority-primary" />
+            <h:form class="form-inline mt-2 mt-md-0 col-lg-8" style="justify-content: flex-end;">
+                <p:inputText id="nome" value="#{index.teste}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
+                <h:commandButton value="Pesquisar" id="pesquisar" action="#" class="btn teste my-2 my-sm-0"/>
             </h:form>
             <ul class="navbar-nav">
-                <th:block sec:authorize="hasRole('ADMIN')">
+<!--                 <th:block sec:authorize="hasRole('ADMIN')">
 	    			<li class="nav-item">
                     	<a class="nav-link" th:href="@{/especialidades}">Especialidades</a>
                 	</li>
-	  			</th:block>
-                <li class="nav-item">
-                    <a class="nav-link" th:href="@{/eventos/meuseventos}">Administrar eventos</a>
+	  			</th:block> -->
+	  			<li class="nav-item">
+                	<p:link outcome="/datafaker.xhtml" value="Datafaker" class="nav-link"/>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" th:href="@{/candidaturas/meustrabalhos}">Meus trabalhos</a>
+                	<p:link outcome="/eventos/cadastro.xhtml" value="Administrar eventos" class="nav-link"/>
+                </li>
+                <li class="nav-item">
+                	<p:link outcome="/index.xhtml" value="Meus trabalhos" class="nav-link"/>
                 </li>
                 <li class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Olá, <span sec:authentication="name"></span>
+                        Olá, <span >teste</span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    	<form method="post" class="dropdown-item"
-						  th:action="@{/logout}">
+                    	<!-- <h:form class="dropdown-item">
+                   		  <h:commandButton value="Logout" id="logout" action="loginBacking.logout()" class="dropdown-item"/>
+						</h:form> -->
+						<form method="post" class="dropdown-item">
 						  <button type="submit" class="dropdown-item">
 						    Sair
 						  </button>

@@ -42,7 +42,6 @@ public class NotificacaoObserverBean {
 //	}
 //	
 	public String notificar() {
-		System.out.println("teste");
 		return "/WEB-INF/facelets/gabaritos/observer.xhtml";
 	}
 

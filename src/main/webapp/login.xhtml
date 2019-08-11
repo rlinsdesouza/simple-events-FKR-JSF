@@ -24,15 +24,15 @@
                         <h:panelGrid columns="3" cellpadding="5" style="margin: 0 auto;">
 
                             <p:outputLabel for="email" value="E-Mail"/>
-                            <p:inputText id="email" value="#{loginBacking.email}"/>
+                            <p:inputText id="email" value="#{loginBean.usuario}"/>
                             <p:message for="email"/>
 
                             <p:outputLabel for="password" value="Password"/>
-                            <p:inputText type="password" id="password" value="#{loginBacking.password}"/>
+                            <p:inputText type="password" id="password" value="#{loginBean.senha}"/>
                             <p:message for="password"/>
 
-                            <p:commandButton id="submit" update="@form" 
-                                 value="Login" action="#{loginBacking.submit}"/>
+                            <h:commandButton id="submit" class="btn btn-primary" 
+                                 value="Login" action="#{loginBean.autenticar}"/>
                         </h:panelGrid>
                     </h:form>
                 </div>

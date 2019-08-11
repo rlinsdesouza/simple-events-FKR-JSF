@@ -31,7 +31,7 @@ public class PasswordUtil {
 		return digitos;
 	}
 	
-	 public static boolean validatePassword(final String password){ 
+	 public static boolean validatePassword(String password){
 		  Pattern p = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#$%&]).{6,}$"); 
 		  Matcher m = p.matcher(password); 
 		  return m.matches(); 

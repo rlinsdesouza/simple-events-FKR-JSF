@@ -7,6 +7,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.enterprise.SecurityContext;
+import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
@@ -23,6 +25,10 @@ public class IndexBean implements Serializable {
 
 	@Inject
 	private IndexController controller;
+	
+    @Inject
+    private SecurityContext securityContext;
+
 
 	public String teste() {
 		return null;
@@ -39,11 +45,13 @@ public class IndexBean implements Serializable {
     }
 	
 	public String showNavBar() {
-		String user = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
+//		String user = securityContext.getCallerPrincipal().getName();
+		String user = FacesContext.getCurrentInstance().getExternalContext().g;
+//		System.out.println(user);
 		if(user != null) {
-        	return "/WEB-INF/facelets/fragments/navbarLoggedIn.xhtml";
+        	return "/WEB-INF/facelets/navbar/navbarLoggedIn.xhtml";
         }else {
-        	return "/WEB-INF/facelets/fragments/navbarLoggedOut.xhtml";
+        	return "/WEB-INF/facelets/navbar/navbarLoggedOut.xhtml";
         }
 	}
 
