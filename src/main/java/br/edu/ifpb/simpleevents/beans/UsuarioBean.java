@@ -2,6 +2,7 @@ package br.edu.ifpb.simpleevents.beans;
 
 import br.edu.ifpb.simpleevents.controller.ParticipanteController;
 import br.edu.ifpb.simpleevents.entity.User;
+import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -36,6 +37,7 @@ public class UsuarioBean extends GenericBean implements Serializable {
     }
 
     public String save () {
+        this.usuario.setSenha(PasswordUtil.encryptMD5(this.usuario.getSenha()));
         this.participanteController.save(this.usuario);
         return "/index.xhtml?faces-redirect=true";
     }

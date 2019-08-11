@@ -18,7 +18,7 @@ public class LoginController implements Serializable {
 	public ParticipanteComposite isValido(String usuario, String senha) {
 
 		ParticipanteComposite user = participanteDAO.findByEmail(usuario);
-		
+
 		if (user == null || !PasswordUtil.encryptMD5(senha).equals(user.getSenha())) {
 			user = null;
 		}

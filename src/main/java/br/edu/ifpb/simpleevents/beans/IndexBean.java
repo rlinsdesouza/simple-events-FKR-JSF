@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.edu.ifpb.simpleevents.controller.IndexController;
 import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "index")
 @SessionScoped
@@ -28,7 +29,6 @@ public class IndexBean implements Serializable {
 	
     @Inject
     private SecurityContext securityContext;
-
 
 	public String teste() {
 		return null;
@@ -45,10 +45,7 @@ public class IndexBean implements Serializable {
     }
 	
 	public String showNavBar() {
-//		String user = securityContext.getCallerPrincipal().getName();
-		String user = FacesContext.getCurrentInstance().getExternalContext().g;
-//		System.out.println(user);
-		if(user != null) {
+		if(LoginFacade.isAuthenticated()) {
         	return "/WEB-INF/facelets/navbar/navbarLoggedIn.xhtml";
         }else {
         	return "/WEB-INF/facelets/navbar/navbarLoggedOut.xhtml";

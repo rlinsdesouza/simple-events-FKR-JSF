@@ -10,6 +10,7 @@ import javax.inject.Named;
 import br.edu.ifpb.simpleevents.beans.GenericBean;
 import br.edu.ifpb.simpleevents.controller.LoginController;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "loginBean")
 @SessionScoped
@@ -28,7 +29,9 @@ public class LoginBean extends GenericBean implements Serializable{
 	public String autenticar() {
 		String proxView = null;
 		if ((usuarioLogado = loginController.isValido(usuario, senha)) != null) {
-			this.setValueOf("loginUser", String.class, usuarioLogado.getEmail());
+			this.setValueOf("#{sessionScope.user}", String.class, usuarioLogado.getEmail());
+			this.setValueOf("#{sessionScope.username}", String.class, usuarioLogado.getEmail().split("@")[0]);
+			LoginFacade.setParticipanteLogado(usuarioLogado);
 			proxView = "/index?faces-redirect=true";
 		} else {
 			this.addMessage(FacesMessage.SEVERITY_ERROR, "Login invalido.");
@@ -39,6 +42,7 @@ public class LoginBean extends GenericBean implements Serializable{
 	
 	public String logout() {
 		this.invalidateSession();
+		LoginFacade.setParticipanteLogado(null);
 		return "/login?faces-redirect=true";
 	}
 

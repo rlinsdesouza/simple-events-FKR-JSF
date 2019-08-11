@@ -15,7 +15,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
-            <h:form class="form-inline mt-2 mt-md-0 col-lg-8" style="justify-content: flex-end;">
+            <h:form class="form-inline mt-2 mt-md-0 col-lg-6" style="justify-content: flex-end;">
                 <p:inputText id="nome" value="#{index.teste}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
                 <h:commandButton value="Pesquisar" id="pesquisar" action="#" class="btn teste my-2 my-sm-0"/>
             </h:form>
@@ -34,21 +34,28 @@
                 <li class="nav-item">
                 	<p:link outcome="/index.xhtml" value="Meus trabalhos" class="nav-link"/>
                 </li>
-                <li class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Olá, <span >teste</span>
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    	<!-- <h:form class="dropdown-item">
-                   		  <h:commandButton value="Logout" id="logout" action="loginBacking.logout()" class="dropdown-item"/>
-						</h:form> -->
-						<form method="post" class="dropdown-item">
-						  <button type="submit" class="dropdown-item">
-						    Sair
-						  </button>
-						</form>
-                    </div>
+                <li class="nav-item">
+                    <h:form class="nav-link">
+                        <h:commandButton value="Logout" id="logout" action="#{loginBean.logout}"/>
+                    </h:form>
                 </li>
+
+<!--                <li class="dropdown">-->
+<!--                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                        Olá, <span >#{sessionScope.username}</span>-->
+<!--                    </button>-->
+<!--                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--                        <a class="dropdown-item" href="#">Action</a>-->
+<!--                    	&lt;!&ndash; <h:form class="dropdown-item">-->
+<!--                   		  <h:commandButton value="Logout" id="logout" action="loginBacking.logout()" class="dropdown-item"/>-->
+<!--						</h:form> &ndash;&gt;-->
+<!--						<form method="post" class="dropdown-item">-->
+<!--						  <button type="submit" class="dropdown-item">-->
+<!--						    Sair-->
+<!--						  </button>-->
+<!--						</form>-->
+<!--                    </div>-->
+<!--                </li>-->
             </ul>
         </div>
     </nav>

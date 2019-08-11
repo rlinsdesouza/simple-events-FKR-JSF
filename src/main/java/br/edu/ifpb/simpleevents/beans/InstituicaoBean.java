@@ -16,6 +16,7 @@ import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.entity.Instituicao;
 import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
 @Named(value = "instituicaoBean")
 @ViewScoped
@@ -67,6 +68,7 @@ public class InstituicaoBean extends GenericBean implements Serializable {
 	}
 
 	public String save () {
+		this.instituicao.setSenha(PasswordUtil.encryptMD5(this.instituicao.getSenha()));
 		String[] emails = this.vinculados.split("-");
 		this.instituicao.setParticipantes(new ArrayList<>());
 		for(String email: emails) {
@@ -74,8 +76,6 @@ public class InstituicaoBean extends GenericBean implements Serializable {
 			if (participante != null)
 				this.instituicao.add(participante);
 		}
-		System.out.println(this.instituicao);
-		System.out.println(this.participanteController);
 		this.participanteController.save(this.instituicao);
 		return "/index.xhtml?faces-redirect=true";
 	}

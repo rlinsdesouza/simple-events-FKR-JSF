@@ -13,6 +13,7 @@ import br.edu.ifpb.simpleevents.controller.ParticipanteController;
 import br.edu.ifpb.simpleevents.entity.Instituicao;
 import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.security.PasswordUtil;
 
 @Named
 @ViewScoped
@@ -71,12 +72,6 @@ public class ParticipanteBean extends GenericBean implements Serializable {
 		if(type.equalsIgnoreCase("instituicao"))
 			return "/WEB-INF/facelets/participante/instituicao.xhtml";
 		return "/WEB-INF/facelets/participante/user.xhtml";
-	}
-
-
-	public String save () {
-		this.participanteController.save(this.participante);
-		return "participante/list.xhtml";
 	}
 
 	public String edit (ParticipanteComposite participante) {
