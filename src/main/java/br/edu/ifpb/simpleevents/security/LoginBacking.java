@@ -2,9 +2,8 @@ package br.edu.ifpb.simpleevents.security;
 
 import java.io.IOException;
 
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -19,9 +18,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
-@Named
-@RequestScoped
-@ManagedBean (name="loginBacking")
+@Named ("loginBacking")
+//@SessionScoped
 public class LoginBacking {
 
     @NotEmpty
@@ -52,18 +50,13 @@ public class LoginBacking {
             case SUCCESS:
                 facesContext.addMessage(null,
                         new FacesMessage(FacesMessage.SEVERITY_INFO, "Login succeed", null));
-                externalContext.redirect(externalContext.getRequestContextPath() + "/app/index.xhtml");
+                externalContext.redirect(externalContext.getRequestContextPath() + "/index.xhtml");
                 break;
             case NOT_DONE:
         }
     }
 
     private AuthenticationStatus continueAuthentication() {
-    	if(securityContext == null) {
-    		System.out.println("nulo");
-    	}else {
-    		System.out.println(securityContext);
-    	}
         return securityContext.authenticate(
                 (HttpServletRequest) externalContext.getRequest(),
                 (HttpServletResponse) externalContext.getResponse(),

@@ -40,10 +40,10 @@ public class IndexBean implements Serializable {
 	
 	public String showNavBar() {
 		String user = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-    	if(user != null) {
+		if(user != null) {
         	return "/WEB-INF/facelets/fragments/navbarLoggedIn.xhtml";
         }else {
-        	return "/WEB-INF/facelets/fragments/navbarLoggedIn.xhtml";
+        	return "/WEB-INF/facelets/fragments/navbarLoggedOut.xhtml";
         }
 	}
 

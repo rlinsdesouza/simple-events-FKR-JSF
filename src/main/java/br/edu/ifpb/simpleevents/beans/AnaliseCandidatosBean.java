@@ -40,7 +40,6 @@ public class AnaliseCandidatosBean extends GenericBean implements Serializable {
 
 	public String analisarCandidatos() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-		System.out.println(params);
 		Long id = Long.parseLong(params.get("id"));
 		Evento evento = evtcontrol.findById(id);
 		for (Vaga vaga : evento.getVagas()) {
