@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
@@ -120,18 +121,11 @@ public class EventoController implements Serializable {
 		candidatoVaga = new CandidatoVaga();
 		candidatoVaga.setVaga(vaga);
 		candidatoVaga.setStatus(Status.AGUARDANDO_APROVACAO);
-		candidatoVaga.setCandidato(this.improvisarCandidato());
+		candidatoVaga.setCandidato((User) LoginFacade.getParticipanteLogado());
 		System.out.println(candidatoVaga);
 		candidatoVagaDAO.create(candidatoVaga);
 	}
 
-	private User improvisarCandidato () {
-    	List<ParticipanteComposite> participantes = this.participanteDAO.read();
-    	for (ParticipanteComposite p: participantes)
-    		if (p instanceof User)
-    			return (User) p;
-		return null;
-	}
 
 
 //    @Transactional

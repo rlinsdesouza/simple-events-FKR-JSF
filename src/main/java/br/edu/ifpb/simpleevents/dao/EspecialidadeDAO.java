@@ -16,10 +16,4 @@ public class EspecialidadeDAO extends GenericDAO<Especialidade, Long> {
 		return (Especialidade) query.getSingleResult();
 	}
 
-
-//	public List<Especialidade> read() {
-//		Query q = entityManager.createQuery("select e from Especialidade e");
-//		return q.getResultList();
-//	}
-
 }

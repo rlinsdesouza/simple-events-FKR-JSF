@@ -29,7 +29,7 @@ public class LoginFacade implements Serializable {
         participanteLogado = p;
     }
 
-    public ParticipanteComposite getParticipanteLogado() {
+    public static ParticipanteComposite getParticipanteLogado() {
         return participanteLogado;
     }
 

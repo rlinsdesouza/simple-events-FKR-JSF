@@ -31,7 +31,6 @@ public class NotificacaoObserver extends Observer {
 			notificacoes.add(notificacao);
 			notificacoesNaoLidas.put(vaga.getCandidato().getId(), notificacoes);
 		}
-		System.out.println(notificacoesNaoLidas.get(vaga.getCandidato().getId()));
 	}
 		
 }

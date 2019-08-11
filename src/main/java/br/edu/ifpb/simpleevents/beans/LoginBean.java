@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.edu.ifpb.simpleevents.beans.GenericBean;
 import br.edu.ifpb.simpleevents.controller.LoginController;
+import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
@@ -44,6 +45,15 @@ public class LoginBean extends GenericBean implements Serializable{
 		this.invalidateSession();
 		LoginFacade.setParticipanteLogado(null);
 		return "/login?faces-redirect=true";
+	}
+
+	public boolean verificarLogado () {
+		System.out.println(this.getUsuarioLogado() != null);
+		return this.getUsuarioLogado() != null;
+	}
+
+	public boolean verificarTipo () {
+		return this.usuarioLogado instanceof User;
 	}
 
 	public String getUsuario() {
