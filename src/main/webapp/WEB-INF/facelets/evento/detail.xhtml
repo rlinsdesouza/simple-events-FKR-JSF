@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:p="http://primefaces.org/ui"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:c="http://java.sun.com/jstl/core">
+	  xmlns:c="http://java.sun.com/jstl/core"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core">
 
 <h:body>
 	<div class="container">
@@ -17,22 +18,29 @@
 
 		<p:tabView>
 			<p:tab title="Vagas">
-				<h:panelGrid columns="2" cellpadding="10">
-					<div class="container">
-						<div class="row">
-						<c:forEach var="vaga" items="#{eventos.evento.vagas}">
-							<div class="col">
-								#{vaga.especialidade.nome} - ${vaga.qtdVagas}
-							<!--<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group pull-right" th:if="${evento.dono.id != userLog.id}">
-									<a th:href="@{/eventos/candidatar/{id}(id=${evento.id})}" class="btn btn-sm btn-outline-secondary">Candidatar</a>
-								</div>
-							</div>-->
+				<div class="container">
+					<div class="row">
+						<h:form id="candidatar" >
+							<div class="form-check">
+								<h:selectOneRadio id="vagaEscolhida" value="#{eventos.vagaEscolhida}">
+									<f:selectItems value="#{eventos.getVagasDisponiveis()}" var="vaga" itemLabel="#{vaga.especialidade.nome}" itemValue="#{vaga.especialidade.nome}"/>
+								</h:selectOneRadio>
 							</div>
-						</c:forEach>
-						</div>
+							<h:commandButton value="Salvar" action="#{eventos.candidatar()}" />
+
+<!--								<c:forEach var="vaga" items="#{eventos.evento.vagas}">-->
+<!--									<div class="col">-->
+<!--										#{vaga.especialidade.nome} - ${vaga.qtdVagas}-->
+<!--										&lt;!&ndash;<div class="d-flex justify-content-between align-items-center">-->
+<!--                                            <div class="btn-group pull-right" th:if="${evento.dono.id != userLog.id}">-->
+<!--                                                <a th:href="@{/eventos/candidatar/{id}(id=${evento.id})}" class="btn btn-sm btn-outline-secondary">Candidatar</a>-->
+<!--                                            </div>-->
+<!--                                        </div>&ndash;&gt;-->
+<!--									</div>-->
+<!--								</c:forEach>-->
+						</h:form>
 					</div>
-				</h:panelGrid>
+				</div>
 			</p:tab>
 			<p:tab title="Avaliação dos Participantes">
 				<h:panelGrid columns="2" cellpadding="10">

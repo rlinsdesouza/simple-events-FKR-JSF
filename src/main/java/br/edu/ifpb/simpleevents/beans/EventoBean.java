@@ -39,6 +39,8 @@ public class EventoBean extends GenericBean implements Serializable {
 
 	private Long idSelecionado;
 
+	private String vagaEscolhida;
+
 	@PostConstruct
 	private void init() {
 		Evento evento = (Evento) this.getFlash("evento");
@@ -86,9 +88,28 @@ public class EventoBean extends GenericBean implements Serializable {
 		return "/eventos/listageral.xhtml?faces-redirect=true";
 	}
 
-	public String apresentarVagas (Evento evento) {
-		System.out.println(evento);
-		return "/eventos/candidatarEvento.xhtml?faces-redirect=true";
+	public String candidatar () {
+		System.out.println("ok");
+		Vaga vaga = this.getVagaByEspecialidade(this.vagaEscolhida);
+		evtcontrol.adicionarCandidato(this.evento, vaga);
+		return "/index.xhtml?faces-redirect=true";
+	}
+
+
+	// Tentar verificar se o usuario já se cadastrou a vaga, para não adicioná-la no Radio Button
+	private Vaga getVagaByEspecialidade (String especialidade) {
+		for (Vaga v: this.evento.getVagas())
+			if (v.getEspecialidade().getNome().equalsIgnoreCase(especialidade))
+				return v;
+		return null;
+	}
+
+	public List<Vaga> getVagasDisponiveis () {
+		List<Vaga> vagasDisponiveis = new ArrayList<>();
+		for (Vaga v: this.evento.getVagas())
+			if (v.getQtdVagas() > 0)
+				vagasDisponiveis.add(v);
+		return vagasDisponiveis;
 	}
 
 //    @RequestMapping(method = RequestMethod.GET)
@@ -334,6 +355,15 @@ public class EventoBean extends GenericBean implements Serializable {
 	}
 
 	// get and setters
+
+
+	public void setVagaEscolhida(String vagaEscolhida) {
+		this.vagaEscolhida = vagaEscolhida;
+	}
+
+	public String getVagaEscolhida() {
+		return vagaEscolhida;
+	}
 
 	public List<Especialidade> getEspecialidades() {
 		return especialidades;
