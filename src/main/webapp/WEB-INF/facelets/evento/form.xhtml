@@ -38,10 +38,30 @@
 							<input type="datetime-local" class="form-control" jsf:value="#{eventos.dataevento}">					
 							</input>
 				</div>
+				
+				<c:if test="#{eventos.userLogin == eventos.evento.dono}">
+					<div class="col-md-6">
+						<label>Status</label>
+							<h:selectOneMenu value="#{eventos.statusSelected}">
+								<f:selectItems value="eventos.status" var="status"
+								 itemLabel="Status"
+								 itemValue="#{status}"
+								/>
+							</h:selectOneMenu>
+				</div>
+				<div class="row m-auto">
+						<hr />
+						<h:commandButton id="Editar" value="Editar" action="#{eventos.atualizar}" class="btn btn-primary"/>
+				</div>
+				</c:if>
+				
+				
+				<c:if test="#{eventos.userLogin != eventos.evento.dono}">
 				<div class="row m-auto">
 						<hr />
 						<h:commandButton id="salvar" value="Salvar" action="#{eventos.salvar}" class="btn btn-primary"/>
 				</div>
+				</c:if>
 			</div>
 		</h:form>
 	</div>

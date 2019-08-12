@@ -7,9 +7,14 @@ import javax.inject.Inject;
 
 import br.edu.ifpb.simpleevents.dao.AvaliacaoEventoDAO;
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
+import br.edu.ifpb.simpleevents.dao.Transactional;
+import br.edu.ifpb.simpleevents.dao.VagaDAO;
 import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
+import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.Vaga;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 public class CandidatoVagaController implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -19,6 +24,9 @@ public class CandidatoVagaController implements Serializable {
     
     @Inject
     private AvaliacaoEventoDAO avaliacoesDAO;
+    
+    @Inject
+    private VagaDAO vagaDAO;
 
     public void create (CandidatoVaga candidatoVaga) {
         if (candidatoVaga.getId() != null)
@@ -34,5 +42,21 @@ public class CandidatoVagaController implements Serializable {
     public List<AvaliacaoEvento> getAvaliacoesPorUsuario (ParticipanteComposite user) {
     	return avaliacoesDAO.findByParticipante(user);
     }
+    
+    @Transactional
+    public boolean delete(Long id) throws Exception {
+		CandidatoVaga trabalho = candidatoVagaDAO.read(id);
+		Vaga vaga = vagaDAO.read(trabalho.getVaga().getId());
+		ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
+		if (usuarioLogado.getId() != trabalho.getCandidato().getId()) {
+            throw new Exception("você não pode alterar este evento");
+        }
+		if (trabalho != null) {
+			vaga.remove(trabalho);
+			candidatoVagaDAO.delete(trabalho);
+			return true;			
+		}
+		return false;
+	}
 
 }

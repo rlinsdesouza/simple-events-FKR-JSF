@@ -7,15 +7,14 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import br.edu.ifpb.simpleevents.facade.LoginFacade;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
+import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
 
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
 import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
 import br.edu.ifpb.simpleevents.dao.EventoDAO;
 import br.edu.ifpb.simpleevents.dao.ParticipanteDAO;
 import br.edu.ifpb.simpleevents.dao.Transactional;
-import br.edu.ifpb.simpleevents.dao.UserDAO;
 import br.edu.ifpb.simpleevents.dao.VagaDAO;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
@@ -25,6 +24,7 @@ import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.Vaga;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.entity.pattern.singleton.LogSingleton;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 public class EventoController implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -125,6 +125,39 @@ public class EventoController implements Serializable {
 		System.out.println(candidatoVaga);
 		candidatoVagaDAO.create(candidatoVaga);
 	}
+    
+    @Transactional
+    public Evento update(Evento e) throws Exception {  
+//      Evento eventoAntigo = e;
+//      Evento evento = new Evento();
+//      evento.setVagas(new ArrayList<>(eventoAntigo.getVagas()));
+//      evento.setAvaliacaoEventos(new ArrayList<>(eventoAntigo.getAvaliacaoEventos()));
+//      evento.setDono(eventoAntigo.getDono());
+//      
+      ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
+      if (usuarioLogado.getId() != e.getDono().getId()) {
+          throw new Exception("você não pode alterar este evento");
+      }
+//      if (especialidades != null) {
+//          for (Vaga v : this.descartarVagas(evento, especialidades))
+//              vagaDAO.deleteById(v.getId());
+//
+//          for (int i = 0; i < especialidades.size(); i++) {
+//              Vaga v = evento.findVagaByEspecialidade(especialidades.get(i));
+//              if (v != null) {
+//                  v.setQtdVagas(quantidades.get(i));
+//              } else {
+//                  Vaga vaga = new Vaga(especDAO.getOne(especialidades.get(i)), quantidades.get(i), evento);
+//                  vagaDAO.save(vaga);
+//                  evento.add(vaga);
+//              }
+//          }
+//      }
+//      evento.setDono(userDAO.findByEmail(auth.getName()));
+//      evento.setStatus(status);
+      
+      return eventoDAO.update(e); 
+  }
 
 
 
@@ -391,25 +424,7 @@ public class EventoController implements Serializable {
 //		return mapAvaliacoes;
 //	}
 //	
-//	@RequestMapping("/meustrabalhos/delete/{id}")
-//	public ModelAndView delete(@PathVariable("id") Long id, 
-//			Authentication auth,
-//			RedirectAttributes att) {
-//		CandidatoVaga trabalho = candidatoVagaDAO.findById(id).get();
-//		Vaga vaga = vagaDAO.findById(trabalho.getVaga().getId()).get();
-//		Evento evento = vaga.getEvento();
-//		User usuarioLogado = userDAO.findByEmail(auth.getName());
-//		if (usuarioLogado.getId() != evento.getDono().getId()) {
-//            att.addAttribute("mensagemerro", "você não pode alterar este evento");
-//            return new ModelAndView("redirect:/eventos");
-//        }
-//		if (trabalho != null) {
-//			vaga.remove(trabalho);
-//			candidatoVagaDAO.deleteById(id);
-//			att.addFlashAttribute("mensagem", "Evento deletado com sucesso!");			
-//		}
-//		return new ModelAndView("redirect:/candidaturas/meustrabalhos");
-//	}
+	
 
     @Transactional
 	public CandidatoVaga aprovarCandidato (Long id) throws Exception {

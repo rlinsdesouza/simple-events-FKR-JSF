@@ -40,10 +40,10 @@
 										<f:param name="id" value="#{evento.id}" />
 					</p:link>
 <!-- 					<div class="btn-group pull-right" th:if="${evento.dono.id == userLog.id}"> -->
-						<p:link outcome="/index.xhtml" value="Editar"
+						<h:link outcome="/eventos/cadastro.xhtml" value="Editar"
 										class="delete btn btn-sm btn-warning">
 										<f:param name="id" value="#{evento.id}" />
-						</p:link>
+						</h:link>
 <!-- 						<a class="delete btn btn-sm btn-warning" th:href="@{/eventos/edit/{id}(id=${evento.id})}">Editar</a> -->
 <!-- 					</div> -->
 <!-- 					<div class="btn-group pull-right" th:if="${evento.status.name() == 'ABERTO' && evento.dono.email.equals(userLog.email)}"> -->

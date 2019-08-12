@@ -1,18 +1,18 @@
 package br.edu.ifpb.simpleevents.beans;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.edu.ifpb.simpleevents.controller.CandidatoVagaController;
-import br.edu.ifpb.simpleevents.controller.EventoController;
+import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
@@ -45,9 +45,7 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	
   public String listMeusTrabalhos() {
       this.userLog = LoginFacade.getParticipanteLogado();
-      System.out.println(userLog);
       this.candidaturas = candidaturaControl.getCandidaturas(userLog);
-      System.out.println(candidaturas);
       List<AvaliacaoEvento> avaliacoes = candidaturaControl.getAvaliacoesPorUsuario(userLog); 
       this.mapAvaliacoes = fazerDicionarioAvaliacoeUsuario(avaliacoes);
 		
@@ -61,6 +59,22 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 		}
 		return mapAvaliacoes;
   }
+  
+  public String desistir(Long id) {
+	  try {
+		if(candidaturaControl.delete(id)) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Desistiu com sucesso!"));
+			return null;
+		}
+	} catch (Exception e) {
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.getMessage()));
+		e.printStackTrace();
+		return null;
+	};
+	return null;	  
+  }
+  
+  
   
 //get and setters
   

@@ -9,54 +9,56 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <body>
-    
+
 	<div class="container">
-<!-- 		<div th:if="${deletado}" >
-			<div th:replace="fragments/mensagens"></div>
-		</div> -->
-		<br/>
+		<br />
 		<h2>Meus trabalhos</h2>
-		<div style="height: 20px"></div>
-		<table class="table table-stripped">
-			<tr>
-				<th>Descrição</th>
-				<th>Local</th>
-				<th>Data</th>
-				<th>Especialidade</th>
-				<th>Status</th>
-				<th>Action</th>
-			</tr>
-			<c:forEach var="trabalho" items="#{trabalhos.candidaturas}">
-			<tr>
-				<td>#{trabalho.vaga.evento.descricao}</td>
-				<td>#{trabalho.vaga.evento.local}</td>
-				<td>#{trabalho.vaga.evento.data}</td>
-				<td>#{trabalho.vaga.especialidade.nome}</td>
-				<td>#{trabalho.status}</td>
-				
-				<td> 
-					<div class="btn-group pull-right">
-							<c:if test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
-							<div>
-								<button 
-									type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-									pt:data-target="#{avaliarEvento+trabalho.id}" 
-									pt:value="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id)} ? 'Nota:'+mapAvaliacoes.get(trabalho.vaga.evento.id) : 'Avaliar'}"
-									pt:disabled="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id)}"										
-									></button>
-								<ui:include src="/WEB-INF/facelets/fragments/avaliarEvento.xhtml"></ui:include>
+		<h:form>
+			<div style="height: 20px">
+			<table class="table table-stripped">
+				<tr>
+					<th>Descrição</th>
+					<th>Local</th>
+					<th>Data</th>
+					<th>Especialidade</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+				<c:forEach var="trabalho" items="#{trabalhos.candidaturas}">
+					<tr>
+						<td>#{trabalho.vaga.evento.descricao}</td>
+						<td>#{trabalho.vaga.evento.local}</td>
+						<td>#{trabalho.vaga.evento.data}</td>
+						<td>#{trabalho.vaga.especialidade.nome}</td>
+						<td>#{trabalho.status}</td>
+
+						<td>
+							<div class="btn-group pull-right">
+								<c:if
+									test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
+									<div>
+										<button type="button" class="btn btn-sm btn-primary"
+											data-toggle="modal"
+											pt:data-target="#{avaliarEvento+trabalho.id}"
+											pt:value="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id)} ? 'Nota:'+mapAvaliacoes.get(trabalho.vaga.evento.id) : 'Avaliar'}"
+											pt:disabled="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id)}"></button>
+										<ui:include
+											src="/WEB-INF/facelets/fragments/avaliarEvento.xhtml"></ui:include>
+									</div>
+								</c:if>
+								<c:if
+									test="#{trabalho.vaga.evento.status.name() != 'EXECUTADO'}">
+									<h:commandButton class="delete btn btn-sm btn-danger"
+										action="#{trabalhos.desistir(trabalho.id)}" value="Desistir" />
+								</c:if>
 							</div>
-							</c:if>
-						<c:if test="#{trabalho.vaga.evento.status.name() != 'EXECUTADO'}">
-						<h:commandButton 
-							class="delete btn btn-sm btn-danger" 
-							action="#{trabalhos.desistir(trabalho.id)}">Desistir</h:commandButton>
-						</c:if>						
-					</div>
-				</td>
-			</tr>
-			</c:forEach>
-		</table>
+						</td>
+					</tr>
+				</c:forEach>
+			</table>
+			</div>
+		</h:form>
 	</div>
 </body>
+
 </html>

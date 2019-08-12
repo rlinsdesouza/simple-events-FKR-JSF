@@ -15,7 +15,7 @@
 	  <div class="modal fade" pt:id="#{avaliarEvento+trabalho.id}" tabindex="-1" role="dialog" 
 					aria-labelledby="exampleModalLabel" 			 	 
 	 			 	aria-hidden="true">
-		  <h:form th:action="@{/avaliar/{id}(id=${trabalho.id})}">
+		  <h:form>
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -27,12 +27,12 @@
 			      <div class="modal-body">
 			        <div class="form-group">
 	  				  	<label for="formControlRange">Avaliacao</label>
-	    				<input type="range" class="form-control-range" name="notaAvaliacaoEvento" min="0" max="10">
+	    				<input type="range" class="form-control-range" name="notaAvaliacaoEvento" min="0" max="10"/>
 	  				</div>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-			        <h:commandButton action="#{avaliaEvento.avaliar}" type="submit" class="btn btn-primary">Avaliar</button>
+			        <h:commandButton action="#{avaliaEvento.avaliar}" type="submit" class="btn btn-primary" value="Avaliar"/>
 			      </div>
 			    </div>
 			  </div>

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,10 @@ import br.edu.ifpb.simpleevents.controller.EspecialidadeController;
 import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
 import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.StatusEvento;
 import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "eventos")
 @ViewScoped
@@ -35,7 +39,11 @@ public class EventoBean extends GenericBean implements Serializable {
 	private List<EscolhaVagasEvento> escolhaVagas;
 
 	private Evento evento;
+	private List<StatusEvento> status;
+	private StatusEvento statusSelected;
 	private String dataevento;
+	
+	private ParticipanteComposite userLogin;
 
 	private Long idSelecionado;
 
@@ -45,6 +53,8 @@ public class EventoBean extends GenericBean implements Serializable {
 	private void init() {
 		Evento evento = (Evento) this.getFlash("evento");
 		if (evento != null) {
+			this.status = new ArrayList<StatusEvento>(EnumSet.allOf(StatusEvento.class));
+			this.userLogin = LoginFacade.getParticipanteLogado();
 			this.evento = evento;
 			this.especialidades = this.espccontrol.consultar();
 			this.escolhaVagas = new ArrayList<EventoBean.EscolhaVagasEvento>();
@@ -52,11 +62,18 @@ public class EventoBean extends GenericBean implements Serializable {
 				this.escolhaVagas.add(new EscolhaVagasEvento(especialidade, false, 0));
 			}
 		} else {
+			this.userLogin = LoginFacade.getParticipanteLogado();
 			this.evento = new Evento();
 		}
 	}
 
 	public String form() {
+		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+		if (!params.isEmpty()) {
+			Long id = Long.parseLong(params.get("id"));
+			this.evento = evtcontrol.findById(id);
+				
+		}
 		return "/WEB-INF/facelets/evento/form.xhtml";
 	}
 
@@ -75,6 +92,19 @@ public class EventoBean extends GenericBean implements Serializable {
 		this.evento = evtcontrol.save(evento);
 		this.setFlash("evento", evento);
 		return "/eventos/addvagas.xhtml";
+	}
+	
+	public String atualizar() {
+		evento.setData(converter(dataevento));
+		try {
+			this.evento = evtcontrol.update(evento);
+			this.setFlash("evento", evento);
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Atualizado com sucesso!"));
+			return "/WEB-INF/facelets/evento/form.xhtml?faces-redirect=true";
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.getMessage()));
+			return "/WEB-INF/facelets/evento/form.xhtml?faces-redirect=true";
+		}
 	}
 
 	public String salvarVagas() {
@@ -178,54 +208,7 @@ public class EventoBean extends GenericBean implements Serializable {
 //        return modelForm;
 //    }
 //
-//    @RequestMapping(value = "/update/{id}", method = RequestMethod.POST)
-//    public ModelAndView update(
-//            Authentication auth,
-//            @PathVariable("id") Long id,
-//            RedirectAttributes att,
-//            @Valid Evento evento,
-//            BindingResult result,
-//            @RequestParam(value = "status") StatusEvento status,
-//            @RequestParam(value = "especialidades", required = false) List<Long> especialidades,
-//            @RequestParam(value = "quantidades", required = false) List<Integer> quantidades) {
-//        
 //
-//        Evento eventoAntigo = eventoDAO.findById(id).get();
-//        evento.setVagas(new ArrayList<>(eventoAntigo.getVagas()));
-//        evento.setAvaliacaoEventos(new ArrayList<>(eventoAntigo.getAvaliacaoEventos()));
-//        evento.setDono(eventoAntigo.getDono());
-//        
-//    	User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        if (usuarioLogado.getId() != evento.getDono().getId()) {
-//            att.addAttribute("mensagemerro", "você não pode alterar este evento");
-//            return new ModelAndView("redirect:/eventos");
-//        }
-//        
-//    	if (result.hasErrors()) {
-//            evento.setId(id);
-//            ModelAndView modelForm = new ModelAndView("evento/form");
-//            return modelForm.addObject("especialidades", especDAO.findAll());
-//        }
-//        if (especialidades != null) {
-//            for (Vaga v : this.descartarVagas(evento, especialidades))
-//                vagaDAO.deleteById(v.getId());
-//
-//            for (int i = 0; i < especialidades.size(); i++) {
-//                Vaga v = evento.findVagaByEspecialidade(especialidades.get(i));
-//                if (v != null) {
-//                    v.setQtdVagas(quantidades.get(i));
-//                } else {
-//                    Vaga vaga = new Vaga(especDAO.getOne(especialidades.get(i)), quantidades.get(i), evento);
-//                    vagaDAO.save(vaga);
-//                    evento.add(vaga);
-//                }
-//            }
-//        }
-//        evento.setDono(userDAO.findByEmail(auth.getName()));
-//        evento.setStatus(status);
-//        eventoDAO.save(evento);
-//        return new ModelAndView("redirect:/eventos/meuseventos");
-//    }
 //
 //    @GetMapping("/candidatar/{id}")
 //    public ModelAndView exibirCandidatar(@PathVariable("id") Long id) {
@@ -396,6 +379,16 @@ public class EventoBean extends GenericBean implements Serializable {
 	public void setDataevento(String dataevento) {
 		this.dataevento = dataevento;
 	}
+	
+	
+
+	public StatusEvento getStatusSelected() {
+		return statusSelected;
+	}
+
+	public void setStatusSelected(StatusEvento statusSelected) {
+		this.statusSelected = statusSelected;
+	}
 
 	public Long getIdSelecionado() {
 		return idSelecionado;
@@ -404,8 +397,30 @@ public class EventoBean extends GenericBean implements Serializable {
 	public void setIdSelecionado(Long idSelecionado) {
 		this.idSelecionado = idSelecionado;
 	}
+	
+	
+	
+	public List<StatusEvento> getStatus() {
+		return status;
+	}
+
+	public void setStatus(List<StatusEvento> status) {
+		this.status = status;
+	}
+
+	public ParticipanteComposite getUserLogin() {
+		return userLogin;
+	}
+
+	public void setUserLogin(ParticipanteComposite userLogin) {
+		this.userLogin = userLogin;
+	}
+
 
 	//	inner class para escolha de quantidade de vagas por especialidade no switch
+
+	
+
 
 	public class EscolhaVagasEvento {
 		private Especialidade especialidade;
@@ -442,6 +457,8 @@ public class EventoBean extends GenericBean implements Serializable {
 		public void setQuantidade(int quantidade) {
 			this.quantidade = quantidade;
 		}
+		
+		
 
 	}
 
