@@ -33,20 +33,21 @@
 						<td>#{trabalho.status}</td>
 
 						<td>
-							<div class="btn-group pull-right">
 								<c:if
 									test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
-									<div>
-										<p:rating value="#{trabalhos.rating}" cancel="false" onRate="#{trabalhos.avaliar()}" />
-										
-									</div>
+									<div style="display:flex;width: 120px;">
+									
+										<p:rating value="#{trabalhos.rating}" cancel="false" required="true"/>
+										<h:commandLink action="#{trabalhos.avaliar(trabalho)}">
+											<i class="fa fa-play-circle"></i>
+										</h:commandLink>
+									</div>	
 								</c:if>
 								<c:if
 									test="#{trabalho.vaga.evento.status.name() != 'EXECUTADO'}">
 									<h:commandButton class="delete btn btn-sm btn-danger"
 										action="#{trabalhos.desistir(trabalho.id)}" value="Desistir" />
 								</c:if>
-							</div>
 						</td>
 					</tr>
 				</c:forEach>

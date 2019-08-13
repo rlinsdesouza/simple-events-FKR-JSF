@@ -11,8 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.PrimeFaces;
-
 import br.edu.ifpb.simpleevents.controller.CandidatoVagaController;
 import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
@@ -29,7 +27,6 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	@Inject
 	private CandidatoVagaController candidaturaControl;
 
-	private Evento evento;
 	private ParticipanteComposite userLog;
 	private List<CandidatoVaga> candidaturas;
 	private Map<Long,String> mapAvaliacoes;
@@ -77,31 +74,15 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	return null;	  
   }
 
-  public String avaliar() {
-	  System.out.println("entrou");
-//	  System.out.println(candidaturaControl.avaliarEvento(candidatura, this.evento, this.rating));
-//      FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());
-//      FacesContext.getCurrentInstance().addMessage(null, message);
-	  return null;
-  }
-   
-  public void oncancel() {
-      FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancel Event", "Rate Reset");
+  public String avaliar(CandidatoVaga candidatura) {
+	  candidaturaControl.avaliarEvento(candidatura, candidatura.getVaga().getEvento(), this.rating);
+      FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado!", "Avaliado com sucesso!");
       FacesContext.getCurrentInstance().addMessage(null, message);
-  }
-  
+	  return null;
+  }  
   
   
 //get and setters
-  
-	
-	public Evento getEvento() {
-		return evento;
-	}
-	
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
 	
 	public ParticipanteComposite getUserLog() {
 		return userLog;
