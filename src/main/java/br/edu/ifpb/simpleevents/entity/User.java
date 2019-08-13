@@ -41,7 +41,7 @@ public class User extends ParticipanteComposite {
 	@OneToOne
 	private AvaliacaoEvento avaliacaoEvento;
 	
-	private boolean isAdmin = false;
+	
 
 	public User() {
 	}
@@ -102,13 +102,6 @@ public class User extends ParticipanteComposite {
 		this.datanascimento = datanascimento;
 	}
 
-	public boolean isAdmin() {
-		return isAdmin;
-	}
-
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
-	}
 
 	@Override
 	public String toString() {
@@ -120,52 +113,5 @@ public class User extends ParticipanteComposite {
 	public int getCount() {
 		return 1;
 	}
-
-//	@Override
-//	public Collection<? extends GrantedAuthority> getAuthorities() {
-//		
-//		List<GrantedAuthority> grantList = new ArrayList<GrantedAuthority>();
-//		grantList.add(new SimpleGrantedAuthority("ROLE_USER"));
-//		
-//		if (this.isAdmin()) {
-//			GrantedAuthority autorizacaoAdmin = new SimpleGrantedAuthority("ROLE_ADMIN");
-//			grantList.add(autorizacaoAdmin);
-//		}
-//		return grantList;
-//	}
-
-//	@Override
-//	public String getPassword() {
-//		return this.getSenha();
-//	}
-//
-//	@Override
-//	public String getUsername() {
-//		return this.getEmail();
-//	}
-//
-//	@Override
-//	public boolean isAccountNonExpired() {
-//		// TODO Auto-generated method stub
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isAccountNonLocked() {
-//		// TODO Auto-generated method stub
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isCredentialsNonExpired() {
-//		// TODO Auto-generated method stub
-//		return true;
-//	}
-//
-//	@Override
-//	public boolean isEnabled() {
-//		// TODO Auto-generated method stub
-//		return true;
-//	}
 
 }

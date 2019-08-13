@@ -2,7 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
 	xmlns:p="http://primefaces.org/ui">
 <body>
 
@@ -10,27 +13,24 @@
         <p:link class="navbar-brand " outcome="/index.xhtml">
             <img src="https://res.cloudinary.com/deqmrmqui/image/upload/v1559256417/fakara2_euoenn.png"/>
         </p:link>
-<!--        <a class="navbar-brand ">-->
-<!--            <img src="https://res.cloudinary.com/deqmrmqui/image/upload/v1559256417/fakara2_euoenn.png"/>-->
-<!--        </a>-->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
             <h:form class="form-inline mt-2 mt-md-0 col-lg-6" style="justify-content: flex-end;">
-                <p:inputText id="nome" value="#{index.teste}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
-                <h:commandButton value="Pesquisar" id="pesquisar" action="#" class="btn teste my-2 my-sm-0"/>
+                <p:inputText id="nome" value="#{index.pesquisaNome}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
+                <h:commandButton value="Pesquisar" id="pesquisar" action="#{index.pesquisar}" class="btn teste my-2 my-sm-0"/>
             </h:form>
             <ul class="navbar-nav">
-<!--                 <th:block sec:authorize="hasRole('ADMIN')">
+               <c:if test="#{index.userLogin.admin}">
 	    			<li class="nav-item">
-                    	<a class="nav-link" th:href="@{/especialidades}">Especialidades</a>
+                    	<p:link outcome="/especialidade/list.xhtml" value="Especialidades" class="nav-link"/>
                 	</li>
-	  			</th:block> -->
-	  			<li class="nav-item">
-                	<p:link outcome="/datafaker.xhtml" value="Datafaker" class="nav-link"/>
-                </li>
+                	<li class="nav-item">
+                		<p:link outcome="/datafaker.xhtml" value="Datafaker" class="nav-link"/>
+                	</li>
+	  			</c:if>
                 <li class="nav-item">
                 	<p:link outcome="/eventos/meuseventos.xhtml" value="Administrar eventos" class="nav-link"/>
                 </li>

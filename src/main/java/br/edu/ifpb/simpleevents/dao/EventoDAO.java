@@ -32,7 +32,7 @@ public class EventoDAO extends GenericDAO<Evento, Long> {
 		}	
 	}
 	
-	public List<Evento> findByName(StatusEvento nome) {
+	public List<Evento> findByName(String nome) {
 		try {
 			Query query = this.entityManager.createQuery("select e from Evento e left join e.vagas v left join v.especialidade f "
 					+ "where lower(e.descricao) like lower(concat('%',:nome,'%'))"

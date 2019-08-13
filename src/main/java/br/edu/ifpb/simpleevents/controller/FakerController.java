@@ -70,21 +70,21 @@ public class FakerController {
 	}
 	
 	public void createDataParticipantes () throws NoSuchAlgorithmException, InvalidKeySpecException {
-		User user;
+		ParticipanteComposite user;
 		user = new User();
-		user.setNome("admin");
+		((User) user).setNome("admin");
 		user.setEmail("admin@test");
 		user.setAdmin(true);
 		user.setSenha(password.encryptMD5("admin"));
-		userdao.create(user);
+		participanteDAO.create(user);
 		for (int i = 0; i < 100; i++) {
-			user = new User();
-			user.setNome(faker.name().fullName());
-			user.setEmail(user.getNome().toLowerCase().replaceAll("\\s+", "-")+"@test");
-			user.setTelefone(faker.phoneNumber().cellPhone());
-			user.setDatanascimento(faker.date().birthday(18, 60));
-			user.setSenha(password.encryptMD5(user.getNome().toLowerCase().split("\\s+")[0]));
-			userdao.create(user);
+			User userpf = new User();
+			userpf.setNome(faker.name().fullName());
+			userpf.setEmail(userpf.getNome().toLowerCase().replaceAll("\\s+", "-")+"@test");
+			userpf.setTelefone(faker.phoneNumber().cellPhone());
+			userpf.setDatanascimento(faker.date().birthday(18, 60));
+			userpf.setSenha(password.encryptMD5(userpf.getNome().toLowerCase().split("\\s+")[0]));
+			userdao.create(userpf);
 		}
 		
 	}

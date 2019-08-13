@@ -3,44 +3,50 @@ package br.edu.ifpb.simpleevents.beans;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.enterprise.context.SessionScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.security.enterprise.SecurityContext;
-import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
+import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.controller.IndexController;
 import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "index")
-@SessionScoped
-public class IndexBean implements Serializable {
+@ViewScoped
+public class IndexBean extends GenericBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<Evento> eventos;
-	private String teste;
+	private ParticipanteComposite userLogin;
+	private String pesquisaNome;
 
 	@Inject
 	private IndexController controller;
 	
-    @Inject
-    private SecurityContext securityContext;
-
-	public String teste() {
-		return null;
+	@Inject
+	private EventoController eventoController;
+	
+	@PostConstruct
+	private void init() {
+		this.eventos = (List<Evento>) this.getFlash("eventos");
+		if (this.eventos == null) {
+			this.eventos = controller.getEventos();
+		}
+		this.userLogin = LoginFacade.getParticipanteLogado();
 	}
 	
+
 	public String showindex() {
     	HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-    	String user = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-    	if(user != null) {
-        	response.addCookie(new Cookie("lastUser",user));
+    	if(LoginFacade.isAuthenticated()) {
+        	response.addCookie(new Cookie("lastUser",this.userLogin.getEmail()));
         }
-    	this.eventos = controller.getEventos();
     	return "/WEB-INF/facelets/evento/listInCards.xhtml";
     }
 	
@@ -51,6 +57,8 @@ public class IndexBean implements Serializable {
         	return "/WEB-INF/facelets/navbar/navbarLoggedOut.xhtml";
         }
 	}
+	
+	
 
 //    @GetMapping("/login")
 //    public String login(Model model, @CookieValue(value = "lastUser", defaultValue="nenhum") String lastUser) {
@@ -60,12 +68,10 @@ public class IndexBean implements Serializable {
 //    	return "login"; // <<< Retorna a página de login
 //    }
 //    
-//    @GetMapping("/pesquisar")
-//    public String pesquisar(Model model,
-//    		@RequestParam(value = "nome", required = false) String nome) {
-//    	model.addAttribute("eventos",eventoDAO.findByName(nome));
-//    	return "index";
-//    }
+    public String pesquisar() {
+    	this.eventos = eventoController.findByName(this.pesquisaNome);
+    	return null;
+    }
 
 	// get and setters
 
@@ -77,12 +83,20 @@ public class IndexBean implements Serializable {
 		this.eventos = eventos;
 	}
 
-	public String getTeste() {
-		return teste;
+	public ParticipanteComposite getUserLogin() {
+		return userLogin;
 	}
 
-	public void setTeste(String teste) {
-		this.teste = teste;
+	public void setUserLogin(ParticipanteComposite userLogin) {
+		this.userLogin = userLogin;
 	}
 
+	public String getPesquisaNome() {
+		return pesquisaNome;
+	}
+
+	public void setPesquisaNome(String pequisaNome) {
+		this.pesquisaNome = pequisaNome;
+	}
+	
 }

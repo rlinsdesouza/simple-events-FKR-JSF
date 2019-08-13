@@ -10,8 +10,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.PersistenceException;
 
+import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
+
 import br.edu.ifpb.simpleevents.controller.EspecialidadeController;
 import br.edu.ifpb.simpleevents.entity.Especialidade;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "especialidadeBean")
 @ViewScoped
@@ -34,6 +37,7 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 			this.especialidade = new Especialidade();
 		}
 	}
+	
 	
 	public String salvar() {
 		String view = null;
@@ -58,7 +62,7 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 		this.controller.deletar(especialidade);
 		this.especialidades = this.controller.consultar();
 		return "list.xhtml?faces-redirect=true";
-	}
+	} 
 
 	public List<Especialidade> getEspecialidades(){
 		return this.especialidades;
@@ -74,6 +78,22 @@ public class EspecialidadeBean extends GenericBean implements Serializable{
 	
 	public void setEspecialidade(Especialidade especialidade) {
 		this.especialidade = especialidade;
+	}
+	
+	public String list() {
+		if(LoginFacade.isAuthenticated() && LoginFacade.getParticipanteLogado().getAdmin() ) {
+			return "/WEB-INF/facelets/especialidade/list.xhtml";
+		}else {
+			return "/WEB-INF/facelets/gabaritos/forbidden.xhtml";
+		}
+	}
+	
+	public String form() {
+		if(LoginFacade.isAuthenticated() && LoginFacade.getParticipanteLogado().getAdmin() ) {
+			return "/WEB-INF/facelets/especialidade/form.xhtml";
+		}else {
+			return "/WEB-INF/facelets/gabaritos/forbidden.xhtml";
+		}
 	}
 
 }

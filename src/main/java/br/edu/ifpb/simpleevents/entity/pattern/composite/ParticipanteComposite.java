@@ -26,9 +26,12 @@ public abstract class ParticipanteComposite {
 //	@Size(min = 8, message = "a senha deve conter no minino 8 caracteres")
 	protected String senha;
 	
-	public ParticipanteComposite(String email, String senha) {
+	protected boolean admin = false;
+	
+	public ParticipanteComposite(String email, String senha, boolean admin) {
 		this.email = email;
 		this.senha = senha;
+		this.admin = admin;
 	}
 	
 	public ParticipanteComposite() {
@@ -60,4 +63,13 @@ public abstract class ParticipanteComposite {
 	public String getSenha() {
 		return this.senha;
 	}
+
+	public boolean getAdmin() {
+		return this.admin;
+	}
+
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
+	}
+	
 }
