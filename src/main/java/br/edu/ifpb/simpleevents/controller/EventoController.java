@@ -108,7 +108,11 @@ public class EventoController implements Serializable {
     public Evento findById(Long id) {
     	return eventoDAO.read(id);
     }
-    
+
+    public List<Evento> findByDono(ParticipanteComposite dono) {
+		return eventoDAO.findByDono(dono);
+	}
+
     @Transactional
     public Vaga criarVaga (Vaga vaga) {
     	return vagaDAO.create(vaga);

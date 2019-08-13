@@ -14,6 +14,7 @@ import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
 import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "eventosList")
 @ViewScoped
@@ -30,6 +31,15 @@ public class EventoListBean extends GenericBean implements Serializable {
 //		User usuarioLogado = userDAO.findByEmail(auth.getName());
 //		modelList.addObject("userLog", usuarioLogado);
 		this.eventos = evtcontrol.findAll();
+		this.eventosVagas = converterListasEventos();
+
+		return "/WEB-INF/facelets/evento/list.xhtml";
+	}
+
+	public String listByParticipante() {
+		if (LoginFacade.isAuthenticated())
+			this.eventos = evtcontrol.findByDono(LoginFacade.getParticipanteLogado());
+
 		this.eventosVagas = converterListasEventos();
 
 		return "/WEB-INF/facelets/evento/list.xhtml";

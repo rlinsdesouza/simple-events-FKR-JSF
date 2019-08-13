@@ -11,6 +11,7 @@
 <body>
     
 	<div class="container">
+		<h:button value="Cadastrar" outcome="/eventos/cadastro" />
 		<br/>
 		<h2>Eventos cadastrados</h2>
 <!-- 		<a sec:authorize="isAuthenticated()" -->
@@ -35,7 +36,7 @@
 				<td>#{evento.dono.nome}</td>
 				<td>#{evento.status}</td>
 				<td>
-					<p:link outcome="/index.xhtml" value="Detalhes"
+					<p:link outcome="/eventos/details.xhtml" value="Detalhes"
 										class="delete btn btn-sm btn-info">
 										<f:param name="id" value="#{evento.id}" />
 					</p:link>
