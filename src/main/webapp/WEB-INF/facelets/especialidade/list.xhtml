@@ -24,7 +24,7 @@
                     <tbody>
                     <c:forEach var="especialidade" items="#{especialidadeBean.especialidades}">
                         <tr>
-                            <th scope="row">#{especialidade.id}</th>
+                            <th scope="row">#{especialidade.nome}</th>
                             <td>#{especialidade.descricao}</td>
                             <td>
                                 <h:commandLink action="#{especialidadeBean.editar(especialidade)}">Editar</h:commandLink>
