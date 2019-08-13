@@ -54,14 +54,10 @@
 						</p:link>
 <!-- 						<a class="delete btn btn-sm btn-light" th:href="@{/eventos/{id}/candidatos(id=${evento.id})}">Analisar Candidatos</a> -->
 <!-- 					</div> -->
-					<button
-							type="button" class="btn btn-sm btn-primary" data-toggle="modal"
-							pt:data-target="'#avaliarDesempenho'+#{evento.id}">
-<!-- 							th:if="${evento.status.name() == 'EXECUTADO' && evento.dono.email.equals(userLog.email)}" -->
-					
-						Avaliar
-					</button>
-					<ui:include src="/WEB-INF/facelets/fragments/avaliarDesempenho.xhtml"></ui:include>
+					<p:link outcome="/eventos/details.xhtml" value="Avaliar"
+							class="delete btn btn-sm btn-primary">
+						<f:param name="id" value="#{evento.id}" />
+					</p:link>
 <!-- 					<div th:replace="fragments/avaliarDesempenho"></div> -->
 				</td>
 			</tr>

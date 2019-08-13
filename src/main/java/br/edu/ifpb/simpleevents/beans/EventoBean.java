@@ -15,12 +15,10 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.edu.ifpb.simpleevents.controller.CandidatoVagaController;
 import br.edu.ifpb.simpleevents.controller.EspecialidadeController;
 import br.edu.ifpb.simpleevents.controller.EventoController;
-import br.edu.ifpb.simpleevents.entity.Especialidade;
-import br.edu.ifpb.simpleevents.entity.Evento;
-import br.edu.ifpb.simpleevents.entity.StatusEvento;
-import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.entity.*;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
@@ -35,6 +33,9 @@ public class EventoBean extends GenericBean implements Serializable {
 	@Inject
 	private EspecialidadeController espccontrol;
 
+	@Inject
+	private CandidatoVagaController candidaturaControl;
+
 	private List<Especialidade> especialidades;
 	private List<EscolhaVagasEvento> escolhaVagas;
 
@@ -48,6 +49,8 @@ public class EventoBean extends GenericBean implements Serializable {
 	private Long idSelecionado;
 
 	private String vagaEscolhida;
+
+	private int rating;
 
 	@PostConstruct
 	private void init() {
@@ -128,6 +131,7 @@ public class EventoBean extends GenericBean implements Serializable {
 		System.out.println("ok");
 		Vaga vaga = this.getVagaByEspecialidade(this.vagaEscolhida);
 		evtcontrol.adicionarCandidato(this.evento, vaga);
+		this.addMessage(FacesMessage.SEVERITY_INFO, "Candidatura realizada.");
 		return "/index.xhtml?faces-redirect=true";
 	}
 
@@ -146,6 +150,15 @@ public class EventoBean extends GenericBean implements Serializable {
 			if (v.getQtdVagas() > 0)
 				vagasDisponiveis.add(v);
 		return vagasDisponiveis;
+	}
+
+	public String avaliar(CandidatoVaga candidatoVaga) {
+		CandidatoVaga candidatura = candidaturaControl.findById(candidatoVaga.getId());
+		candidatura.setNotaDesempenho(this.rating);
+		candidaturaControl.create(candidatura);
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado!", "Avaliado com sucesso!");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+		return "/eventos/meuseventos.xhtml?faces-redirect=true";
 	}
 
 //    @RequestMapping(method = RequestMethod.GET)
@@ -403,9 +416,15 @@ public class EventoBean extends GenericBean implements Serializable {
 	public void setIdSelecionado(Long idSelecionado) {
 		this.idSelecionado = idSelecionado;
 	}
-	
-	
-	
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
 	public List<StatusEvento> getStatus() {
 		return status;
 	}

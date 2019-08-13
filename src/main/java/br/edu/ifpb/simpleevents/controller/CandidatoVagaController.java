@@ -33,6 +33,7 @@ public class CandidatoVagaController implements Serializable {
     @Inject
     private EventoDAO eventoDAO;
 
+    @Transactional
     public void create (CandidatoVaga candidatoVaga) {
         if (candidatoVaga.getId() != null)
             this.candidatoVagaDAO.create(candidatoVaga);

@@ -45,22 +45,39 @@
                 </div>
             </p:tab>
             <p:tab title="Avaliação dos Participantes">
-                <h:panelGrid columns="2" cellpadding="10">
-                    <ul class="row">
+                <div class="row">
+                    <c:if test="#{eventos.evento.status.name() == 'EXECUTADO'}">
+                        <h:form styleClass="w-100">
+                            <c:forEach var="vaga" items="#{eventos.evento.vagas}">
+                                <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+                                    <div class="flex-row">
+                                        <div class="col-md-4">#{candidato.candidato.nome} - #{candidato.id}</div>
+                                        <div class="col-md-4">
+                                            <p:rating value="#{eventos.rating}" cancel="false" required="true"/>
+                                        </div>
+                                        <h:commandLink action="#{eventos.avaliar(candidato)}" styleClass="col-md-2">
+                                            <i class="fa fa-play-circle"></i>
+                                        </h:commandLink>
+                                    </div>
+                                </c:forEach>
+                            </c:forEach>
+                        </h:form>
+                    </c:if>
+                    <c:if test="#{eventos.evento.status.name() != 'EXECUTADO'}">
                         <c:forEach var="vaga" items="#{eventos.evento.vagas}">
                             <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
                                 <div class="col">#{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
                             </c:forEach>
                         </c:forEach>
-                    </ul>
-                </h:panelGrid>
+                    </c:if>
+                </div>
             </p:tab>
             <p:tab title="Avaliação do Evento">
-                <ul class="row">
+                <div class="row">
                     <c:forEach var="avaliacao" items="#{eventos.evento.avaliacaoEventos}">
                         <div class="col">#{avaliacao.notaAvaliacaoEvento}</div>
                     </c:forEach>
-                </ul>
+                </div>
             </p:tab>
         </p:tabView>
     </div>
