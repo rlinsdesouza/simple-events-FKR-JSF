@@ -37,13 +37,8 @@
 								<c:if
 									test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
 									<div>
-										<button type="button" class="btn btn-sm btn-primary"
-											data-toggle="modal"
-											data-target="#{avaliarEvento+trabalho.id}"
-											value="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id) ? 'Nota:'+mapAvaliacoes.get(trabalho.vaga.evento.id) : 'Avaliar'}"
-											disabled="#{trabalhos.mapAvaliacoes.get(trabalho.vaga.evento.id)}"></button>
-										<ui:include
-											src="/WEB-INF/facelets/fragments/avaliarEvento.xhtml"></ui:include>
+										<p:rating value="#{trabalhos.rating}" cancel="false" onRate="#{trabalhos.avaliar()}" />
+										
 									</div>
 								</c:if>
 								<c:if

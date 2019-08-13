@@ -7,9 +7,6 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
-import org.jboss.weld.bean.builtin.FacadeInjectionPoint;
-
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
 import br.edu.ifpb.simpleevents.dao.EspecialidadeDAO;
 import br.edu.ifpb.simpleevents.dao.EventoDAO;
@@ -469,6 +466,9 @@ public class EventoController implements Serializable {
 //		att.addFlashAttribute("mensagemsecundaria", "Candidato reprovado com sucesso!");	
 		return candidatura;
 	}
+	
+
+
 
 //	@PostMapping("/{id}/avaliar")
 //	public ModelAndView detail(@PathVariable("id") Long id,

@@ -105,11 +105,11 @@ public class EventoBean extends GenericBean implements Serializable {
 			this.evento = evtcontrol.update(evento);
 			this.setFlash("evento", evento);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Atualizado com sucesso!"));
-			return "/eventos/details.xhtml?faces-redirect=true";
+			return "/eventos/details.xhtml?faces-redirect=true&id="+evento.getId();
 		} catch (Exception e) {
 			this.setFlash("evento", evento);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.getMessage()));
-			return "/eventos/details.xhtml?faces-redirect=true";
+			return "/eventos/details.xhtml?faces-redirect=true&id="+evento.getId();
 		}
 	}
 

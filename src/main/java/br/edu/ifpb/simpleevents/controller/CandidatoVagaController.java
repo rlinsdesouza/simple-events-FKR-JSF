@@ -7,11 +7,13 @@ import javax.inject.Inject;
 
 import br.edu.ifpb.simpleevents.dao.AvaliacaoEventoDAO;
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
+import br.edu.ifpb.simpleevents.dao.EventoDAO;
 import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.dao.VagaDAO;
 import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
+import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.Vaga;
 import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.facade.LoginFacade;
@@ -27,6 +29,9 @@ public class CandidatoVagaController implements Serializable {
     
     @Inject
     private VagaDAO vagaDAO;
+    
+    @Inject
+    private EventoDAO eventoDAO;
 
     public void create (CandidatoVaga candidatoVaga) {
         if (candidatoVaga.getId() != null)
@@ -37,6 +42,10 @@ public class CandidatoVagaController implements Serializable {
     
     public List<CandidatoVaga> getCandidaturas (ParticipanteComposite user) {
     	return candidatoVagaDAO.findByCandidato(user);
+    }
+    
+    public CandidatoVaga findById (Long id) {
+    	return candidatoVagaDAO.read(id);
     }
     
     public List<AvaliacaoEvento> getAvaliacoesPorUsuario (ParticipanteComposite user) {
@@ -57,6 +66,18 @@ public class CandidatoVagaController implements Serializable {
 			return true;			
 		}
 		return false;
+	}
+    
+	@Transactional
+	public boolean avaliarEvento(CandidatoVaga candidatura, Evento evento,int notaAvaliacaoEvento) {
+		AvaliacaoEvento avaliacao = new AvaliacaoEvento();
+		avaliacao.setEvento(evento);
+		avaliacao.setNotaAvaliacaoEvento(notaAvaliacaoEvento);
+		avaliacao.setParticipante((User) LoginFacade.getParticipanteLogado());
+		avaliacao = avaliacoesDAO.create(avaliacao);
+		evento.add(avaliacao);
+		eventoDAO.update(evento);
+		return true;
 	}
 
 }

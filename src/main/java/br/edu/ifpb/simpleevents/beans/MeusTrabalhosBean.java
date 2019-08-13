@@ -11,8 +11,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.PrimeFaces;
+
 import br.edu.ifpb.simpleevents.controller.CandidatoVagaController;
-import br.edu.ifpb.simpleevents.dao.Transactional;
 import br.edu.ifpb.simpleevents.entity.AvaliacaoEvento;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
@@ -32,6 +33,8 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	private ParticipanteComposite userLog;
 	private List<CandidatoVaga> candidaturas;
 	private Map<Long,String> mapAvaliacoes;
+	private Integer rating;
+	
 	
 //	@PostConstruct
 //	private void init() {
@@ -73,6 +76,19 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	};
 	return null;	  
   }
+
+  public String avaliar() {
+	  System.out.println("entrou");
+//	  System.out.println(candidaturaControl.avaliarEvento(candidatura, this.evento, this.rating));
+//      FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Rate Event", "You rated:" + ((Integer) rateEvent.getRating()).intValue());
+//      FacesContext.getCurrentInstance().addMessage(null, message);
+	  return null;
+  }
+   
+  public void oncancel() {
+      FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cancel Event", "Rate Reset");
+      FacesContext.getCurrentInstance().addMessage(null, message);
+  }
   
   
   
@@ -103,6 +119,14 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 		this.candidaturas = candidaturas;
 	}
 	
+	public Integer getRating() {
+		return rating;
+	}
+
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
+
 	public Map<Long, String> getMapAvaliacoes() {
 		return mapAvaliacoes;
 	}
