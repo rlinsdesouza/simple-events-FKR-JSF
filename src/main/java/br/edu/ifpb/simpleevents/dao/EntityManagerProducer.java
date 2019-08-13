@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 
 public class EntityManagerProducer {
 	
-	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("simple-events");
+	private static EntityManagerFactory factory = Persistence.createEntityManagerFactory("simple-events",PersistenceProperties.get());
 	
 	@Produces
 	@RequestScoped
