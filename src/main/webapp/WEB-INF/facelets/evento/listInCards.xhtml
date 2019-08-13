@@ -12,41 +12,37 @@
 <div class="album py-5">
     <div class="container">
         <div class="row">
-
-			<h:form id="form-candidatar">
-				<c:forEach var="evento" items="#{index.eventos}"
-						   class="col-md-4 col-sm-6">
-					<div class="card mb-4 shadow-sm">
-						<h:outputText value="#{evento.descricao}"/>
-						<div>
-							<small><h:outputText value="#{evento.local}"/></small>
-						</div>
-						<div class="card-body">
-							<h:outputText value="#{evento.dono.nome}"
-										  class="card-text"/>
-							<h:outputText value="#{evento.status}"
-										  class="card-text"/>
-							<h:outputText value="#{evento.vagas}" class="card-text"/>
-
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<p:link outcome="/eventos/details.xhtml" value="Detalhes"
-										class="btn btn-sm btn-outline-secondary">
-										<f:param name="id" value="#{evento.id}" />
-									</p:link>
-									
-									<!-- <p:link outcome="/eventos/canidatar.xhtml" value="Candidatar"
-										class="btn btn-sm btn-outline-secondary">
-										<f:param name="id" value="#{evento.id}" />
-									</p:link>-->
-
+			<c:forEach var="evento" items="#{index.eventos}">
+					<div class="col-sm-6 col-md-6 p-2">
+						<div class="card shadow-sm">
+							<div class="card-body">
+								<h:outputText value="Evento - #{evento.descricao}"/>
+								<div>
+									<small><h:outputText value="#{evento.local}"/></small>
 								</div>
-								<small class="text-muted"><h:outputText value="#{evento.data}"/></small>
+								<div class="card-text">Organizado por #{evento.dono.nome}</div>
+								<div class="d-flex">
+									<div>Vagas:  </div>
+									<div>
+										<c:forEach var="vaga" items="#{evento.vagas}">
+											<div>#{vaga.qtdVagas} vagas para #{vaga.especialidade.nome}</div>
+										</c:forEach>
+									</div>
+								</div>
+								<div class="d-flex justify-content-between align-items-center">
+									<small class="text-muted"><h:outputText value="Data - #{evento.data}"/></small>
+									<div class="btn-group">
+										<p:link outcome="/eventos/details.xhtml" value="Detalhes"
+												class="btn btn-sm btn-outline-secondary">
+											<f:param name="id" value="#{evento.id}" />
+										</p:link>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-				</c:forEach>
-			</h:form>
+
+			</c:forEach>
         </div>
     </div>
 </div>
