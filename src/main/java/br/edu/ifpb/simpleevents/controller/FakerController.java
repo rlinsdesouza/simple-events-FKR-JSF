@@ -80,10 +80,10 @@ public class FakerController {
 		for (int i = 0; i < 100; i++) {
 			user = new User();
 			user.setNome(faker.name().fullName());
-			user.setEmail(user.getNome()+"@teste");
+			user.setEmail(user.getNome().toLowerCase().replaceAll("\\s+", "-")+"@test");
 			user.setTelefone(faker.phoneNumber().cellPhone());
 			user.setDatanascimento(faker.date().birthday(18, 60));
-			user.setSenha(password.encryptMD5(user.getNome().toLowerCase()));
+			user.setSenha(password.encryptMD5(user.getNome().toLowerCase().split("\\s+")[0]));
 			userdao.create(user);
 		}
 		

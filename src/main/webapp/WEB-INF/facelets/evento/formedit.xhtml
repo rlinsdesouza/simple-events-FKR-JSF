@@ -13,7 +13,7 @@
 
 	<div class="container">
 		<br />
-		<h4>Evento</h4>
+		<h4>Evento - Editar</h4>
 		<hr />
 		<!-- Form de Create -->
 		<h:form>
@@ -39,10 +39,24 @@
 							</input>
 				</div>
 				
+				<div class="col-md-6">
+					<label>Status</label>
+						<h:selectOneMenu value="#{eventos.statusSelected}">
+							<f:selectItems value="#{eventos.status}"/>
+							
+<!-- 							<f:selectItems value="eventos.status" var="status" -->
+<!-- 							 itemLabel="Status" -->
+<!-- 							 itemValue="#{status}" -->
+<!-- 							/> -->
+						</h:selectOneMenu>
+				</div>
+				
+				
 				<div class="row m-auto">
 						<hr />
-						<h:commandButton id="salvar" value="Salvar" action="#{eventos.salvar}" class="btn btn-primary"/>
+						<h:commandButton id="Editar" value="Editar" action="#{eventos.atualizar}" class="btn btn-primary"/>
 				</div>
+				
 			</div>
 		</h:form>
 	</div>

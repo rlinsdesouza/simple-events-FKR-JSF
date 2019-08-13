@@ -53,8 +53,6 @@ public class EventoBean extends GenericBean implements Serializable {
 	private void init() {
 		Evento evento = (Evento) this.getFlash("evento");
 		if (evento != null) {
-			this.status = new ArrayList<StatusEvento>(EnumSet.allOf(StatusEvento.class));
-			this.userLogin = LoginFacade.getParticipanteLogado();
 			this.evento = evento;
 			this.especialidades = this.espccontrol.consultar();
 			this.escolhaVagas = new ArrayList<EventoBean.EscolhaVagasEvento>();
@@ -62,19 +60,25 @@ public class EventoBean extends GenericBean implements Serializable {
 				this.escolhaVagas.add(new EscolhaVagasEvento(especialidade, false, 0));
 			}
 		} else {
-			this.userLogin = LoginFacade.getParticipanteLogado();
 			this.evento = new Evento();
 		}
+		this.status = new ArrayList<StatusEvento>(EnumSet.allOf(StatusEvento.class));
+		this.userLogin = LoginFacade.getParticipanteLogado();
 	}
 
 	public String form() {
+		return "/WEB-INF/facelets/evento/form.xhtml";
+	}
+	
+	public String formEdit() {
 		Map<String, String> params = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 		if (!params.isEmpty()) {
 			Long id = Long.parseLong(params.get("id"));
 			this.evento = evtcontrol.findById(id);
 				
 		}
-		return "/WEB-INF/facelets/evento/form.xhtml";
+		System.out.println(status);
+		return "/WEB-INF/facelets/evento/formedit.xhtml";
 	}
 
 	public String detail(){
@@ -96,14 +100,16 @@ public class EventoBean extends GenericBean implements Serializable {
 	
 	public String atualizar() {
 		evento.setData(converter(dataevento));
+		this.evento.setStatus(statusSelected);
 		try {
 			this.evento = evtcontrol.update(evento);
 			this.setFlash("evento", evento);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Atualizado com sucesso!"));
-			return "/WEB-INF/facelets/evento/form.xhtml?faces-redirect=true";
+			return "/eventos/details.xhtml?faces-redirect=true";
 		} catch (Exception e) {
+			this.setFlash("evento", evento);
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Erro!",e.getMessage()));
-			return "/WEB-INF/facelets/evento/form.xhtml?faces-redirect=true";
+			return "/eventos/details.xhtml?faces-redirect=true";
 		}
 	}
 

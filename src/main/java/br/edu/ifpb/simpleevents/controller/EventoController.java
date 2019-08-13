@@ -134,10 +134,10 @@ public class EventoController implements Serializable {
 //      evento.setAvaliacaoEventos(new ArrayList<>(eventoAntigo.getAvaliacaoEventos()));
 //      evento.setDono(eventoAntigo.getDono());
 //      
-      ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
-      if (usuarioLogado.getId() != e.getDono().getId()) {
-          throw new Exception("você não pode alterar este evento");
-      }
+//      ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
+//      if (usuarioLogado.getId() != e.getDono().getId()) {
+//          throw new Exception("você não pode alterar este evento");
+//      }
 //      if (especialidades != null) {
 //          for (Vaga v : this.descartarVagas(evento, especialidades))
 //              vagaDAO.deleteById(v.getId());
