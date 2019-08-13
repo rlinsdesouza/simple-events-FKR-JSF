@@ -2,14 +2,14 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
    version="1.0">
- <!--   
+   
     <persistence-unit name="simple-events">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/simple-events" />
-            <property name="javax.persistence.jdbc.user" value="postgres" />
-            <property name="javax.persistence.jdbc.password" value="postgres" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgres://ojxflgogyhaghc:1c07b13f2deb033f2436eed0af0de75985159ae76e94abeaed6a67a3a4dbb880@ec2-54-243-243-76.compute-1.amazonaws.com:5432/dqv3c7j5qvmn2"/>
+            <property name="javax.persistence.jdbc.user" value="ojxflgogyhaghc" />
+            <property name="javax.persistence.jdbc.password" value="1c07b13f2deb033f2436eed0af0de75985159ae76e94abeaed6a67a3a4dbb880" />
              
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="javax.persistence.schema-generation.scripts.action" value="create"/>  
@@ -23,15 +23,14 @@
             <property name="hibernate.format_sql" value="true" />
         </properties>
     </persistence-unit>
- -->
+
     
-    <persistence-unit name="simple-events" transaction-type="RESOURCE_LOCAL">
+<!--     <persistence-unit name="simple-events" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 
 
         <properties>
        		<property name="javax.persistence.jdbc.driver" value="org.h2.Driver" />
-<!--      		<property name="javax.persistence.jdbc.url"    value="jdbc:h2:~/Projetos/pweb2/data/testdb" /> -->
      		<property name="hibernate.connection.url" value="jdbc:h2:mem:simple-events;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=false" />
       		<property name="javax.persistence.jdbc.user" value="sa" />
       		<property name="javax.persistence.jdbc.password" value="" />
@@ -45,6 +44,6 @@
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>
         </properties>
-    </persistence-unit>
+    </persistence-unit> -->
     
 </persistence>
