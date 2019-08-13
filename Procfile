@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -jar target/dependency/webapp-runner.jar --port SPORT target/*.war
+web: java $JAVA_OPTS -jar target/dependency/* --port SPORT target/*.war
