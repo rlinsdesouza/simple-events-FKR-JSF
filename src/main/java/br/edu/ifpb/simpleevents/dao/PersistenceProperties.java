@@ -20,7 +20,7 @@ public class PersistenceProperties {
      * @return Properties propriedades que irão sobrescrever o persistence.xml
      * @throws Exception
      */
-    public Properties get() {
+    public static Properties get() {
         try {
             Properties props = new Properties();
             
@@ -54,7 +54,7 @@ public class PersistenceProperties {
      * @return Properties propriedades que irão sobrescrever o persistence.xml
      * @throws Exception
      */
-    private Properties userHomeJdbcFile() throws Exception {
+    private static Properties userHomeJdbcFile() throws Exception {
         Properties props = new Properties();
         
         File fileProperties = new File(System.getProperty("user.home"), "jdbc.properties");
@@ -76,7 +76,7 @@ public class PersistenceProperties {
      * @return Properties propriedades que irão sobrescrever o persistence.xml
      * @throws Exception
      */
-    private Properties systemEnv() {
+    private static Properties systemEnv() {
         Properties props = new Properties();
         
         if (System.getenv().containsKey(JDBC_URL)) {
@@ -104,7 +104,7 @@ public class PersistenceProperties {
      * @return Properties propriedades que irão sobrescrever o persistence.xml
      * @throws Exception
      */
-    private Properties javaPropertyJdbcFile() throws Exception {
+    private static Properties javaPropertyJdbcFile() throws Exception {
         Properties props = new Properties();
         
         if (!System.getProperties().containsKey("jdbc-file")) {
@@ -132,7 +132,7 @@ public class PersistenceProperties {
      * @return Properties propriedades que irão sobrescrever o persistence.xml
      * @throws Exception
      */
-    private Properties javaProperties() {
+    private static Properties javaProperties() {
         Properties props = new Properties();
         
         if (System.getProperties().containsKey(JDBC_URL)) {
