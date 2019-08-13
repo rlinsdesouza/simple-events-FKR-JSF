@@ -74,6 +74,10 @@ public class EventoController implements Serializable {
 		ArrayList<Evento> eventos = (ArrayList<Evento>) eventoDAO.read();
 		return eventos;
 	}
+	
+	public List<Evento> findByName (String nome) {
+		return eventoDAO.findByName(nome);
+	}
 
 	@Transactional
 	public Evento cadastrar(Evento evento) {

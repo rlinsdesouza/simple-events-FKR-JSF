@@ -17,8 +17,8 @@ public class Instituicao extends ParticipanteComposite {
 	@OneToMany(fetch = FetchType.EAGER)
 	private List<ParticipanteComposite> participantes ;
 
-	public Instituicao(String email, String senha) {
-		super(email, senha);
+	public Instituicao(String email, String senha,boolean isAdmin) {
+		super(email, senha,isAdmin);
 		this.participantes = new ArrayList<>();
 	}
 	
@@ -51,4 +51,6 @@ public class Instituicao extends ParticipanteComposite {
 	public void setParticipantes(List<ParticipanteComposite> participantes) {
 		this.participantes = participantes;
 	}
+
+
 }

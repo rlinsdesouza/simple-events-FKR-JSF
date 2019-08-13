@@ -2,31 +2,27 @@
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	  xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:p="http://bootsfaces.net/ui">
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 
 
-<h:head>
-    <ui:include src="/commum/head.xhtml"/>    
-</h:head>
-<h:body>
-	<div class="area">
-		<h:form id="form-espec">
-			<div class="form-group col-md-3">
-				<h:outputLabel value="Nome" for="nome" />
-				<p:inputText styleClass="form-control" id="nome" value="#{especialidadeBean.especialidade.nome}" />
-			</div>
-			<div class="form-group col-md-3">
-				<h:outputLabel value="Descrição" for="descricao" />
-				<p:inputText styleClass="form-control" id="descricao" value="#{especialidadeBean.especialidade.descricao}" />
-			</div>
-	   		<p:commandButton
-					styleClass="col-md-2 col-lg-1"
-				id="bt_salva_espec" 
-				value="Salvar" 
-				action="#{especialidadeBean.salvar}" />
-		</h:form>
-	</div>
-</h:body>
+	<ui:composition template="/WEB-INF/facelets/components/dashboard.xhtml">
+	
+	
+		<ui:define name="titulo">
+			Simple Events JSF - Especialidades Cadastro 
+		</ui:define>
+		
+		<ui:define name="messages">
+			<ui:include src="/WEB-INF/facelets/gabaritos/messages.xhtml"></ui:include>
+		</ui:define>
+		
+		<ui:define name="main">
+			<ui:include src="#{especialidadeBean.list()}"></ui:include>
+		</ui:define>
+	
+	</ui:composition>
+
 </html>
