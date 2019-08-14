@@ -69,8 +69,9 @@ public class IndexBean extends GenericBean implements Serializable {
 //    }
 //    
     public String pesquisar() {
-    	this.eventos = eventoController.findByName(this.pesquisaNome);
-    	return null;
+    	List<Evento> eventos = eventoController.findByName(this.pesquisaNome);
+    	this.setFlash("eventos", eventos );
+    	return "/index.xhtml?faces-redirect=true";
     }
 
 	// get and setters

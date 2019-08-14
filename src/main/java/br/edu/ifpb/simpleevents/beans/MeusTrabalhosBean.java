@@ -30,7 +30,7 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	private ParticipanteComposite userLog;
 	private List<CandidatoVaga> candidaturas;
 	private Map<Long,String> mapAvaliacoes;
-	private Integer rating;
+	private int rating;
 	
 	
 //	@PostConstruct
@@ -78,7 +78,7 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 	  candidaturaControl.avaliarEvento(candidatura, candidatura.getVaga().getEvento(), this.rating);
       FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado!", "Avaliado com sucesso!");
       FacesContext.getCurrentInstance().addMessage(null, message);
-	  return null;
+	  return "/eventos/meustrabalhos?faces-redirect=true";
   }
   
   public String deleteavaliacao(CandidatoVaga candidatura) {
@@ -133,11 +133,11 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
 		this.candidaturas = candidaturas;
 	}
 	
-	public Integer getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(Integer rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 

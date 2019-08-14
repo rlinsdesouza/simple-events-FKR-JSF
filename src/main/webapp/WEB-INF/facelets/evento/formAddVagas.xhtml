@@ -20,12 +20,9 @@
 		<h:form>
 			<div class="row">
 					<c:forEach var="escolhaVaga" items="#{eventos.escolhaVagas}">
-					<div class="form-group col-md-4">
-						<div class="row">
-							<h:outputText value="#{escolhaVaga.especialidade.nome}"/>
-							<p:inputSwitch value="#{escolhaVaga.temVaga}" onLabel="Quero" offLabel="Nao quero"/>
-						</div>
-						<p:spinner value="#{escolhaVaga.quantidade}" min="0" max="100" />
+					<div class="form-group col-md-4" style="display:flex;">
+						<p:selectBooleanCheckbox value="#{escolhaVaga.temVaga}" itemLabel="#{escolhaVaga.especialidade.nome}"/>
+						<p:spinner value="#{escolhaVaga.quantidade}" min="0" max="100" style="width:55px;" />
 					</div>
 					</c:forEach>
 				<div class="row m-auto">

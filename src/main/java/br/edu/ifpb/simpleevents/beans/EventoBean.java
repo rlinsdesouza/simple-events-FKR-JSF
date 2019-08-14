@@ -153,7 +153,6 @@ public class EventoBean extends GenericBean implements Serializable {
 
 	public String avaliar(CandidatoVaga candidatoVaga) {
 		CandidatoVaga candidatura = candidaturaControl.findById(candidatoVaga.getId());
-		System.out.println(candidatura == candidatoVaga);
 		candidatura.setNotaDesempenho(this.rating);
 		candidaturaControl.create(candidatura);
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado!", "Avaliado com sucesso!");
