@@ -53,6 +53,10 @@ public class CandidatoVagaController implements Serializable {
     	return avaliacoesDAO.findByParticipante(user);
     }
     
+    public List<AvaliacaoEvento> getAvaliacaoEventoPorUsuario (ParticipanteComposite user, Evento evento) {
+    	return avaliacoesDAO.findByEventoAndUser(evento, user);
+    }
+    
     @Transactional
     public boolean delete(Long id) throws Exception {
 		CandidatoVaga trabalho = candidatoVagaDAO.read(id);
@@ -78,6 +82,12 @@ public class CandidatoVagaController implements Serializable {
 		avaliacao = avaliacoesDAO.create(avaliacao);
 		evento.add(avaliacao);
 		eventoDAO.update(evento);
+		return true;
+	}
+	
+	@Transactional
+	public boolean delAvaliarEvento (AvaliacaoEvento avaliacao) {
+		avaliacoesDAO.delete(avaliacao);
 		return true;
 	}
 

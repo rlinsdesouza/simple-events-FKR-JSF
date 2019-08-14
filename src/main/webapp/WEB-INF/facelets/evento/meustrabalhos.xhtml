@@ -36,11 +36,22 @@
 								<c:if
 									test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
 									<div style="display:flex;width: 120px;">
-									
-										<p:rating value="#{trabalhos.rating}" cancel="false"/>
-										<h:commandLink action="#{trabalhos.avaliar(trabalho)}">
-											<i class="fa fa-play-circle"></i>
-										</h:commandLink>
+												
+										<c:if test="#{trabalhos.hasAvaliacao(trabalho) == false}">
+											<p:rating value="#{trabalhos.rating}" 
+												cancel="false"/>										
+											<h:commandLink action="#{trabalhos.avaliar(trabalho)}">
+												<i class="fa fa-play-circle"></i>
+											</h:commandLink>
+										</c:if>
+										<c:if test="#{trabalhos.hasAvaliacao(trabalho)}">
+											<p:rating value="#{trabalhos.rateAvaliacao(trabalho)}" 
+												cancel="false" 
+												disabled="true"/>
+<!-- 											<h:commandLink action="#{trabalhos.deleteavaliacao(trabalho)}">
+												<i class="fa fa-trash"></i>
+											</h:commandLink> -->
+										</c:if>
 									</div>	
 								</c:if>
 								<c:if

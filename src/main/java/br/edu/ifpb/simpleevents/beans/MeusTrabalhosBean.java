@@ -79,7 +79,40 @@ public class MeusTrabalhosBean extends GenericBean implements Serializable {
       FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Avaliado!", "Avaliado com sucesso!");
       FacesContext.getCurrentInstance().addMessage(null, message);
 	  return null;
-  }  
+  }
+  
+  public String deleteavaliacao(CandidatoVaga candidatura) {
+	  List<AvaliacaoEvento> avaliacoes = candidaturaControl.getAvaliacaoEventoPorUsuario(LoginFacade.getParticipanteLogado(), candidatura.getVaga().getEvento());
+	  if (!avaliacoes.isEmpty()) {
+		  candidaturaControl.delAvaliarEvento(avaliacoes.get(0));
+		  FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Deletado!", "Deletado com sucesso!");
+	      FacesContext.getCurrentInstance().addMessage(null, message);
+	  }else {
+		  FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Nao possui avaliacao");
+	      FacesContext.getCurrentInstance().addMessage(null, message);
+	  }
+	  return "/eventos/meustrabalhos?faces-redirect=true";
+  } 
+  
+  
+  
+  public int rateAvaliacao(CandidatoVaga trabalho) {
+	  List<AvaliacaoEvento> avaliacoes = candidaturaControl.getAvaliacaoEventoPorUsuario(LoginFacade.getParticipanteLogado(), trabalho.getVaga().getEvento());
+	  if (!avaliacoes.isEmpty()) {
+		  return avaliacoes.get(0).getNotaAvaliacaoEvento();
+	  }else {
+		  return 0;
+	  }
+  }
+  
+  public boolean hasAvaliacao (CandidatoVaga trabalho) {
+	  List<AvaliacaoEvento> avaliacoes = candidaturaControl.getAvaliacaoEventoPorUsuario(LoginFacade.getParticipanteLogado(), trabalho.getVaga().getEvento());
+	  if (!avaliacoes.isEmpty()) {
+		  return true;
+	  }else {
+		  return false;
+	  }
+  }
   
   
 //get and setters

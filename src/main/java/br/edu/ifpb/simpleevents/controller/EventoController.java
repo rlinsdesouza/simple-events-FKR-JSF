@@ -135,7 +135,6 @@ public class EventoController implements Serializable {
   public Evento delete(Long id) throws Exception {
       Evento evento = eventoDAO.read(id);
       List<CandidatoVaga> candidaturas = candidatoVagaDAO.findByEvento(evento);
-      System.out.println(candidaturas);
       ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
       if (usuarioLogado.getId() != evento.getDono().getId()) {
       	  throw new Exception("Você não pode deletar este evento por nao ser dono do evento");
