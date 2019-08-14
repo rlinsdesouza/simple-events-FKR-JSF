@@ -35,7 +35,7 @@ public class CandidatoVagaController implements Serializable {
 
     @Transactional
     public void create (CandidatoVaga candidatoVaga) {
-        if (candidatoVaga.getId() != null)
+        if (candidatoVaga == null)
             this.candidatoVagaDAO.create(candidatoVaga);
         else
             this.candidatoVagaDAO.update(candidatoVaga);

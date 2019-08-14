@@ -48,6 +48,19 @@
                     </div>
                 </div>
             </p:tab>
+            <c:if test="#{eventos.evento.status.name() == 'EXECUTADO'}">
+                <p:tab title="Avaliação Atual">
+                    <c:forEach var="vaga" items="#{eventos.evento.vagas}">
+                        <div class="col-md-6">
+                            <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+                                <c:if test="#{candidato.notaDesempenho > 0}">
+                                    <div>- Candidato #{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
+                                </c:if>
+                            </c:forEach>
+                        </div>
+                    </c:forEach>
+                </p:tab>
+            </c:if>
             <p:tab title="Avaliação dos Participantes">
                 <div class="row">
                     <c:if test="#{eventos.podeAvaliarParticipante() == true}">
@@ -67,12 +80,12 @@
                             </c:forEach>
                         </h:form>
                     </c:if>
-                    <c:if test="#{eventos.evento.status.name() == 'EXECUTADO'}">
+                    <c:if test="#{eventos.evento.status.name() != 'EXECUTADO'}">
                         <c:forEach var="vaga" items="#{eventos.evento.vagas}">
                             <div class="col-md-6">
                                 <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
                                 	<c:if test="#{candidato.notaDesempenho > 0}">
-                                    <div>- Candidato #{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
+                                        <div>- Candidato #{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
                                     </c:if>
                                 </c:forEach>
                             </div>
