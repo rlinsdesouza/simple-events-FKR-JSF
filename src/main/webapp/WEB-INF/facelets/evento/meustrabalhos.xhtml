@@ -37,7 +37,7 @@
 									test="#{trabalho.vaga.evento.status.name() == 'EXECUTADO'}">
 									<div style="display:flex;width: 120px;">
 									
-										<p:rating value="#{trabalhos.rating}" cancel="false" required="true"/>
+										<p:rating value="#{trabalhos.rating}" cancel="false"/>
 										<h:commandLink action="#{trabalhos.avaliar(trabalho)}">
 											<i class="fa fa-play-circle"></i>
 										</h:commandLink>

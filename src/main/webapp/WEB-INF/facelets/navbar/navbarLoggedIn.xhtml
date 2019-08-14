@@ -19,7 +19,7 @@
         </button>
         <div class="collapse navbar-collapse items-navbar" id="navbarCollapse">
             <h:form class="form-inline mt-2 mt-md-0 col-lg-6" style="justify-content: flex-end;">
-                <p:inputText id="nome" value="#{index.pesquisaNome}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" />
+                <p:inputText id="nome" value="#{index.pesquisaNome}" class="form-control mr-sm-2 col-lg-8" placeholder="Pesquisar por nome do evento,especialidade,promotor" aria-label="Search" required="true"/>
                 <h:commandButton value="Pesquisar" id="pesquisar" action="#{index.pesquisar}" class="btn teste my-2 my-sm-0"/>
             </h:form>
             <ul class="navbar-nav">
