@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -12,8 +15,8 @@ import javax.inject.Named;
 import br.edu.ifpb.simpleevents.controller.EventoController;
 import br.edu.ifpb.simpleevents.entity.CandidatoVaga;
 import br.edu.ifpb.simpleevents.entity.Evento;
-import br.edu.ifpb.simpleevents.entity.User;
 import br.edu.ifpb.simpleevents.entity.Vaga;
+import br.edu.ifpb.simpleevents.entity.pattern.composite.ParticipanteComposite;
 import br.edu.ifpb.simpleevents.facade.LoginFacade;
 
 @Named(value = "eventosList")
@@ -26,14 +29,22 @@ public class EventoListBean extends GenericBean implements Serializable {
 
 	private Map<Long, Map<Long, String>> eventosVagas;
 	private List<Evento> eventos;
+	private ParticipanteComposite userLogin;
+	
+	@PostConstruct
+	public void init() {
+		this.userLogin = LoginFacade.getParticipanteLogado();
+	}
 
 	public String list() {
-//		User usuarioLogado = userDAO.findByEmail(auth.getName());
-//		modelList.addObject("userLog", usuarioLogado);
-		this.eventos = evtcontrol.findAll();
-		this.eventosVagas = converterListasEventos();
+		if(LoginFacade.isAuthenticated() && userLogin.getAdmin()) {
+			this.eventos = evtcontrol.findAll();
+			this.eventosVagas = converterListasEventos();
 
-		return "/WEB-INF/facelets/evento/list.xhtml";
+			return "/WEB-INF/facelets/evento/list.xhtml";
+		}else {
+			return "/WEB-INF/facelets/gabaritos/forbidden.xhtml";
+		}	
 	}
 
 	public String listByParticipante() {
@@ -72,6 +83,22 @@ public class EventoListBean extends GenericBean implements Serializable {
 			}
 		}
 		return vagasCandidatos;
+	}
+	
+	public String cancelar(Long id) {
+		try {
+			if (evtcontrol.delete(id) == null) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Evento deletado com sucesso!"));
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			}else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Apenas cancelado!","Evento so foi cancelado por ja existir candidatos aprovados nele!"));
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			}
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Opaaa!",e.getMessage()));
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		}
+		return "/eventos/meuseventos.xhtml?faces-redirect=true";
 	}
 
 	// get and setters

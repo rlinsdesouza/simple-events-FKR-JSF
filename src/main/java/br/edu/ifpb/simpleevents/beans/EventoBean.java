@@ -124,11 +124,10 @@ public class EventoBean extends GenericBean implements Serializable {
 		}
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","Evento e vagas adicionados com sucesso!"));
 		FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-		return "/eventos/listageral.xhtml?faces-redirect=true";
+		return "/eventos/meuseventos.xhtml?faces-redirect=true";
 	}
 
 	public String candidatar () {
-		System.out.println("ok");
 		Vaga vaga = this.getVagaByEspecialidade(this.vagaEscolhida);
 		evtcontrol.adicionarCandidato(this.evento, vaga);
 		this.addMessage(FacesMessage.SEVERITY_INFO, "Candidatura realizada.");
@@ -161,39 +160,6 @@ public class EventoBean extends GenericBean implements Serializable {
 		return "/eventos/meuseventos.xhtml?faces-redirect=true";
 	}
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ModelAndView list(Authentication auth) {
-//        ModelAndView modelList = new ModelAndView("evento/list");
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        List<Evento> eventos = eventoDAO.findAll();
-//        modelList.addObject("userLog", usuarioLogado);
-//        modelList.addObject("eventos", eventos);
-//        modelList.addObject("eventosVagas", converterListasEventos());
-//        return modelList;
-//    }
-//
-//    @GetMapping("/meuseventos")
-//    public ModelAndView listmyevents(Authentication auth) {
-//        ModelAndView modelList = new ModelAndView("evento/list");
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        modelList.addObject("userLog", usuarioLogado);
-//        modelList.addObject("eventos", eventoDAO.findByDono(usuarioLogado));
-//        modelList.addObject("eventosVagas", converterListasEventos());
-//        return modelList;
-//    }
-//
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-//    public ModelAndView detail(@PathVariable("id") Long id,
-//                               Authentication auth) {
-//        Evento evento = eventoDAO.findById(id).get();
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        ModelAndView modelDetail = new ModelAndView("evento/detail");
-//        modelDetail.addObject("eventoVagas", converterLista(evento.getVagas(), false));
-//        modelDetail.addObject("userLog", usuarioLogado);
-//        modelDetail.addObject("evento", evento);
-//        return modelDetail;
-//    }
-//
 //    @RequestMapping("/delete/{id}")
 //    public ModelAndView delete(@PathVariable("id") Long id,
 //                               Authentication auth,
@@ -240,38 +206,6 @@ public class EventoBean extends GenericBean implements Serializable {
 //        }
 //        modelForm.addObject("especialidades", especialidadesdisponiveis);
 //        return modelForm;
-//    }
-//
-//    @PostMapping("/candidatar/{id}")
-//    public ModelAndView candidatar(@PathVariable("id") Long id,
-//                                   @RequestParam("especialidades") List<Long> especialidades,
-//                                   Principal user,
-//                                   RedirectAttributes att) {
-//        Evento evento = eventoDAO.getOne(id);
-//        CandidatoVaga candidatoVaga;
-//        Boolean vagaValida = false;
-//
-//        for (Long especialidade : especialidades) {
-//            vagaValida = false;
-//            for (Vaga vaga : this.getVagasDisponiveis(evento)) {
-//                if (vaga.getEspecialidade().getId() == especialidade) {
-//                    candidatoVaga = new CandidatoVaga();
-//                    candidatoVaga.setVaga(vaga);
-//                    candidatoVaga.setStatus(Status.AGUARDANDO_APROVACAO);
-//                    candidatoVaga.setCandidato(userDAO.findByEmail(user.getName()));
-//                    candidatoVagaDAO.save(candidatoVaga);
-//                    vagaValida = true;
-//                }
-//            }
-//            if (!vagaValida) {
-//                att.addFlashAttribute("mensagemerro", String.format("Não foi possivel se candidatar a vaga %s: VAGA JÁ ESGOTADA!",
-//                        especDAO.findById(especialidade).get().getNome()));
-//            }
-//
-//        }
-//        att.addFlashAttribute("mensagem", "Se tornou candidato com sucesso!");
-//
-//        return new ModelAndView("redirect:/");
 //    }
 //
 //    private List<Vaga> getVagasDisponiveis(Evento evento) {
@@ -442,8 +376,7 @@ public class EventoBean extends GenericBean implements Serializable {
 	}
 
 
-	//	inner class para escolha de quantidade de vagas por especialidade no switch
-
+	
 	// funções para verificar renderização:
 	// quando vai aparecer o radio para o usuario:
 	public boolean podeCandidatarse(){
@@ -453,7 +386,6 @@ public class EventoBean extends GenericBean implements Serializable {
 		if (this.userLogin != null && userLogin.getId() == evento.getDono().getId()){
 			pode = false;
 		}
-		System.out.println("PODEEEEEEEEE" + pode);
 		return pode;
 	}
 
@@ -467,6 +399,8 @@ public class EventoBean extends GenericBean implements Serializable {
 		return pode;
 	}
 
+
+//	inner class para escolha de quantidade de vagas por especialidade no switch
 
 	public class EscolhaVagasEvento {
 		private Especialidade especialidade;

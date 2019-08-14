@@ -14,8 +14,6 @@
 		<h:button value="Cadastrar" outcome="/eventos/cadastro" />
 		<br/>
 		<h2>Eventos cadastrados</h2>
-<!-- 		<a sec:authorize="isAuthenticated()" -->
-<!--            th:href="@{/eventos/form}" class="btn btn-primary">Novo</a> -->
 		<div style="height: 20px"></div>
 		<table class="table table-stripped">
 			<tr>
@@ -51,8 +49,20 @@
 							<f:param name="id" value="#{evento.id}" />
 						</h:link>
 					</c:if>
+					<c:if test="#{evento.status.name() == 'ABERTO' and evento.dono.id == index.userLogin.id}">
+						<p:link outcome="/eventos/escolhecandidatos.xhtml" value="Analisar Candidatos"
+								class="delete btn btn-sm btn-light">
+								<f:param name="id" value="#{evento.id}" />
+						</p:link>
+						<h:form>
+							<h:commandButton class="delete btn btn-sm btn-danger" 
+											action="#{eventosList.cancelar(evento.id)}" 
+											value="Cancelar/Excluir evento">
+							</h:commandButton>
+						</h:form>
+					</c:if>
 					<c:if
-						test="#{evento.status.name() == 'ABERTO' and evento.dono.id == index.userLogin.id}">
+						test="#{evento.status.name() == 'EXECUTADO' and evento.dono.id == index.userLogin.id}">
 						<p:link outcome="/eventos/details.xhtml" value="Avaliar"
 								class="delete btn btn-sm btn-primary">
 							<f:param name="id" value="#{evento.id}" />

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 import br.edu.ifpb.simpleevents.dao.CandidatoVagaDAO;
@@ -41,29 +40,8 @@ public class EventoController implements Serializable {
     private CandidatoVagaDAO candidatoVagaDAO;
     
     
-    private String username = FacesContext.getCurrentInstance().getExternalContext().getRemoteUser();
-    
     @Transactional
-    public Evento save(Evento evento) {
-//        if (result.hasErrors()) {
-//            return new ModelAndView("/form");
-//        }
-//        if (especialidades != null) {
-//            eventoDAO.save(evento);
-//            Optional<Especialidade> esp;
-//            int i = 0;
-//            for (Long id : especialidades) {
-//                esp = especDAO.findById(id);
-//                Vaga vaga = new Vaga();
-//                vaga.setEspecialidade(esp.get());
-//                vaga.setQtdVagas(quantidades.get(i));
-//                vaga.setEvento(evento);
-//                vagaDAO.save(vaga);
-//                evento.add(vaga);
-//                i++;
-//            }
-//        }
-    	
+    public Evento save(Evento evento) {    	
     	ParticipanteComposite currentUser = LoginFacade.getParticipanteLogado();
         evento.setDono(currentUser);
         evento.setStatus(StatusEvento.ABERTO);
@@ -90,17 +68,6 @@ public class EventoController implements Serializable {
 		}
 		return evento;
 	}
-	
-	@Transactional
-	public boolean deletar(Evento evento) {
-		boolean deletou = false;
-		Evento espec = eventoDAO.read(evento.getId());
-		eventoDAO.delete(espec);
-		if(deletou)
-			LogSingleton.getInstance().escrever("Delete - " + evento.getDescricao() );
-		return deletou;
-	}
-
     
     public List<Evento> findAll() {
     	return eventoDAO.read();
@@ -163,6 +130,27 @@ public class EventoController implements Serializable {
       
       return eventoDAO.update(e); 
   }
+  
+  @Transactional  
+  public Evento delete(Long id) throws Exception {
+      Evento evento = eventoDAO.read(id);
+      List<CandidatoVaga> candidaturas = candidatoVagaDAO.findByEvento(evento);
+      System.out.println(candidaturas);
+      ParticipanteComposite usuarioLogado = LoginFacade.getParticipanteLogado();
+      if (usuarioLogado.getId() != evento.getDono().getId()) {
+      	  throw new Exception("Você não pode deletar este evento por nao ser dono do evento");
+      }
+      if (evento != null && candidaturas.size()==0) {
+          eventoDAO.delete(evento);
+          LogSingleton.getInstance().escrever("Delete - " + evento.getDescricao() );
+          return null;
+      }else {
+    	evento.setStatus(StatusEvento.CANCELADO);
+    	eventoDAO.update(evento);
+    	return evento;
+      }
+  }
+
 
 
 
@@ -196,46 +184,7 @@ public class EventoController implements Serializable {
 //        modelList.addObject("eventosVagas", converterListasEventos());
 //        return modelList;
 //    }
-//
-//    @GetMapping("/meuseventos")
-//    public ModelAndView listmyevents(Authentication auth) {
-//        ModelAndView modelList = new ModelAndView("evento/list");
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        modelList.addObject("userLog", usuarioLogado);
-//        modelList.addObject("eventos", eventoDAO.findByDono(usuarioLogado));
-//        modelList.addObject("eventosVagas", converterListasEventos());
-//        return modelList;
-//    }
-//
-//    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-//    public ModelAndView detail(@PathVariable("id") Long id,
-//                               Authentication auth) {
-//        Evento evento = eventoDAO.findById(id).get();
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        ModelAndView modelDetail = new ModelAndView("evento/detail");
-//        modelDetail.addObject("eventoVagas", converterLista(evento.getVagas(), false));
-//        modelDetail.addObject("userLog", usuarioLogado);
-//        modelDetail.addObject("evento", evento);
-//        return modelDetail;
-//    }
-//
-//    @RequestMapping("/delete/{id}")
-//    public ModelAndView delete(@PathVariable("id") Long id,
-//                               Authentication auth,
-//                               RedirectAttributes att) {
-//        Evento evento = eventoDAO.findById(id).get();
-//        User usuarioLogado = userDAO.findByEmail(auth.getName());
-//        if (usuarioLogado.getId() != evento.getDono().getId()) {
-//        	att.addAttribute("mensagemerro", "você não pode deletar este evento");
-//            return new ModelAndView("redirect:/eventos");
-//        }
-//        if (evento != null) {
-//            att.addFlashAttribute("deletado", "Evento deletado com sucesso!");
-//            eventoDAO.deleteById(id);
-//        }
-//        return new ModelAndView("redirect:/eventos");
-//    }
-//
+
 //    @RequestMapping("/edit/{id}")
 //    public ModelAndView edit(@PathVariable("id") Long id,
 //                             RedirectAttributes att,
@@ -407,20 +356,7 @@ public class EventoController implements Serializable {
 //    	}
 //        return vagasCandidatos;
 //    }
-    
-//	
-//	@GetMapping("/meustrabalhos")
-//	public ModelAndView exibirTrabalhos (Principal user) {
-//		List<CandidatoVaga> trabalhos = candidatoVagaDAO.findByCandidato(userDAO.findByEmail(user.getName()));
-//		User usuario = userDAO.findByEmail(user.getName());
-//		List<AvaliacaoEvento> avaliacoes = avaliacaoEventoDAO.findByParticipante(usuario); 
-//		Map<Long,String> mapAvaliacoes = fazerDicionarioAvaliacoeUsuario(avaliacoes);
-//		ModelAndView modelForm = new ModelAndView("evento/meustrabalhos");
-//		modelForm.addObject("trabalhos", trabalhos);
-//		modelForm.addObject("mapAvaliacoes", mapAvaliacoes);
-//		return modelForm;
-//	}
-//	
+	
 //	private Map<Long,String> fazerDicionarioAvaliacoeUsuario(List<AvaliacaoEvento> avaliacoesDoUsuario) {
 //		Map<Long,String> mapAvaliacoes = new HashMap<Long, String>();
 //		for (AvaliacaoEvento avaliacaoEvento : avaliacoesDoUsuario) {
@@ -453,7 +389,6 @@ public class EventoController implements Serializable {
 			candidatura.setStatus(Status.NAO_APROVADO);
 			candidatoVagaDAO.update(candidatura);
 			return null;
-//			att.addFlashAttribute("mensagemerro", "Não foi possível aprovar, candidato já aprovado no evento ou Vaga lotada!");	
 		}	
 	}
     
@@ -470,31 +405,6 @@ public class EventoController implements Serializable {
 //		att.addFlashAttribute("mensagemsecundaria", "Candidato reprovado com sucesso!");	
 		return candidatura;
 	}
-	
-
-
-
-//	@PostMapping("/{id}/avaliar")
-//	public ModelAndView detail(@PathVariable("id") Long id,
-//							   @RequestParam("notaAvaliacao") int notaAvaliacaoEvento,
-//							   @RequestParam("candidatoVaga") Long candidatoVaga,
-//								Authentication auth,
-//								RedirectAttributes att
-//	) {
-//		CandidatoVaga candidatura = candidatoVagaDAO.findById(candidatoVaga).get();
-//		Evento evento = eventoDAO.getOne(id);
-//		User usuarioLogado = userDAO.findByEmail(auth.getName());
-//		if (usuarioLogado.getId() != evento.getDono().getId()) {
-//            att.addAttribute("mensagemerro", "você não pode alterar este evento");
-//            return new ModelAndView("redirect:/eventos");
-//        }
-//		candidatura.setNotaDesempenho(notaAvaliacaoEvento);
-//		System.out.println(candidatura);
-//		candidatoVagaDAO.save(candidatura);
-//		ModelAndView model = new ModelAndView("redirect:/eventos/meuseventos");
-//		att.addFlashAttribute("mensagem", "Avaliado com sucesso!");
-//		return model;
-//	}
 	
 	private boolean validarCandidatura (Vaga vaga, User candidato) {
 		

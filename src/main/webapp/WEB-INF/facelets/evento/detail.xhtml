@@ -19,8 +19,6 @@
         <p:tabView>
             <p:tab title="Vagas">
                 <div class="container">
-                    <div>#{loginBean.usuarioLogado.id}</div>
-                    <div>#{eventos.evento.dono.id}</div>
                     <div>
                         <c:if test="${loginBean.verificarLogado() and
                         loginBean.verificarTipo() and
@@ -69,11 +67,13 @@
                             </c:forEach>
                         </h:form>
                     </c:if>
-                    <c:if test="#{eventos.evento.status.name() != 'EXECUTADO'}">
+                    <c:if test="#{eventos.evento.status.name() == 'EXECUTADO'}">
                         <c:forEach var="vaga" items="#{eventos.evento.vagas}">
                             <div class="col-md-6">
                                 <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+                                	<c:if test="#{candidato.notaDesempenho > 0}">
                                     <div>- Candidato #{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
+                                    </c:if>
                                 </c:forEach>
                             </div>
                         </c:forEach>
