@@ -20,26 +20,28 @@
             <p:tab title="Vagas">
                 <div class="container">
                     <div class="row">
-                        <c:if test="${loginBean.verificarLogado() and loginBean.verificarTipo()}">
+                        <c:if test="${loginBean.verificarLogado() and
+                        loginBean.verificarTipo() and
+                        loginBean.usuarioLogado.id != eventos.evento.dono.id and
+                        eventos.evento.status.name() == 'CONFIRMADO'}">
                             <h:form id="candidatar">
-
-                                <div class="form-check">
-                                    <h:selectOneRadio id="vagaEscolhida" value="#{eventos.vagaEscolhida}">
-                                        <f:selectItems value="#{eventos.getVagasDisponiveis()}" var="vaga"
-                                                       itemLabel="#{vaga.especialidade.nome}"
-                                                       itemValue="#{vaga.especialidade.nome}"/>
-                                    </h:selectOneRadio>
-                                </div>
+                                <h:selectOneRadio id="vagaEscolhida" value="#{eventos.vagaEscolhida}">
+                                    <f:selectItems value="#{eventos.getVagasDisponiveis()}" var="vaga"
+                                                   itemLabel="#{vaga.especialidade.nome}"
+                                                   itemValue="#{vaga.especialidade.nome}"/>
+                                </h:selectOneRadio>
                                 <h:commandButton value="Candidatar" action="#{eventos.candidatar()}"/>
-
                             </h:form>
                         </c:if>
-                        <c:if test="${!loginBean.verificarLogado() or !loginBean.verificarTipo()}">
-                            <c:forEach var="vaga" items="#{eventos.evento.vagas}">
-                                <div class="col">
-                                    ${vaga.especialidade.nome} - ${vaga.qtdVagas}
-                                </div>
-                            </c:forEach>
+                        <c:if test="${!loginBean.verificarLogado() or
+                                !loginBean.verificarTipo() or
+                                loginBean.usuarioLogado.id == eventos.evento.dono.id or
+                                eventos.evento.status.name() != 'CONFIRMADO'}">
+                            <div class="col-md-6">
+                                <c:forEach var="vaga" items="#{eventos.evento.vagas}">
+                                    <div>- ${vaga.qtdVagas} vagas para ${vaga.especialidade.nome}</div>
+                                </c:forEach>
+                            </div>
                         </c:if>
                     </div>
                 </div>
@@ -65,18 +67,22 @@
                     </c:if>
                     <c:if test="#{eventos.evento.status.name() != 'EXECUTADO'}">
                         <c:forEach var="vaga" items="#{eventos.evento.vagas}">
-                            <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
-                                <div class="col">#{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
-                            </c:forEach>
+                            <div class="col-md-6">
+                                <c:forEach var="candidato" items="#{vaga.candidatoVaga}">
+                                    <div>- Candidato #{candidato.candidato.nome} - nota: #{candidato.notaDesempenho}</div>
+                                </c:forEach>
+                            </div>
                         </c:forEach>
                     </c:if>
                 </div>
             </p:tab>
             <p:tab title="Avaliação do Evento">
                 <div class="row">
-                    <c:forEach var="avaliacao" items="#{eventos.evento.avaliacaoEventos}">
-                        <div class="col">#{avaliacao.notaAvaliacaoEvento}</div>
-                    </c:forEach>
+                    <div class="col-md-6">
+                        <c:forEach var="avaliacao" items="#{eventos.evento.avaliacaoEventos}">
+                            <div>#{avaliacao.notaAvaliacaoEvento}</div>
+                        </c:forEach>
+                    </div>
                 </div>
             </p:tab>
         </p:tabView>
