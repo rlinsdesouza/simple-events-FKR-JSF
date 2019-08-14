@@ -13,30 +13,34 @@
         <div class="row">
             <p class="card-text col-md-3">Organizardor: #{eventos.evento.dono.email}</p>
             <p class="card-text col-md-3">Data: #{eventos.evento.data}</p>
-            <p class="card-text col-md-3">Status: #{eventos.evento.status}</p>
+            <p class="card-text col-md-3">Status: #{eventos.evento.status.name()}</p>
         </div>
 
         <p:tabView>
             <p:tab title="Vagas">
                 <div class="container">
-                    <div class="row">
+                    <div>#{loginBean.usuarioLogado.id}</div>
+                    <div>#{eventos.evento.dono.id}</div>
+                    <div>
                         <c:if test="${loginBean.verificarLogado() and
                         loginBean.verificarTipo() and
                         loginBean.usuarioLogado.id != eventos.evento.dono.id and
-                        eventos.evento.status.name() == 'CONFIRMADO'}">
+                        eventos.podeCandidatarse() == true}">
+                        <div>
                             <h:form id="candidatar">
-                                <h:selectOneRadio id="vagaEscolhida" value="#{eventos.vagaEscolhida}">
-                                    <f:selectItems value="#{eventos.getVagasDisponiveis()}" var="vaga"
-                                                   itemLabel="#{vaga.especialidade.nome}"
-                                                   itemValue="#{vaga.especialidade.nome}"/>
-                                </h:selectOneRadio>
+                                <p:selectOneRadio id="vagaEscolhida" value="#{eventos.vagaEscolhida}" layout="responsive" columns="3"  >
+                                    <f:selectItems
+                                            value="#{eventos.getVagasDisponiveis()}" var="vaga"
+                                            itemLabel="#{vaga.especialidade.nome}"
+                                            itemValue="#{vaga.especialidade.nome}"/>
+                                </p:selectOneRadio>
                                 <h:commandButton value="Candidatar" action="#{eventos.candidatar()}"/>
                             </h:form>
+                        </div>
                         </c:if>
                         <c:if test="${!loginBean.verificarLogado() or
                                 !loginBean.verificarTipo() or
-                                loginBean.usuarioLogado.id == eventos.evento.dono.id or
-                                eventos.evento.status.name() != 'CONFIRMADO'}">
+                                eventos.podeCandidatarse() == false}">
                             <div class="col-md-6">
                                 <c:forEach var="vaga" items="#{eventos.evento.vagas}">
                                     <div>- ${vaga.qtdVagas} vagas para ${vaga.especialidade.nome}</div>
@@ -48,7 +52,7 @@
             </p:tab>
             <p:tab title="Avaliação dos Participantes">
                 <div class="row">
-                    <c:if test="#{eventos.evento.status.name() == 'EXECUTADO'}">
+                    <c:if test="#{eventos.podeAvaliarParticipante() == true}">
                         <h:form styleClass="w-100">
                             <c:forEach var="vaga" items="#{eventos.evento.vagas}">
                                 <c:forEach var="candidato" items="#{vaga.candidatoVaga}">

@@ -17,7 +17,7 @@
 						<div class="card shadow-sm">
 							<div class="card-body">
 								<h:outputText value="Evento - #{evento.descricao} "/>
-								<div>Status - #{evento.status}</div>
+								<div>Status - #{evento.status.name()}</div>
 								<div>
 									<small><h:outputText value="#{evento.local}"/></small>
 								</div>

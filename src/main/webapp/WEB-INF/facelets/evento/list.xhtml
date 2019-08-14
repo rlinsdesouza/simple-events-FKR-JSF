@@ -38,7 +38,7 @@
 					</c:forEach>
 				</td>
 				<td>#{evento.dono.nome}</td>
-				<td>#{evento.status}</td>
+				<td>#{evento.status.name()}</td>
 				<td>
 					<p:link outcome="/eventos/details.xhtml" value="Detalhes"
 						class="delete btn btn-sm btn-info">
@@ -52,7 +52,7 @@
 						</h:link>
 					</c:if>
 					<c:if
-						test="#{evento.status == 'ABERTO' and evento.dono.id == index.userLogin.id}">
+						test="#{evento.status.name() == 'ABERTO' and evento.dono.id == index.userLogin.id}">
 						<p:link outcome="/eventos/details.xhtml" value="Avaliar"
 								class="delete btn btn-sm btn-primary">
 							<f:param name="id" value="#{evento.id}" />
