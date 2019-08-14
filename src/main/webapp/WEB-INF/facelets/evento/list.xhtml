@@ -52,13 +52,6 @@
 						</h:link>
 					</c:if>
 					<c:if
-						test="#{evento.dono.id == index.userLogin.id and evento.status == 'ABERTO'}">
-						<h:link outcome="/eventos/editar.xhtml" value="Editar"
-								class="delete btn btn-sm btn-warning">
-							<f:param name="id" value="#{evento.id}" />
-						</h:link>
-					</c:if>
-					<c:if
 						test="#{evento.status == 'ABERTO' and evento.dono.id == index.userLogin.id}">
 						<p:link outcome="/eventos/details.xhtml" value="Avaliar"
 								class="delete btn btn-sm btn-primary">
