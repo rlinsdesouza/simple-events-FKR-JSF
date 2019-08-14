@@ -32,33 +32,32 @@
 				<td>#{evento.descricao}</td>
 				<td>#{evento.local}</td>
 				<td>#{evento.data}</td>
-				<td>#{evento.vagas}</td>
+				<td>
+					<c:forEach var="vaga" items="#{evento.vagas}">
+						<div>#{vaga.qtdVagas} vagas para #{vaga.especialidade.nome}</div>
+					</c:forEach>
+				</td>
 				<td>#{evento.dono.nome}</td>
-				<td>#{evento.status}</td>
+				<td>#{evento.status.name()}</td>
 				<td>
 					<p:link outcome="/eventos/details.xhtml" value="Detalhes"
-										class="delete btn btn-sm btn-info">
-										<f:param name="id" value="#{evento.id}" />
-					</p:link>
-<!-- 					<div class="btn-group pull-right" th:if="${evento.dono.id == userLog.id}"> -->
-						<h:link outcome="/eventos/editar.xhtml" value="Editar"
-										class="delete btn btn-sm btn-warning">
-										<f:param name="id" value="#{evento.id}" />
-						</h:link>
-<!-- 						<a class="delete btn btn-sm btn-warning" th:href="@{/eventos/edit/{id}(id=${evento.id})}">Editar</a> -->
-<!-- 					</div> -->
-<!-- 					<div class="btn-group pull-right" th:if="${evento.status.name() == 'ABERTO' && evento.dono.email.equals(userLog.email)}"> -->
-						<p:link outcome="/eventos/escolhecandidatos.xhtml" value="Analisar Candidatos"
-								class="delete btn btn-sm btn-light">
-								<f:param name="id" value="#{evento.id}" />
-						</p:link>
-<!-- 						<a class="delete btn btn-sm btn-light" th:href="@{/eventos/{id}/candidatos(id=${evento.id})}">Analisar Candidatos</a> -->
-<!-- 					</div> -->
-					<p:link outcome="/eventos/details.xhtml" value="Avaliar"
-							class="delete btn btn-sm btn-primary">
+						class="delete btn btn-sm btn-info">
 						<f:param name="id" value="#{evento.id}" />
 					</p:link>
-<!-- 					<div th:replace="fragments/avaliarDesempenho"></div> -->
+					<c:if
+						test="#{evento.dono.id == index.userLogin.id}">
+						<h:link outcome="/eventos/editar.xhtml" value="Editar"
+								class="delete btn btn-sm btn-warning">
+							<f:param name="id" value="#{evento.id}" />
+						</h:link>
+					</c:if>
+					<c:if
+						test="#{evento.status.name() == 'ABERTO' and evento.dono.id == index.userLogin.id}">
+						<p:link outcome="/eventos/details.xhtml" value="Avaliar"
+								class="delete btn btn-sm btn-primary">
+							<f:param name="id" value="#{evento.id}" />
+						</p:link>
+					</c:if>
 				</td>
 			</tr>
 			</c:forEach>

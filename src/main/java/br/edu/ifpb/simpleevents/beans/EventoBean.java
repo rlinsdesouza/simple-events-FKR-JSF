@@ -444,7 +444,28 @@ public class EventoBean extends GenericBean implements Serializable {
 
 	//	inner class para escolha de quantidade de vagas por especialidade no switch
 
-	
+	// funções para verificar renderização:
+	// quando vai aparecer o radio para o usuario:
+	public boolean podeCandidatarse(){
+		boolean pode = false;
+		if (evento.getStatus().name().equals("ABERTO") || evento.getStatus().name().equals("CONFIRMADO"))
+			pode = true;
+		if (this.userLogin != null && userLogin.getId() == evento.getDono().getId()){
+			pode = false;
+		}
+		System.out.println("PODEEEEEEEEE" + pode);
+		return pode;
+	}
+
+	//quando irá aparecer o form de avaliaçao de participantes:
+	public boolean podeAvaliarParticipante(){
+		boolean pode = false;
+		if(this.userLogin != null &&
+				userLogin.getId() == evento.getDono().getId() &&
+				evento.getStatus().name().equals("EXECUTADO"))
+			pode = true;
+		return pode;
+	}
 
 
 	public class EscolhaVagasEvento {
